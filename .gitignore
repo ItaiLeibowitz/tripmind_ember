@@ -1,5 +1,9 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# Ignore rubyMine files
+.idea/*
+/.idea/
+
 # compiled output
 /dist
 /tmp

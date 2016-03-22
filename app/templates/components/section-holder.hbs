@@ -1,0 +1,6 @@
+<div class="section-title" {{action 'toggleMinimized'}}>{{title}}</div>
+{{#unless isMinimized}}
+	{{#each model as |item|}}
+		{{item-card model=item}}
+	{{/each}}
+{{/unless}}

@@ -6,6 +6,8 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+	this.route('item', { resetNamespace: true, path: '/items/:item_id' }, function () {
+	});
 });
 
 export default Router;

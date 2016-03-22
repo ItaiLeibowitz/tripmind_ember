@@ -1,0 +1,15 @@
+<div class="card-position-marker"></div>
+
+<div class="image-container" style={{photoStyle}}>
+</div>
+<div class="details-box">
+	<div class="vertical-center-parent">
+		<div class="name">{{model.name}}</div>
+		<div class="type">{{model.itemType}}
+			{{#if model.parentName}}
+				in {{model.parentName}}
+			{{/if}}
+		</div>
+	</div>
+</div>
+{{#link-to 'item' model.slug class="card-link"}}{{/link-to}}

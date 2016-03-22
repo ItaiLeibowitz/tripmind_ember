@@ -4,7 +4,22 @@ var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
-    // Add options here
+	  outputPaths: {
+		  app: {
+			  html: 'index.html',
+			  css: {
+				  'app': '/ember/tripmind.css'
+			  },
+			  js: '/ember/tripmind.js'
+		  },
+		  vendor: {
+			  css: '/ember/vendor.css',
+			  js: '/ember/vendor.js'
+		  }
+	  },
+	  fingerprint:{
+		enabled: false
+	}
   });
 
   // Use `app.import` to add additional libraries to the generated

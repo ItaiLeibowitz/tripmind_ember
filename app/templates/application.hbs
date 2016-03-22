@@ -1,3 +1,17 @@
-<h2 id="title">Welcome to Ember</h2>
+<div id="left-menu">
+	{{#link-to "index" id="top-logo"}}<b>Trip</b>Mind{{/link-to}}
+	<a class="menu-link search">Search</a>
+	<a class="menu-link recent">Recent</a>
+	<a class="menu-link starred">Starred</a>
+	{{#link-to "index" class="menu-link"}}Places{{/link-to}}
+	<a class="menu-link collections">Collections</a>
+	<div class="menu-line"></div>
+	<a class="menu-link shared-collections">Shared collections</a>
+	<a class="menu-link trash">Trash</a>
+	<div class="menu-line"></div>
+	<a class="menu-link trash">Settings</a>
+</div>
 
-{{outlet}}
+<div id="rhs-container">
+	{{outlet}}
+</div>
