@@ -30,6 +30,20 @@ export default Ember.Mixin.create({
 		} else {
 			return this.get('name');
 		}
-	}.property('ancestryNames', 'name')
+	}.property('ancestryNames', 'name'),
+
+	ancestorsArray: function () {
+		var ancestryNames = this.get('ancestryNames'),
+			response = [];
+		if (ancestryNames && ancestryNames.length > 0) {
+			var ancestryNamesArray = ancestryNames.split("/");
+			response = ancestryNamesArray.map(function (el, i) {
+				return {target: 'item', name: ancestryNamesArray[i], slug: ancestryNamesArray.slice(0,i+1).join("_"), offsetClass: `offset-${i + 1}`}
+			});
+		}
+		var ancestryLength = response.length;
+		response.push({target: 'item', name: this.get('name'), slug: this.get('slug'), offsetClass: `offset-${ancestryLength + 1} is-selected`});
+		return response;
+	}.property('ancestryNames', 'name', 'slug'),
 
 });

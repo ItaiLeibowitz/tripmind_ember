@@ -5,9 +5,7 @@ export default Ember.Component.extend({
 	classNameBindings: ['addedClass', 'cardId', 'imageDidLoad'],
 	addedClass: null,
 
-	photoStyle: function(){
-		return `background-image: url(${this.get('model.image')})`;
-	}.property('model.image'),
+
 
 
 });

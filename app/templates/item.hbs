@@ -1,1 +1,34 @@
-<div class="title-ancestry">{{model.path}}</div>
+<div class="title-ancestry">
+	{{#each model.ancestorsArray as |ancestor|}}
+		{{#link-to ancestor.target ancestor.slug}}{{ancestor.name}}{{/link-to}} >
+	{{/each}}
+</div>
+
+<div class="top-content">
+		<div class="rhs">
+			<div class="image-container main-image" style={{model.photoStyle}}></div>
+			<div class="main-map-link"></div>
+		</div>
+		<div class="lhs">
+			<div class="section-title">Description:</div>
+			<div class="long-desc">{{model.longDesc}}</div>
+		</div>
+</div>
+
+<div class="bottom-content">
+
+		<div class="rhs">
+
+		</div>
+		<div class="lhs">
+
+		</div>
+</div>
+
+{{#if destinations }}
+	{{section-holder model=destinations title="Destinations"}}
+{{/if}}
+{{#if attractions}}
+	{{section-holder model=attractions title="Attractions"}}
+{{/if}}
+

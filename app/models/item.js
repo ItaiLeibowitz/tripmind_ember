@@ -61,6 +61,9 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 	imageUrl: Ember.computed.alias('itemImageUrl'),
 	imageStyle: Ember.computed.alias('itemImageStyle'),
 
+	photoStyle: function(){
+		return `background-image: url(${this.get('image')})`;
+	}.property('image'),
 
 	itemTypeName: function(){
 		return Constants.ITEM_TYPES_ARRAY[this.get('itemType')] ? Constants.ITEM_TYPES_ARRAY[this.get('itemType')].name.capitalize() : 'Attraction';
