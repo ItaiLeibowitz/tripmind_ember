@@ -18,14 +18,14 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 	ancestryDepth: DS.attr('number'),
 	ancestryNames: DS.attr('string'),
 	duration: DS.attr('number', {defaultValue: 3600}),
-	latitude: DS.attr('number'),
-	longitude: DS.attr('number'),
+	lat: DS.attr('number'),
+	lng: DS.attr('number'),
 	boundSwLat: DS.attr('number'),
 	boundSwLng: DS.attr('number'),
 	boundNeLat: DS.attr('number'),
 	boundNeLng: DS.attr('number'),
 	userId: DS.attr('number'),
-	itemType: DS.attr('number'),
+	itemType: DS.attr('string'),
 	operatingHours: DS.attr(),
 	externalLinks: DS.attr(),
 	phone: DS.attr('string'),
@@ -45,6 +45,7 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 	gmapsReference: DS.attr('string'),
 	isGoogle: DS.attr('boolean', {defaultValue: false}),
 	isHidden: DS.attr('boolean', {defaultValue: false}),
+	additionalInfoComplete: DS.attr('boolean', {defaultValue: false}),
 	needsWikiContent: DS.attr('boolean'),
 	needsFullGoogleInfo: DS.attr('boolean'),
 	imageBaseUrl: DS.attr('string'),
@@ -55,6 +56,7 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 	ancestryObject: DS.attr(),
 	parentOptions: DS.attr(),
 	recentlyUpdated: DS.attr('boolean', {defaultValue: false}),
+	trackingStatus: DS.attr('boolean', {defaultValue: true}),
 	trippointsCount: DS.attr('number'),
 	destinationRoute: 'item.overview',
 
@@ -62,7 +64,13 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 	imageStyle: Ember.computed.alias('itemImageStyle'),
 
 	photoStyle: function(){
-		return `background-image: url(${this.get('image')})`;
+		if (this.get('image')) {
+			return `background-image: url(${this.get('image')})`;
+		} else {
+			var colorLength = Constants.FLAT_DESIGN_COLORS.length,
+				color = Constants.FLAT_DESIGN_COLORS[Math.floor(Math.random()*colorLength)];
+			return `background-image: url('assets/images/background-pattern.png'); background-color: ${color};`
+		}
 	}.property('image'),
 
 	itemTypeName: function(){
@@ -70,8 +78,8 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 	}.property('itemType'),
 
 	slug: function(){
-		return this.get('path').replace(/\//g,"_");
-	}.property('path'),
+		return [this.get('id').toString(), this.get('name').toLowerCase()].join(' ').replace(/ /g, '+');
+	}.property('id', 'name'),
 
 	reviewedByArray: function(){
 		var reviewDigest = this.get('reviewDigest');
@@ -101,7 +109,7 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 
 	phoneLink: function(){
 			return `tel:${this.get('phone')}`;
-	}.property('phone'),
+	}.property('phone')
 
 
 });

@@ -100,6 +100,18 @@ var Constants = Ember.Object.create({
 			]
 		},
 	],
+	FLAT_DESIGN_COLORS: [
+		'#D24D57',
+		'#9A12B3',
+		'#22A7F0',
+		'#1F3A93',
+		'#1BBC9B',
+		'#87D37C',
+		'#2ECC71',
+		'#F89406',
+		'#F9BF3B',
+		'#F62459'
+	],
 	ITEM_TYPES_ARRAY: [],
 	GOOGLE_PLACES_TYPE_CONVERSION: {
 		administrative_area_level_1: 'region',

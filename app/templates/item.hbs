@@ -32,3 +32,12 @@
 	{{section-holder model=attractions title="Attractions"}}
 {{/if}}
 
+{{# if links}}
+	{{#each links as |link|}}
+		<div class="link-holder">
+			<div class="link-name">{{link.title}}</div>
+			<img class="link-image" height="50" src={{link.image}}>
+		</div>
+
+	{{/each}}
+{{/if}}

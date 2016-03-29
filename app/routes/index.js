@@ -5,7 +5,7 @@ import Ember from 'ember';
 export default Ember.Route.extend({
 	model: function(){
 		var store = this.get('store');
-		return store.peekAll('item')
+		return store.findAll('item')
 	},
 	setupController: function(controller, model){
 		var countries = model.filter(function(item){

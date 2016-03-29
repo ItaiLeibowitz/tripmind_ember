@@ -3,16 +3,27 @@ import Utils from 'tripmind/appconfig/utils';
 
 
 export default Ember.Route.extend({
-	model: function(params) {
-		return this.get('store').peekRecord('item', params.item_id);
+	model: function (params) {
+		var itemId = params.item_slug.split('+')[0],
+			store = this.get('store');
+		return store.findRecord('item', itemId)
+			.then(function (itemRecord) {
+				return store.findAll('potentialLink').then(function(allLinks){
+					var relevantLinks = allLinks.filter(function (l) {
+						return l.get('itemId') == itemId;
+					});
+					return Ember.Object.create({item: itemRecord, links: relevantLinks});
+				});
+			})
 	},
 	serialize: function(model) {
-		return { item_path: model.get('path').replace(/[\/\s]/g,"_") };
+		return { item_path: model.get('item.path').replace(/[\/\s]/g,"_") };
 	},
 	setupController: function(controller, model){
-		this._super(controller, model);
-	    var descendants = this.get('store').peekAll('item').filter(function(item){
-			return item.get('ancestryNames').indexOf(model.get('path')) == 0;
+		var item = model.get('item');
+		this._super(controller, item);
+	    var descendants = this.get('store').peekAll('item').filter(function(i){
+			return i.get('ancestry') && i.get('ancestry').indexOf(item.get('path')) == 0;
 		});
 		var destinations = Ember.ArrayProxy.create({content: []}),
 			attractions = Ember.ArrayProxy.create({content: []});
@@ -27,7 +38,8 @@ export default Ember.Route.extend({
 		controller.setProperties({
 			descendants: descendants,
 			destinations: destinations,
-			attractions: attractions
+			attractions: attractions,
+			links: model.get('links')
 		});
 	}
 });
