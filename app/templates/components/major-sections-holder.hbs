@@ -1,3 +1,10 @@
-{{#each majorSections as |majorSection|}}
-	{{major-section model=majorSection}}
-{{/each}}
+<div class="scroll-menu">
+	{{#each majorSections as |majorSection|}}
+		<div class="scroll-link">{{majorSection.title}}</div>
+	{{/each}}
+</div>
+<div class="scrollable-rhs-content">
+	{{#each majorSections as |majorSection|}}
+		{{major-section model=majorSection}}
+	{{/each}}
+</div>

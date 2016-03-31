@@ -1,10 +1,10 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
-	classNames: ['section'],
+export default Ember.Mixin.create({
+	classNames: ['section-holder'],
 	classNameBindings: ['isMinimized'],
 	isMinimized: false,
-	model: null,
+
 
 
 	actions: {

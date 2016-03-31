@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import constants from 'tripmind/appconfig/constants';
 
 export default Ember.Component.extend({
 	classNames: ['major-sections-holder'],
@@ -11,14 +12,16 @@ export default Ember.Component.extend({
 
 	modelDidChange: function(){
 		Ember.run.scheduleOnce('sync', this, 'updateSections');
-	}.observes('items.[]').on('init'),
+	}.observes('filteredItems.[]').on('init'),
 
 	updateSections: function(){
 		var items = this.get('filteredItems');
-		if (!items || items.get('length') == 0 ) return;
+		if (!items || items.get('length') == 0 ) {
+			this.set('majorSections', []);
+			return;
+		}
 		var majorSections = this._sectionItems(items,this.get('majorSectionType'), {countriesOnly: true, threshold: 1, minDepth: 1});
 		this._subsectionSections(majorSections, this.get('minorSectionType'), {threshold: 3, minDepth: 2});
-		console.log(majorSections)
 		this.set('majorSections', majorSections);
 	},
 
@@ -34,7 +37,7 @@ export default Ember.Component.extend({
 	_sectionItems: function(items, sectionType, options) {
 		var sectionsObject = {};
 		var orderedSections = Ember.ArrayProxy.create({content: []});
-
+		var extraItems = Ember.ArrayProxy.create({content: []});
 		// Each type of sort returns a sectionsObject and a sortedKeys
 
 		//----- Sort by name
@@ -50,16 +53,16 @@ export default Ember.Component.extend({
 				sectionsObject[firstLetter].items.pushObject(item);
 			});
 			var orderedKeys = Object.keys(sectionsObject).sort();
-
-
-		//--- Sort by geo
 		} else if (sectionType == 'geo') {
-			// first build the tree object and an items hash
+
+
+			//--- Sort by geo
+			// Step 1 - build a tree that shows every descendant
 			var treeObject = {};
 			items.forEach(function(item){
 				var ancestry = item.get('ancestry'),
 					itemId = item.get('id');
-				if (!ancestry || ancestry.length == 0){
+				if (!ancestry || ancestry.length == (options.minDepth - 1 || 0)){
 					treeObject[itemId] = treeObject[itemId] || {
 						ancestryArray: [],
 						count: 0,
@@ -82,12 +85,21 @@ export default Ember.Component.extend({
 						treeObject[ancestorId].descs.push(item);
 						treeObject[ancestorId].count ++;
 						//TODO: add a total weight to each node based on this item's weight
+						// If this item is a parent we should put it in the tree even if it doesn't have desc
+						if ( constants.GOOGLE_PLACE_DESTINATION_TYPES.indexOf(item.get('itemType'))> -1) {
+							treeObject[itemId] = treeObject[itemId] || {
+								ancestryArray: ancestorsArray,
+								count: 0,
+								descs: [],
+								depth: ancestorsArray.length + 1,
+								name: item.get('name')
+							};
+						}
 					})
 				}
 			});
 
-			// Now that we have a tree, we will go through the lowest branches and remove any branches which passes the threshold
-			// First, build an array of itemIds to sort:
+			// Step 2 - sort the tree nodes by their depth from deepest to shallowest
 			var treeArray = [];
 			for (var itemId in treeObject){
 				if (treeObject.hasOwnProperty(itemId)){
@@ -100,6 +112,11 @@ export default Ember.Component.extend({
 				return treeObject[a].depth > treeObject[b].depth ? -1 : 1;
 			});
 
+
+
+			// Step 3 - traverse from deepest node, creating a section if it has enough descendants
+			// Where we create a node, we remove those items from higher up in the tree, and remove that node as well.
+			// If the node did not pass the threshold, BUT it sits at the minimum depth that we care about, then it becomes a section too.
 			var orderedKeys = [];
 			treeArray.forEach(function(itemId){
 				var descCount = treeObject[itemId].count;
@@ -107,7 +124,8 @@ export default Ember.Component.extend({
 					// Create the sectionsObject
 					sectionsObject[itemId] = sectionsObject[itemId] || Ember.Object.create({
 						title: treeObject[itemId].name,
-						items: treeObject[itemId].descs,
+						slug: `${itemId}+${treeObject[itemId].name}`,
+						items: Ember.ArrayProxy.create({content: treeObject[itemId].descs}),
 						count: treeObject[itemId].count,
 						innerSort: 'name',
 						subsections: null
@@ -115,13 +133,18 @@ export default Ember.Component.extend({
 					orderedKeys.push(itemId);
 					// now remove these items from the node's ancestors
 					treeObject[itemId].ancestryArray.forEach(function (nodeAncestorId, index) {
-						// reduce the count of that node's children:
-						treeObject[nodeAncestorId].count -= descCount;
+						// reduce the count of that node's children - and +1 for this node itself
+						treeObject[nodeAncestorId].count -= (descCount + 1);
 						// now remove the actual descendants from that ancestor node
 						treeObject[itemId].descs.forEach(function(desc){
 							treeObject[nodeAncestorId].descs.removeObject(desc)
-						})
+						});
+						// Now remove this own node from that ancestor
+						treeObject[nodeAncestorId].descs = treeObject[nodeAncestorId].descs.reject(function(desc){
+							return desc.get('id') == itemId;
+						});
 					})
+
 				}
 			});
 			// now sort the ordered keys based on the count of items in the node in reverse order
@@ -129,11 +152,53 @@ export default Ember.Component.extend({
 				if (treeObject[a].count == treeObject[b].count) return 0;
 				return treeObject[a].count > treeObject[b].count ? -1 : 1;
 			})
+		} else if (sectionType == 'item') {
+			//------ sort for item pages
+
+			// split items by section
+			var destinations = Ember.ArrayProxy.create({content: []}),
+				attractions = Ember.ArrayProxy.create({content: []}),
+				restaurants = Ember.ArrayProxy.create({content: []}),
+				hotels = Ember.ArrayProxy.create({content: []});
+			items.forEach(function(item){
+				var itemType = item.get('itemType');
+				if (constants.GOOGLE_PLACE_DESTINATION_TYPES.indexOf(itemType) > -1 ){
+					destinations.pushObject(item);
+				} else if (itemType=="restaurant"){
+					restaurants.pushObject(item);
+				} else if (itemType == 'hotel') {
+					hotels.pushObject(item);
+				} else {
+					attractions.pushObject(item);
+				}
+			});
+			if (destinations.get('length')>0) sectionsObject[0] = Ember.Object.create({
+				title: 'Destinations',
+				items: destinations,
+				innerSort: 'name'
+			});
+			if (attractions.get('length')>0) sectionsObject[1] = Ember.Object.create({
+				title: 'Attractions',
+				items: attractions,
+				innerSort: 'geo'
+			});
+			if (restaurants.get('length')>0) sectionsObject[2] = Ember.Object.create({
+				title: 'Restaurants',
+				items: restaurants,
+				innerSort: 'geo'
+			});
+			if (hotels.get('length')>0) sectionsObject[3] = Ember.Object.create({
+				title: 'Hotels',
+				items: hotels,
+				innerSort: 'geo'
+			});
+			var orderedKeys = [0,1,2,3];
+
 		}
 
 		// Order sectionsObject into an array according to the sorted keys
 		orderedKeys.forEach(function(key){
-			orderedSections.pushObject(sectionsObject[key]);
+			if (sectionsObject[key]) orderedSections.pushObject(sectionsObject[key]);
 		});
 		return orderedSections;
 	},

@@ -1,4 +1,14 @@
-<div class="major-section-title">{{model.title}}</div>
-{{#each model.subsections as |subsection|}}
-	{{#sub-section model=subsection}}{{/sub-section}}
-{{/each}}
+<div class="major-section-title">
+	{{#link-to 'item' model.slug}}{{model.title}} ({{model.items.length}}){{/link-to}}
+	<div class="toggle-minimized" {{action 'toggleMinimized'}}></div>
+</div>
+{{#unless isMinimized}}
+	{{#each model.subsections as |subsection|}}
+		{{#sub-section model=subsection}}{{/sub-section}}
+	{{/each}}
+	{{# each model.extraItems as |item|}}
+		{{#item-card model=item}}{{/item-card}}
+	{{/each}}
+{{/unless}}
+
+

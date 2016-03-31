@@ -127,7 +127,17 @@ var Constants = Ember.Object.create({
 		sublocality_level_2: 'sublocality',
 		sublocality_level_1: 'sublocality',
 		establishment: 'attraction'
-	}
+	},
+	GOOGLE_PLACE_DESTINATION_TYPES: ["country",
+		"locality",
+		"administrative_area_level_1",
+		"administrative_area_level_2",
+		"administrative_area_level_3",
+		"administrative_area_level_4",
+		"administrative_area_level_5",
+		"colloquial_area",
+		"sublocality"
+	]
 
 
 

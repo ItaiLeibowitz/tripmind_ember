@@ -1,4 +1,25 @@
-<div class="sub-section-title">{{model.title}}</div>
-{{#each model.items as |item|}}
-	{{#item-card model=item}}{{/item-card}}
-{{/each}}
+{{#if model.items}}
+	<div class="sub-section-title">
+		{{#link-to 'item' model.slug}}{{model.title}} ({{model.items.length}}){{/link-to}}
+		<div class="toggle-minimized" {{action 'toggleMinimized'}}></div>
+	</div>
+	{{#if isMinimized}}
+		<div class="item-card sub-section-minimized">
+			<div class="image-container" style={{model.items.firstObject.photoStyle}}></div>
+			{{#link-to 'item' model.slug class="card-link"}}{{/link-to}}
+		</div>
+	{{else}}
+		{{#each model.items as |item|}}
+			{{#item-card model=item}}{{/item-card}}
+		{{/each}}
+	{{/if}}
+{{else}}
+	<div class="sub-section-title">
+		{{#link-to 'item' model.slug}}{{model.title}} ({{model.items.length}}){{/link-to}}
+	</div>
+	<div class="item-card sub-section-minimized">
+		<div class="image-container" style={{model.items.firstObject.photoStyle}}></div>
+		{{#link-to 'item' model.slug class="card-link"}}{{/link-to}}
+	</div>
+{{/if }}
+

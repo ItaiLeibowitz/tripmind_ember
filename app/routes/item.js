@@ -25,20 +25,8 @@ export default Ember.Route.extend({
 	    var descendants = this.get('store').peekAll('item').filter(function(i){
 			return i.get('ancestry') && i.get('ancestry').indexOf(item.get('path')) == 0;
 		});
-		var destinations = Ember.ArrayProxy.create({content: []}),
-			attractions = Ember.ArrayProxy.create({content: []});
-		for (var i = 0; i < descendants.length; i++) {
-			var obj = descendants[i];
-			if (obj.get('itemType') == 'locality' || obj.get('itemType') == "administrative_area_level_1") {
-				destinations.pushObject(obj);
-			} else {
-				attractions.pushObject(obj);
-			}
-		}
 		controller.setProperties({
 			descendants: descendants,
-			destinations: destinations,
-			attractions: attractions,
 			links: model.get('links')
 		});
 	}
