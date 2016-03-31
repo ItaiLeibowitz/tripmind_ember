@@ -125,7 +125,7 @@ export default Ember.Component.extend({
 					// Create the sectionsObject
 					sectionsObject[itemId] = sectionsObject[itemId] || Ember.Object.create({
 						title: treeObject[itemId].name,
-						slug: `${itemId}+${treeObject[itemId].name}`,
+						slug: `${itemId} ${treeObject[itemId].name}`.replace(/ /g, '_'),
 						items: Ember.ArrayProxy.create({content: treeObject[itemId].descs}),
 						count: treeObject[itemId].count,
 						innerSort: 'name',
@@ -166,9 +166,11 @@ export default Ember.Component.extend({
 				var itemType = item.get('itemType');
 				if (constants.GOOGLE_PLACE_DESTINATION_TYPES.indexOf(itemType) > -1 ){
 					destinations.pushObject(item);
-				} else if (itemType=="restaurant"){
+				} else if (constants.GOOGLE_PLACE_RESTAURANT_TYPES.indexOf(itemType) > -1){
 					restaurants.pushObject(item);
-				} else if (itemType == 'hotel') {
+				} else if (constants.GOOGLE_PLACE_NIGHTLIFE_TYPES.indexOf(itemType) > -1){
+					restaurants.pushObject(item);
+				} else if (constants.GOOGLE_PLACE_HOTEL_TYPES.indexOf(itemType) > -1) {
 					hotels.pushObject(item);
 				} else {
 					attractions.pushObject(item);
@@ -226,6 +228,10 @@ export default Ember.Component.extend({
 
 	actions: {
 		sortDidChange: function (newSortType) {
+		},
+		scrollToSection: function(destination){
+			var newOffset = $(`#major-section-${destination}`).offset().top;
+			$('body').animate({scrollTop: newOffset}, 200);
 		}
 	}
 });

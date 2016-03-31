@@ -137,7 +137,23 @@ var Constants = Ember.Object.create({
 		"administrative_area_level_5",
 		"colloquial_area",
 		"sublocality"
+	],
+	GOOGLE_PLACE_RESTAURANT_TYPES: [
+		"restaurant",
+		"cafe",
+		"bakery"
+
+	],
+	GOOGLE_PLACE_NIGHTLIFE_TYPES: [
+		"bar",
+		"casino",
+		"movie_theater",
+		"night_club"
+	],
+	GOOGLE_PLACE_HOTEL_TYPES: [
+		"lodging"
 	]
+
 
 
 
