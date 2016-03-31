@@ -121,6 +121,7 @@ export default Ember.Component.extend({
 			treeArray.forEach(function(itemId){
 				var descCount = treeObject[itemId].count;
 				if (descCount >= options.threshold || treeObject[itemId].depth == options.minDepth) {
+					if (treeObject[itemId].skipIfEmpty && treeObject[itemId].descs.length == 0) return;
 					// Create the sectionsObject
 					sectionsObject[itemId] = sectionsObject[itemId] || Ember.Object.create({
 						title: treeObject[itemId].name,
@@ -135,6 +136,7 @@ export default Ember.Component.extend({
 					treeObject[itemId].ancestryArray.forEach(function (nodeAncestorId, index) {
 						// reduce the count of that node's children - and +1 for this node itself
 						treeObject[nodeAncestorId].count -= (descCount + 1);
+						treeObject[nodeAncestorId].skipIfEmpty = true;
 						// now remove the actual descendants from that ancestor node
 						treeObject[itemId].descs.forEach(function(desc){
 							treeObject[nodeAncestorId].descs.removeObject(desc)
