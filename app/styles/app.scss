@@ -37,6 +37,17 @@ a {
 	padding: 0 0 0 5em;
 	box-sizing: border-box;
 	color: #E74C3C;
+
+	&:before{
+		background-image: url("/assets/images/128_icon.png");
+		height: 3em;
+		width: 3em;
+		position: absolute;
+		background-size: contain;
+		left: 1em;
+		margin: 0.5em;
+		content: "";
+	}
 }
 
 .menu-link {
@@ -121,7 +132,7 @@ a {
 	background: #efefef;
 }
 
-.section-title {
+.top-section-title {
 	font-size: 1.5em;
 	margin-bottom: 1em;
 }
@@ -369,6 +380,26 @@ a {
 }
 
 .section-holder {
+
+	.section-title{
+		.selector-holder{
+			display: inline-block;
+			vertical-align: top;
+			overflow: hidden;
+			width: 0;
+			transition: width 0.1s ease-in;
+		}
+		.selector{
+			display: inline-block;
+			cursor: pointer;
+			font-size: 1.5em;
+			line-height: 1em;
+			vertical-align: top;
+			color: #333;
+			opacity: 0;
+			transition: opacity 0.5s ease-in;
+		}
+	}
 	.toggle-minimized {
 		display: inline-block;
 		margin-left: 1em;
@@ -400,6 +431,43 @@ a {
 			}
 		}
 	}
+
+
+
+	&.is-selected{
+		.section-title{
+			.selector{
+				color: #E74C3C;
+			}
+		}
+	}
+
+}
+
+.major-section{
+	 &:hover, &.in-select-mode, &.is-selected{
+		 .major-section-title {
+			 .selector-holder {
+				 width: 2em;
+			 }
+			 .selector {
+				 opacity: 1;
+			 }
+		 }
+	 }
+ }
+
+.sub-section{
+	&:hover, &.in-select-mode, &.is-selected{
+		.sub-section-title {
+			.selector-holder {
+				width: 2em;
+			}
+			.selector {
+				opacity: 1;
+			}
+		}
+	}
 }
 
 .major-section-title {
@@ -417,47 +485,13 @@ a {
 	vertical-align: top;
 	.sub-section-title {
 		margin: 2em 0 0 0.5em;
-		.selector-holder{
-			display: inline-block;
-			vertical-align: top;
-			overflow: hidden;
-			width: 0;
-			transition: width 0.1s ease-in;
-		}
-		.selector{
-			display: inline-block;
-			cursor: pointer;
-			font-size: 1.5em;
-			line-height: 1em;
-			vertical-align: top;
-			color: #333;
-			opacity: 0;
-			transition: opacity 0.5s ease-in;
-		}
 	}
 
 	&.is-minimized .toggle-minimized{
 		float: right;
 	}
 	
-	&:hover, &.in-select-mode, &.is-selected{
-		.sub-section-title {
-			.selector-holder {
-				width: 2em;
-			}
-			.selector {
-				opacity: 1;
-			}
-		}
-	}
 
-	&.is-selected{
-		.sub-section-title{
-			.selector{
-				color: #E74C3C;
-			}
-		}
-	}
 }
 
 

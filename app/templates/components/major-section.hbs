@@ -1,13 +1,15 @@
-<div id="major-section-{{model.scrollSlug}}" class="major-section-title">
+<div id="major-section-{{model.scrollSlug}}" class="section-title major-section-title">
+	{{#if model.items}}
+		<div class="selector-holder">
+			<div class="selector icon-check-circle" {{action 'toggleSelected'}}></div>
+		</div>
+	{{/if}}
 	{{#link-to 'item' model.slug}}{{model.title}} ({{model.items.length}}){{/link-to}}
 	<div class="toggle-minimized" {{action 'toggleMinimized'}}></div>
 </div>
 {{#unless isMinimized}}
 	{{#each model.subsections as |subsection|}}
 		{{#sub-section model=subsection}}{{/sub-section}}
-	{{/each}}
-	{{# each model.extraItems as |item|}}
-		{{#item-card model=item}}{{/item-card}}
 	{{/each}}
 {{/unless}}
 
