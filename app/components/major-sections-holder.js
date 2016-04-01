@@ -125,7 +125,8 @@ export default Ember.Component.extend({
 					// Create the sectionsObject
 					sectionsObject[itemId] = sectionsObject[itemId] || Ember.Object.create({
 						title: treeObject[itemId].name,
-						slug: `${itemId} ${treeObject[itemId].name}`.replace(/ /g, '_'),
+						slug: `${itemId} ${treeObject[itemId].name}`.replace(/ /g, '+'),
+						scrollSlug: `${itemId} ${treeObject[itemId].name}`.replace(/ /g, '_'),
 						items: Ember.ArrayProxy.create({content: treeObject[itemId].descs}),
 						count: treeObject[itemId].count,
 						innerSort: 'name',
@@ -178,21 +179,25 @@ export default Ember.Component.extend({
 			});
 			if (destinations.get('length')>0) sectionsObject[0] = Ember.Object.create({
 				title: 'Destinations',
+				scrollSlug: 'destinations',
 				items: destinations,
 				innerSort: 'name'
 			});
 			if (attractions.get('length')>0) sectionsObject[1] = Ember.Object.create({
 				title: 'Attractions',
+				scrollSlug: 'attractions',
 				items: attractions,
 				innerSort: 'geo'
 			});
 			if (restaurants.get('length')>0) sectionsObject[2] = Ember.Object.create({
 				title: 'Restaurants',
+				scrollSlug: 'restaurants',
 				items: restaurants,
 				innerSort: 'geo'
 			});
 			if (hotels.get('length')>0) sectionsObject[3] = Ember.Object.create({
 				title: 'Hotels',
+				scrollSlug: 'hotels',
 				items: hotels,
 				innerSort: 'geo'
 			});
