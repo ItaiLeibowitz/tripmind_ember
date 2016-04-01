@@ -1,5 +1,8 @@
 {{#if model.items}}
 	<div class="sub-section-title">
+		<div class="selector-holder">
+			<div class="selector icon-check-circle" {{action 'toggleSelected'}}></div>
+		</div>
 		{{#link-to 'item' model.slug}}{{model.title}} ({{model.items.length}}){{/link-to}}
 		<div class="toggle-minimized" {{action 'toggleMinimized'}}></div>
 	</div>

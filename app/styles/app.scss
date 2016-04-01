@@ -417,10 +417,46 @@ a {
 	vertical-align: top;
 	.sub-section-title {
 		margin: 2em 0 0 0.5em;
-
+		.selector-holder{
+			display: inline-block;
+			vertical-align: top;
+			overflow: hidden;
+			width: 0;
+			transition: width 0.1s ease-in;
+		}
+		.selector{
+			display: inline-block;
+			cursor: pointer;
+			font-size: 1.5em;
+			line-height: 1em;
+			vertical-align: top;
+			color: #333;
+			opacity: 0;
+			transition: opacity 0.5s ease-in;
+		}
 	}
+
 	&.is-minimized .toggle-minimized{
 		float: right;
+	}
+	
+	&:hover, &.in-select-mode, &.is-selected{
+		.sub-section-title {
+			.selector-holder {
+				width: 2em;
+			}
+			.selector {
+				opacity: 1;
+			}
+		}
+	}
+
+	&.is-selected{
+		.sub-section-title{
+			.selector{
+				color: #E74C3C;
+			}
+		}
 	}
 }
 
