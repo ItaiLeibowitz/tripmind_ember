@@ -10,6 +10,41 @@ export default Ember.Component.extend({
 	majorSectionType: "geo",
 	minorSectionType: "geo",
 
+	majorSort: function(){
+		return this.get('majorSortOptions').findBy('isSelected');
+	}.property('majorSortOptions.[]'),
+
+	subSort: function(){
+		return this.get('subSortOptions').findBy('isSelected');
+	}.property('subSortOptions.[]'),
+
+	init: function(){
+		this._super();
+		var majorSortOptions = [
+				{name: "Geography (auto-sort)", value: 'geo-auto', isSelected: true},
+				{name: "Geography (A-Z)", value: 'geo-name', isSelected: false},
+				{name: "Category", value: 'category', isSelected: false},
+				{name: "Date visited", value: 'date', isSelected: false},
+				{name: "Name", value: 'name', isSelected: false}
+			],
+			subSortOptions = [
+				{name: "Geography (auto-sort)", value: 'geo-auto', isSelected: true},
+				{name: "Geography (A-Z)", value: 'geo-name', isSelected: false},
+				{name: "Category", value: 'category', isSelected: false},
+				{name: "Date visited", value: 'date', isSelected: false, sortOnly: true},
+				{name: "Name", value: 'name', isSelected: false, sortOnly: true}
+			];
+		majorSortOptions = Ember.ArrayProxy.create({content: majorSortOptions.map(function(el){
+			return Ember.Object.create(el);
+		})});
+		subSortOptions = Ember.ArrayProxy.create({content: subSortOptions.map(function(el){
+			return Ember.Object.create(el);
+		})});
+		this.set('majorSortOptions', majorSortOptions);
+		this.set('subSortOptions', subSortOptions);
+	},
+
+
 	modelDidChange: function(){
 		Ember.run.scheduleOnce('sync', this, 'updateSections');
 	}.observes('filteredItems.[]').on('init'),
@@ -20,8 +55,8 @@ export default Ember.Component.extend({
 			this.set('majorSections', []);
 			return;
 		}
-		var majorSections = this._sectionItems(items,this.get('majorSectionType'), {countriesOnly: true, threshold: 1, minDepth: 1});
-		this._subsectionSections(majorSections, this.get('minorSectionType'), {threshold: 3, minDepth: 2});
+		var majorSections = this._sectionItems(items,this.get('majorSort.value'), {countriesOnly: true, threshold: 1, minDepth: 1});
+		this._subsectionSections(majorSections, this.get('subSort.value'), {threshold: 3, minDepth: 2, sortOnly: this.get('subSort.sortOnly')});
 		this.set('majorSections', majorSections);
 	},
 
@@ -44,16 +79,17 @@ export default Ember.Component.extend({
 		if (sectionType == 'name') {
 			// Organize items into sections
 			items.forEach(function(item){
-				var firstLetter = item.get('name').slice(0,1).toLowerCase();
+				var firstLetter = item.get('name').slice(0,1).toUpperCase();
 				sectionsObject[firstLetter] = sectionsObject[firstLetter] || Ember.Object.create({
 					title: firstLetter,
+					scrollSlug: firstLetter,
 					items: Ember.ArrayProxy.create({content: []}),
 					innerSort: 'name'
 				});
 				sectionsObject[firstLetter].items.pushObject(item);
 			});
 			var orderedKeys = Object.keys(sectionsObject).sort();
-		} else if (sectionType == 'geo') {
+		} else if (sectionType == 'geo-auto') {
 
 
 			//--- Sort by geo
@@ -203,6 +239,20 @@ export default Ember.Component.extend({
 			});
 			var orderedKeys = [0,1,2,3];
 
+		} else if (sectionType == 'category') {
+
+			// Organize items into sections
+			items.forEach(function(item){
+				var itemType = item.get('itemType').replace(/_/g," ").capitalize();
+				sectionsObject[itemType] = sectionsObject[itemType] || Ember.Object.create({
+					title: itemType,
+					scrollSlug: item.get('itemType'),
+					items: Ember.ArrayProxy.create({content: []}),
+					innerSort: 'name'
+				});
+				sectionsObject[itemType].items.pushObject(item);
+			});
+			var orderedKeys = Object.keys(sectionsObject).sort();
 		}
 
 		// Order sectionsObject into an array according to the sorted keys
@@ -215,7 +265,17 @@ export default Ember.Component.extend({
 	_subsectionSections: function(sectionsArray, subSectionType, options) {
 		var self = this;
 		sectionsArray.forEach(function(section){
-			section.set('subsections',  self._sectionItems(section.get('items'), subSectionType, options));
+			if (options.sortOnly) {
+				section.setProperties({
+					subsections: null,
+					sortedItems: section.get('items').sortBy(subSectionType)
+				})
+			} else {
+				section.setProperties({
+					subsections: self._sectionItems(section.get('items'), subSectionType, options),
+					sortedItems: null
+				});
+			}
 		})
 	},
 
@@ -228,14 +288,19 @@ export default Ember.Component.extend({
 	// - but this is controlled from the major section holder here
 	// The major section holder has a menu where you can determine the filtering and sort for both sections and subsections
 
+
+
 	// major section: Title Item, items in order
 
 
 	actions: {
-		sortDidChange: function (newSortType) {
+		updateSortOptions: function () {
+			this.notifyPropertyChange('majorSortOptions');
+			this.notifyPropertyChange('subSortOptions');
+			Ember.run.scheduleOnce('sync', this, 'updateSections');
 		},
 		scrollToSection: function(destination){
-			var newOffset = $(`#major-section-${destination}`).offset().top;
+			var newOffset = (destination == "top") ? 0 : $(`#major-section-${destination}`).offset().top;
 			$('body').animate({scrollTop: newOffset}, 200);
 		}
 	}

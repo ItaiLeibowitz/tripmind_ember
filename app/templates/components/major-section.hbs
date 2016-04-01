@@ -11,6 +11,9 @@
 	{{#each model.subsections as |subsection|}}
 		{{#sub-section model=subsection}}{{/sub-section}}
 	{{/each}}
+	{{#each model.sortedItems as |item|}}
+		{{item-card model=item}}
+	{{/each}}
 {{/unless}}
 
 

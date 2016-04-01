@@ -1,9 +1,41 @@
 <div class="scroll-menu">
+	{{#if majorSections}}
+		<div class="scroll-link" {{action 'scrollToSection' 'top'}}>Top</div>
+	{{/if}}
 	{{#each majorSections as |majorSection|}}
 		<div class="scroll-link" {{action 'scrollToSection' majorSection.scrollSlug}}>{{majorSection.title}}</div>
 	{{/each}}
 </div>
 <div class="scrollable-rhs-content">
+	<div class="options-menu section-options-menu">
+		<div class="toggle-btn">Options</div>
+		<div class="menu-body two-column">
+			<div class="menu-column">
+				<div class="menu-section">
+					<div class="menu-section-title">Sort by:</div>
+					{{select-one options=majorSortOptions onChange=(action 'updateSortOptions')}}
+				</div>
+				<div class="menu-section">
+					<div class="menu-section-title">Sort subsections by:</div>
+					{{select-one options=subSortOptions onChange=(action 'updateSortOptions')}}
+				</div>
+			</div>
+			<div class="menu-column">
+				<div class="menu-section">
+					<div class="menu-section-title">Filter:</div>
+					<div class="menu-option is-selected">Museum</div>
+					<div class="menu-option is-selected">Nature</div>
+					<div class="menu-option">Art</div>
+					<div class="menu-option">History</div>
+					<div class="menu-option">Landmark</div>
+					<div class="menu-line"></div>
+					<div class="menu-option">Restaurants</div>
+					<div class="menu-line"></div>
+					<div class="menu-option">Hotels</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	{{#each majorSections as |majorSection|}}
 		{{major-section model=majorSection}}
 	{{/each}}

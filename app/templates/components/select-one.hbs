@@ -1,0 +1,3 @@
+{{#each options as |option|}}
+	<div class="menu-option {{if option.isSelected 'is-selected'}}" {{action 'selectThis' option.value}}>{{option.name}}</div>
+{{/each}}

@@ -132,6 +132,83 @@ a {
 	background: #efefef;
 }
 
+.options-menu{
+	.toggle-btn{
+		display: inline-block;
+		line-height: 3em;
+		padding: 0 1em;
+		background: white;
+		box-shadow: 0 1px 1px rgba(0,0,0,0.25);
+		opacity: 0.75;
+
+		&:after{
+			content: " \25bc";
+			font-size: 0.75em;
+		}
+	}
+	.menu-body{
+		font-size: 0.9em;
+		position: absolute;
+		top: 3em;
+		right: 0;
+		background: white;
+		box-shadow: 0 1px 1px rgba(0,0,0,0.25);
+		display: none;
+
+		&.two-column{
+			width: 33em;
+		}
+	}
+
+	.menu-column{
+		display: inline-block;
+		vertical-align: top;
+		margin: 1em 1em 1em 3em;
+		width: 12em;
+	}
+
+
+
+	.menu-section{
+		margin: 1em 0;
+		line-height: 2em;
+	}
+
+	.menu-section-title{
+		color: #aaa;
+		margin-bottom: .5em;
+	}
+
+	.menu-option{
+		cursor: pointer;
+		position: relative;
+
+		&.is-selected:before{
+			content:'\2713 ';
+			color: #E74C3C;
+			font-weight: bold;
+			position: absolute;
+			left: -1.5em;
+		}
+	}
+
+	&:hover, &.is-active{
+		.toggle-btn{
+			opacity: 1;
+		}
+		.menu-body{
+			display: inline-block;
+		}
+	}
+}
+
+.section-options-menu{
+	position: absolute;
+	right: 0;
+	z-index: 9;
+}
+
+
 .top-section-title {
 	font-size: 1.5em;
 	margin-bottom: 1em;
@@ -376,6 +453,7 @@ a {
 	margin-left: 10em;
 	border-left: 1px solid #ccc;
 	padding-left: 1em;
+	position: relative;
 
 }
 
