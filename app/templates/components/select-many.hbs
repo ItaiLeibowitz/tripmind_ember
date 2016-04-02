@@ -1,0 +1,6 @@
+{{#each options as |option|}}
+	{{# if option.hasLineBefore}}
+		<div class="menu-line"></div>
+	{{/if}}
+	<div class="menu-option {{if option.isSelected 'is-selected'}}" {{action 'toggleThis' option.value}}>{{option.name}}</div>
+{{/each}}

@@ -22,16 +22,7 @@
 			</div>
 			<div class="menu-column">
 				<div class="menu-section">
-					<div class="menu-section-title">Filter:</div>
-					<div class="menu-option is-selected">Museum</div>
-					<div class="menu-option is-selected">Nature</div>
-					<div class="menu-option">Art</div>
-					<div class="menu-option">History</div>
-					<div class="menu-option">Landmark</div>
-					<div class="menu-line"></div>
-					<div class="menu-option">Restaurants</div>
-					<div class="menu-line"></div>
-					<div class="menu-option">Hotels</div>
+					{{select-many options=filterOptions onChange=(action 'updateFilter')}}
 				</div>
 			</div>
 		</div>

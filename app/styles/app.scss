@@ -214,27 +214,6 @@ a {
 	margin-bottom: 1em;
 }
 
-.section-holder {
-	margin: 2em 0;
-	.section-title {
-		cursor: pointer;
-
-		&:after {
-			content: " \25bc";
-			font-size: 0.6em;
-			line-height: 0.6em;
-			vertical-align: middle;
-		}
-
-	}
-
-	&.is-minimized .section-title:after {
-		content: " \25b6";
-		font-size: 0.9em;
-	}
-
-}
-
 .image-container {
 	background-size: cover;
 	background-position: 50% 50%;
@@ -458,6 +437,7 @@ a {
 }
 
 .section-holder {
+	margin: 2em 0;
 
 	.section-title{
 		.selector-holder{

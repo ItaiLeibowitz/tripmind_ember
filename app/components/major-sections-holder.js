@@ -33,6 +33,14 @@ export default Ember.Component.extend({
 				{name: "Category", value: 'category', isSelected: false},
 				{name: "Date visited", value: 'date', isSelected: false, sortOnly: true},
 				{name: "Name", value: 'name', isSelected: false, sortOnly: true}
+			],
+			filterOptions = [
+				{name: "Museums", value: 'museum', isSelected: true},
+				{name: "Nature", value: 'nature', isSelected: true},
+				{name: "Art", value: 'art', isSelected: true},
+				{name: "History", value: 'history', isSelected: true},
+				{name: "Restaurants", value: 'restaurant', isSelected: true, hasLineBefore: true},
+				{name: "Hotels", value: 'lodging', isSelected: true, hasLineBefore: true}
 			];
 		majorSortOptions = Ember.ArrayProxy.create({content: majorSortOptions.map(function(el){
 			return Ember.Object.create(el);
@@ -40,8 +48,14 @@ export default Ember.Component.extend({
 		subSortOptions = Ember.ArrayProxy.create({content: subSortOptions.map(function(el){
 			return Ember.Object.create(el);
 		})});
-		this.set('majorSortOptions', majorSortOptions);
-		this.set('subSortOptions', subSortOptions);
+		filterOptions = Ember.ArrayProxy.create({content: filterOptions.map(function(el){
+			return Ember.Object.create(el);
+		})});
+		this.setProperties({
+			majorSortOptions: majorSortOptions,
+			subSortOptions: subSortOptions,
+			filterOptions: filterOptions
+		});
 	},
 
 
@@ -89,7 +103,7 @@ export default Ember.Component.extend({
 				sectionsObject[firstLetter].items.pushObject(item);
 			});
 			var orderedKeys = Object.keys(sectionsObject).sort();
-		} else if (sectionType == 'geo-auto') {
+		} else if (sectionType.slice(0,3) == 'geo') {
 
 
 			//--- Sort by geo
@@ -186,11 +200,21 @@ export default Ember.Component.extend({
 
 				}
 			});
-			// now sort the ordered keys based on the count of items in the node in reverse order
-			orderedKeys.sort(function(a,b){
-				if (treeObject[a].count == treeObject[b].count) return 0;
-				return treeObject[a].count > treeObject[b].count ? -1 : 1;
-			})
+			// now sort the ordered keys based on the count of items in the node in reverse order, or in A-Z order:
+			if (sectionType == 'geo-auto') {
+
+				orderedKeys.sort(function (a, b) {
+					if (treeObject[a].count == treeObject[b].count) return 0;
+					return treeObject[a].count > treeObject[b].count ? -1 : 1;
+				})
+
+			} else {
+				orderedKeys.sort(function (a, b) {
+					if (treeObject[a].name == treeObject[b].name) return 0;
+					return treeObject[a].name > treeObject[b].name ? 1 : -1;
+				})			}
+
+
 		} else if (sectionType == 'item') {
 			//------ sort for item pages
 
@@ -241,6 +265,8 @@ export default Ember.Component.extend({
 
 		} else if (sectionType == 'category') {
 
+
+
 			// Organize items into sections
 			items.forEach(function(item){
 				var itemType = item.get('itemType').replace(/_/g," ").capitalize();
@@ -254,6 +280,9 @@ export default Ember.Component.extend({
 			});
 			var orderedKeys = Object.keys(sectionsObject).sort();
 		}
+
+
+
 
 		// Order sectionsObject into an array according to the sorted keys
 		orderedKeys.forEach(function(key){
@@ -297,6 +326,10 @@ export default Ember.Component.extend({
 		updateSortOptions: function () {
 			this.notifyPropertyChange('majorSortOptions');
 			this.notifyPropertyChange('subSortOptions');
+			Ember.run.scheduleOnce('sync', this, 'updateSections');
+		},
+		updateFilter: function(){
+			this.notifyPropertyChange('filterOptions');
 			Ember.run.scheduleOnce('sync', this, 'updateSections');
 		},
 		scrollToSection: function(destination){
