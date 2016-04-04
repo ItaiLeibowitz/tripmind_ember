@@ -1,3 +1,4 @@
+<div class="flex-container">
 <div class="scroll-menu">
 	{{#if majorSections}}
 		<div class="scroll-link" {{action 'scrollToSection' 'top'}}>Top</div>
@@ -30,4 +31,6 @@
 	{{#each majorSections as |majorSection|}}
 		{{major-section model=majorSection}}
 	{{/each}}
+</div>
+
 </div>

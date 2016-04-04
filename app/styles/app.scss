@@ -67,6 +67,10 @@ a {
 	cursor: pointer;
 }
 
+.flex-container{
+	display: flex;
+}
+
 .flex-vert-align{
 	display: flex;
 	align-items: center;
@@ -487,6 +491,7 @@ a {
 	width: 10em;
 	line-height: 2em;
 	position: fixed;
+	flex-grow: 0;
 
 	.scroll-link {
 		cursor: pointer;
@@ -500,6 +505,7 @@ a {
 	border-left: 1px solid #ccc;
 	padding-left: 1em;
 	position: relative;
+	flex-grow: 1;
 
 	&.no-margin{
 		margin: 0;
@@ -603,6 +609,7 @@ a {
 	border-bottom: 1px solid #777;
 	line-height: 2em;
 	padding-left: 1em;
+	box-sizing: border-box;
 	width: 100%;
 	margin: 1em 0;
 	font-weight: bold;
