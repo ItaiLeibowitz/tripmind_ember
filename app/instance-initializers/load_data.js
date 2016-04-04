@@ -86,52 +86,18 @@ var addlData = {data: [
 		type: 'collection',
 		attributes:{
 			name: "itai's collection"
+		},
+		relationships: {
+			items: {
+				data: [
+					{ type: 'item', id: "ChIJD3uTd9hx5kcR1IQvGfr8dbk" },
+					{ type: 'item', id: "ChIJdbbQwbZx5kcRs7Qu5nPw18g" }
+				]
+			}
 		}
 	},
 	{
 		id: 2,
-		type: 'collection',
-		attributes:{
-			name: "itai's other collection"
-		}
-	},
-	{
-		id: 3,
-		type: 'collection',
-		attributes:{
-			name: "itai's collection"
-		}
-	},
-	{
-		id: 5,
-		type: 'collection',
-		attributes:{
-			name: "itai's other collection"
-		}
-	},
-	{
-		id: 6,
-		type: 'collection',
-		attributes:{
-			name: "itai's collection"
-		}
-	},
-	{
-		id: 7,
-		type: 'collection',
-		attributes:{
-			name: "itai's other collection"
-		}
-	},
-	{
-		id: 8,
-		type: 'collection',
-		attributes:{
-			name: "itai's collection"
-		}
-	},
-	{
-		id: 9,
 		type: 'collection',
 		attributes:{
 			name: "itai's other collection"

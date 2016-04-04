@@ -12,10 +12,12 @@
 		<div class="toggle-btn">Options</div>
 		<div class="menu-body two-column">
 			<div class="menu-column">
-				<div class="menu-section">
-					<div class="menu-section-title">Sort by:</div>
-					{{select-one options=majorSortOptions onChange=(action 'updateSortOptions')}}
-				</div>
+				{{#unless majorSectionType}}
+					<div class="menu-section">
+						<div class="menu-section-title">Sort by:</div>
+						{{select-one options=majorSortOptions onChange=(action 'updateSortOptions')}}
+					</div>
+				{{/unless}}
 				<div class="menu-section">
 					<div class="menu-section-title">Sort subsections by:</div>
 					{{select-one options=subSortOptions onChange=(action 'updateSortOptions')}}

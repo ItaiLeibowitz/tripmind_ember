@@ -1,4 +1,7 @@
 {{#each model as |collection|}}
 	{{collection-card model=collection}}
+{{else}}
+	<div>You currently don't have any collections to show.</div>
+	<div>Create a collection by selecting a few places then clicking on the "+" button to add them to a new collection.</div>
 {{/each}}
 

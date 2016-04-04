@@ -7,8 +7,8 @@ export default Ember.Component.extend({
 	model: null,
 	filteredItems: Ember.computed.alias('model'),
 	orderedMajorSections: null,
-	majorSectionType: "geo",
-	minorSectionType: "geo",
+	majorSectionType:null,
+	minorSectionType: null,
 
 	majorSort: function(){
 		return this.get('majorSortOptions').findBy('isSelected');
@@ -69,7 +69,7 @@ export default Ember.Component.extend({
 			this.set('majorSections', []);
 			return;
 		}
-		var majorSections = this._sectionItems(items,this.get('majorSort.value'), {countriesOnly: true, threshold: 1, minDepth: 1});
+		var majorSections = this._sectionItems(items,this.get('majorSectionType') || this.get('majorSort.value'), {countriesOnly: true, threshold: 1, minDepth: 1});
 		this._subsectionSections(majorSections, this.get('subSort.value'), {threshold: 3, minDepth: 2, sortOnly: this.get('subSort.sortOnly')});
 		this.set('majorSections', majorSections);
 	},

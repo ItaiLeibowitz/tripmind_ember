@@ -1,5 +1,4 @@
-<div class="title">{{model.name}}</div>
-
+{{input-with-default value=model.name addedClass="collection-title" default="Untitled"}}
 {{#each model.items as |item|}}
 	{{item-card model=item}}
 {{/each}}
