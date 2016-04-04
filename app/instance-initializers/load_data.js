@@ -80,6 +80,65 @@ var places = [
 	}
 ];
 
+var addlData = {data: [
+	{
+		id: 1,
+		type: 'collection',
+		attributes:{
+			name: "itai's collection"
+		}
+	},
+	{
+		id: 2,
+		type: 'collection',
+		attributes:{
+			name: "itai's other collection"
+		}
+	},
+	{
+		id: 3,
+		type: 'collection',
+		attributes:{
+			name: "itai's collection"
+		}
+	},
+	{
+		id: 5,
+		type: 'collection',
+		attributes:{
+			name: "itai's other collection"
+		}
+	},
+	{
+		id: 6,
+		type: 'collection',
+		attributes:{
+			name: "itai's collection"
+		}
+	},
+	{
+		id: 7,
+		type: 'collection',
+		attributes:{
+			name: "itai's other collection"
+		}
+	},
+	{
+		id: 8,
+		type: 'collection',
+		attributes:{
+			name: "itai's collection"
+		}
+	},
+	{
+		id: 9,
+		type: 'collection',
+		attributes:{
+			name: "itai's other collection"
+		}
+	}
+]};
+
 
 var formatPlace = function(place){
 	if (place.ancestryNames && place.ancestryNames.length > 0){
@@ -104,13 +163,13 @@ export function initialize(applicationInstance) {
 		var formattedData = Object.keys(trackedPlaces)
 			.map(function(key){ return trackedPlaces[key].item})
 			.map(function (place) {	return formatPlace(place)});
-		store.push({data: formattedData})
 	} else {
+		store.push(addlData);
 		var formattedData = places.map(function (place) {
 			return formatPlace(place)
 		});
 	}
-	store.push({data: formattedData})
+	store.push({data: formattedData});
 };
 
 

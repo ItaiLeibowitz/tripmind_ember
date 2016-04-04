@@ -1,3 +1,41 @@
+@import "ember-modal-dialog/ember-modal-structure";
+
+
+@mixin box-shadow($args...) {
+	-webkit-box-shadow: $args;
+	-moz-box-shadow: $args;
+	box-shadow: $args;
+}
+
+@mixin box-sizing($args...) {
+	-webkit-box-sizing: $args;
+	-moz-box-sizing: $args;
+	box-sizing: $args;
+}
+
+@mixin transition($args...) {
+	-webkit-transition: $args;
+	-moz-transition: $args;
+	-ms-transition: $args;
+	-o-transition: $args;
+	transition: $args;
+}
+
+@mixin transform($args...) {
+	-webkit-transform: $args;
+	-moz-transform: $args;
+	-ms-transform: $args;
+	transform: $args;
+}
+
+@mixin transform-origin($args...) {
+	-webkit-transform-origin: $args;
+	-moz-transform-origin: $args;
+	-ms-transform-origin: $args;
+	transform-origin: $args;
+}
+
+
 
 $black-1qtrans: rgba(0,0,0,0.25);
 $black-semitrans: rgba(0,0,0,0.5);
@@ -14,12 +52,21 @@ body {
 	margin: 0;
 	background: #efefef;
 	font-size: 100%;
+
+	&.modal-open{
+		overflow: hidden;
+	}
 }
 
 a {
 	color: inherit;
 	text-decoration: none;
 }
+
+[data-ember-action]:not(:disabled) {
+	cursor: pointer;
+}
+
 
 #left-menu {
 	position: fixed;
@@ -552,7 +599,63 @@ a {
 
 }
 
+.ember-modal-overlay.translucent {
+	background-color: rgba(#808080, .77);
+}
 
+
+
+.ember-modal-dialog{
+	border-radius: 3px;
+	background-color: #fff;
+	box-shadow: 0 1px 1px rgba(0,0,0,0.25);
+	-webkit-animation: modal-appear 0.2s ease-in-out;
+	-moz-animation: modal-appear 0.2s ease-in-out;
+	-o-animation: modal-appear 0.2s ease-in-out;
+	animation: modal-appear 0.2s ease-in-out;
+	margin: auto;
+	left: 0;
+	right: 0;
+	width: 80%;
+	top: 10em;
+}
+
+@-webkit-keyframes modal-appear{
+	0.00% {-webkit-transform: scale3d(0,0,0);}
+	100%{-webkit-transform: scale3d(1,1,1);}
+}
+
+@keyframes modal-appear{
+	0.00% {transform: scale3d(0,0,0);}
+	100%{transform: scale3d(1,1,1);}
+}
+
+.modal-close.close-btn{
+	position: absolute;
+	right: 1em;
+	top: 1em;
+}
+
+.modal-title{
+	font-weight: bold;
+	padding: 1em;
+	border-bottom: 1px solid #E74C3C;
+}
+.modal-content{
+	padding: 1em;
+	max-height: 22em;
+	overflow: auto;
+}
+
+
+.collection-option {
+	line-height: 3em;
+	color: #777;
+
+	&:hover{
+		color: #333;
+	}
+}
 
 @font-face {
 	font-family: "wanderant";

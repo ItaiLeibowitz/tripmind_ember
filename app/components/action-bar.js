@@ -9,7 +9,13 @@ export default Ember.Component.extend({
 
 	actions: {
 		clearSelection: function(){
-			this.get('service.selectedIds').clear();
+			this.get('service').clearSelected();
+		},
+		addSelected: function(){
+			this.send('openTopModal', 'addToCollection', this.get('service'))
+		},
+		openTopModal: function(modalName, model){
+			this.get('openModalAction')(modalName, model)
 		}
 	}
 

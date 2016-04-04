@@ -8,6 +8,10 @@ export default Ember.Service.extend({
 		this.set('selectedIds', Ember.ArrayProxy.create({content: []}));
 	},
 
+	clearSelected: function(){
+		this.get('selectedIds').clear();
+	},
+
 	numOfSelected: function(){
 		return this.get('selectedIds.length');
 	}.property('selectedIds.[]'),

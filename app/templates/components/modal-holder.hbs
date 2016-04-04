@@ -1,0 +1,9 @@
+<div class="top-modal fade" style="display:block;">
+	<div class="modal-dialog fade {{if isExpanded:is-expanded}}">
+		<div class="modal-content">
+			<div class="close-btn" {{action 'closeTopModal'}}>&#x2715;</div>
+			{{yield}}
+		</div>
+	</div>
+</div>
+<div class="modal-backdrop fade in"></div>

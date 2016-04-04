@@ -1,0 +1,6 @@
+<div class="modal-title">Add to Collection</div>
+<div class="modal-content">
+	{{#each collections as |collection|}}
+		<div class="collection-option" {{action 'chooseCollection' collection}}>{{collection.name}}</div>
+	{{/each}}
+</div>

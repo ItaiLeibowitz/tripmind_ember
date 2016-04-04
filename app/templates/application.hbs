@@ -4,15 +4,24 @@
 	<a class="menu-link recent">Recent</a>
 	<a class="menu-link starred">Starred</a>
 	{{#link-to "index" class="menu-link"}}Places{{/link-to}}
-	<a class="menu-link collections">Collections</a>
+	{{#link-to "collections" class="menu-link"}}Collections{{/link-to}}
 	<div class="menu-line"></div>
 	<a class="menu-link shared-collections">Shared collections</a>
 	<a class="menu-link trash">Trash</a>
 	<div class="menu-line"></div>
 	<a class="menu-link trash">Settings</a>
 </div>
-{{action-bar}}
+{{action-bar openModalAction=(action 'openTopModal' target=displayService)}}
 {{action-bar-placeholder}}
 <div id="rhs-container">
 	{{outlet}}
 </div>
+
+{{#if displayService.modalIsOpen}}
+	{{#modal-dialog close="toggleModal"
+	targetAttachment="none"
+	translucentOverlay=true}}
+		<div class="close-btn modal-close" {{action 'toggleModal'}}>&#x2715;</div>
+		{{component displayService.modalComponentName model=displayService.model closeAction=(action 'toggleModal')}}
+	{{/modal-dialog}}
+{{/if}}
