@@ -6,4 +6,9 @@ import Utils from 'tripmind/appconfig/utils';
 export default DS.Model.extend({
 	name: DS.attr('string'),
 	items: DS.hasMany('item'),
+
+	slug: function(){
+		return `${this.get('id')}-${this.get('name')}`;
+	}.property('id','name'),
+
 });
