@@ -1,0 +1,5 @@
+<div class="sentence">{{feedbackSentence}} {{#link-to feedbackLinkRoute feedbackLinkTarget}}{{feedbackLinkModel.name}}{{/link-to}}</div>
+{{#if feedbackActionName}}
+	<div class="button" {{action 'callAction'}}>{{feedbackActionName}}</div>
+{{/if}}
+<div class="dismiss" {{action 'dismiss'}}>✕</div>

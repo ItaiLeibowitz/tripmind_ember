@@ -720,6 +720,61 @@ a {
 
 }
 
+
+.feedback {
+	position: fixed;
+	bottom: -500px;
+	z-index: 20000;
+	background: yellow;
+	max-width: 40em;
+	left:0;
+	right: 0;
+	margin: auto;
+	min-height: 3em;
+	font-size: 0.8em;
+	@include transition(transform .5s);
+	-webkit-transition: -webkit-transform .5s;
+	box-shadow: 0 2px 2px rgba(0,0,0,0.35);
+
+	.sentence{
+		margin: 1em;
+		margin-right: 4em;
+
+
+		a{
+			font-weight: 700;
+		}
+	}
+	.button{
+		margin: 1em;
+		text-transform: uppercase;
+		font-weight: 700;
+	}
+	.dismiss{
+		position: absolute;
+		right: 0;
+		top: 0;
+		background: rgba(0, 0, 0, 0.5);
+		padding: 0 1em;
+		height: 100%;
+		line-height: 3.2em;
+		color: white;
+	}
+
+	&.success{
+		background: #8cdd7f;
+	}
+
+	&.failure{
+		background: #c66167;
+		color: white;
+	}
+
+	&.is-showing{
+		@include transform(translate3d(0, -510px,0));
+	}
+}
+
 @font-face {
 	font-family: "wanderant";
 	src: url(/assets/fonts/wanderant.eot);

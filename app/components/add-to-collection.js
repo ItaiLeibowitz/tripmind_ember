@@ -4,6 +4,7 @@ export default Ember.Component.extend({
 	collections: null,
 	store: Ember.inject.service('store'),
 	actionService: Ember.inject.service('action-service'),
+	feedbackService: Ember.inject.service('feedback-service'),
 
 	init: function(){
 		var self = this;
@@ -30,6 +31,16 @@ export default Ember.Component.extend({
 				collection.set('updatedAt',currentTime);
 				self.get('actionService').clearSelected();
 				self.get('closeAction')();
+				self.get('feedbackService').setProperties({
+					isShowing: true,
+					feedbackSentence: "Selection has been added to the collection:",
+					feedbackLinkRoute: 'collection',
+					feedbackLinkTarget: collection.get('slug'),
+					feedbackLinkModel: collection,
+					feedbackActionName: null,
+					feedbackAddedClass: 'success',
+					feedbackDuration: 3000
+				});
 			})
 		}
 	}
