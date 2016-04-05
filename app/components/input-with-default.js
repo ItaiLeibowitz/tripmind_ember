@@ -10,5 +10,10 @@ export default Ember.Component.extend({
 			this.set('value', value || this.get('default'));
 			return value;
 		}
-	})
+	}),
+	focusOut: function(){
+		var modelToSave = this.get('saveOnExit');
+		if (modelToSave) modelToSave.save();
+		console.log('focused out!')
+	}
 });

@@ -1,4 +1,4 @@
-{{input-with-default value=model.name addedClass="collection-title" default="Untitled"}}
+{{input-with-default value=model.name addedClass="collection-title" default="Untitled" saveOnExit=model}}
 {{#each model.items as |item|}}
 	{{item-card model=item}}
 {{/each}}

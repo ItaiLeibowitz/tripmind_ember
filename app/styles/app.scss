@@ -445,7 +445,8 @@ a {
 
 .collection-title{
 	font-size: 2em;
-	margin: .5em 0 1em.25em;
+	margin:0.25em auto 1em auto;
+	width: 100%;
 	display: block;
 	background: none;
 	border: none;
@@ -484,8 +485,18 @@ a {
 	margin-right: 1em;
 
 	.long-desc {
-		line-height: 1.5em;
 		margin: 1em 0;
+		-webkit-appearance: none;
+		font: inherit;
+		resize: initial;
+		background: none;
+		outline: none;
+		border-color: transparent;
+		white-space: normal;
+		line-height: 1.5em;
+		&:hover, &:focus{
+			border-color: #ccc;
+		}
 	}
 }
 
