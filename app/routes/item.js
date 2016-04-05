@@ -19,7 +19,7 @@ export default Ember.Route.extend({
 			.then(function (result) {
 			   	return store.findAll('item').then(function(items){
 					var descendants = items.filter(function(i){
-						return i.get('ancestry') && i.get('ancestry').indexOf(result.item.get('path')) == 0;
+						return i.get('trackingStatus') && i.get('ancestry') && i.get('ancestry').indexOf(result.item.get('path')) == 0;
 					});
 					return Ember.Object.create($.extend(result, {descendants: descendants}))
 				})

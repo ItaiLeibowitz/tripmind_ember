@@ -14,7 +14,6 @@ export default Ember.Component.extend({
 
 	actions: {
 		    toggleSelected: function(){
-				console.log('toggle!')
 				if (this.get('isSelected')) {
 					this.get('actionService.selectedIds').removeObject(this.get('model.id'));
 				} else {

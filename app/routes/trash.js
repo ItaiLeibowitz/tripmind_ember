@@ -8,12 +8,13 @@ export default Ember.Route.extend({
 		return store.findAll('item')
 			.then(function (results) {
 				return results.filter(function (item) {
-					return item.get('trackingStatus');
+					return !item.get('trackingStatus');
 				});
 			});
 	},
+	templateName: 'index',
 	setupController: function(controller,model){
 		this._super(controller, model);
-		controller.set('prefilterAttribute','trackingStatus');
+		controller.set('prefilterAttribute','trackingStatus-not');
 	}
 });

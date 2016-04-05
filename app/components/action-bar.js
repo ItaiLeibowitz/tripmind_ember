@@ -14,6 +14,9 @@ export default Ember.Component.extend({
 		addSelected: function(){
 			this.send('openTopModal', 'addToCollection', this.get('service'))
 		},
+		trashSelected: function(){
+			this.get('service').trashSelected();
+		},
 		openTopModal: function(modalName, model){
 			this.get('openModalAction')(modalName, model)
 		}

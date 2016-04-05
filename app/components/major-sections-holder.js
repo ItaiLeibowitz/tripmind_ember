@@ -5,10 +5,30 @@ export default Ember.Component.extend({
 	classNames: ['major-sections-holder'],
 	classNameBindings: [],
 	model: null,
-	filteredItems: Ember.computed.alias('model'),
+	filteredItems: null,
 	orderedMajorSections: null,
 	majorSectionType:null,
 	minorSectionType: null,
+
+	filterItems: function(items, attribute){
+		if (!attribute) return this.get('model');
+		var [filterAttribute, not] = attribute.split("-");
+		not = (not == 'not');
+		return  items.filter(function(item){
+			return not ? !item.get(filterAttribute) : item.get(filterAttribute);
+		})
+	},
+
+	shouldRefilterItems: function(){
+		Ember.run.scheduleOnce('sync', this, 'refilterItems');
+	}.observes('model.@each.trackingStatus').on('init'),
+
+	refilterItems: function(){
+		var initialItems = this.get('model'),
+			prefilterAttribute = this.get('prefilterAttribute');
+		this.set('filteredItems', this.filterItems(initialItems, prefilterAttribute));
+	},
+
 
 	majorSort: function(){
 		return this.get('majorSortOptions').findBy('isSelected');

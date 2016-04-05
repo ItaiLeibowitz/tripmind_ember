@@ -16,6 +16,20 @@ var places = [
 	{
 		ancestryNames: "France/Paris",
 		ancestry: "ChIJMVd4MymgVA0R99lHx5Y__Ws/ChIJD7fiBh9u5kcRYJSMaMOCCwQ",
+		address: "Montmartre hill, Paris, France",
+		longDesc: "The Basilica of the Sacred Heart of Paris, commonly known as Sacré-Cœur Basilica and often simply Sacré-Cœur, is a Roman Catholic church and minor basilica, dedicated to the Sacred Heart of Jesus, in Paris, France. ",
+		image: "https://lh5.googleusercontent.com/-Bjqfs1z6bJ0/VG8NbQBV5jI/AAAAAAAAAA8/NxjyxM37UAQ/w3000-k/",
+		lat: "48.7606111",
+		lng: "2.437644",
+		name: "Sacre Coeur",
+		place_id: "ChIJ442GNENu5kcRGYUrvgqHw88",
+		oneliner: "Church in Paris, France",
+		itemType: "place of worship",
+		trackingStatus: false
+	},
+	{
+		ancestryNames: "France/Paris",
+		ancestry: "ChIJMVd4MymgVA0R99lHx5Y__Ws/ChIJD7fiBh9u5kcRYJSMaMOCCwQ",
 		address: "1 Avenue du Colonel Henri Rol-Tanguy, 75014 Paris, France",
 		longDesc: "The Catacombs of Paris are underground ossuaries in Paris, France which hold the remains of about six million people in a small part of the ancient Mines of Paris tunnel network. Wikipedia",
 		image: "https://lh5.googleusercontent.com/-VpLjFFT9_O8/VAiPrcdVQ9I/AAAAAAAAF4E/o-FmhWyOtJ8/w3000-k/",

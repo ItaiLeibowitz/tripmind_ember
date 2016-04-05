@@ -449,9 +449,13 @@ a {
 	display: block;
 	background: none;
 	border: none;
+	border-bottom: 1px solid transparent;
 	outline: none;
 	&:focus{
-		border-bottom: 1px solid #E74C3C;
+		border-bottom-color: #E74C3C;
+	}
+	&:hover{
+		border-bottom-color: #ccc;
 	}
 }
 
