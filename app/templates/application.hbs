@@ -1,21 +1,13 @@
-<div id="left-menu">
-	{{#link-to "index" id="top-logo"}}<b>Trip</b>Mind{{/link-to}}
-	<a class="menu-link search">Search</a>
-	<a class="menu-link recent">Recent</a>
-	<a class="menu-link starred">Starred</a>
-	{{#link-to "index" class="menu-link"}}Places{{/link-to}}
-	{{#link-to "collections" class="menu-link"}}Collections{{/link-to}}
-	<div class="menu-line"></div>
-	<a class="menu-link shared-collections">Shared collections</a>
-	{{#link-to "trash" class="menu-link"}}Trash{{/link-to}}
-	<div class="menu-line"></div>
-	<a class="menu-link trash">Settings</a>
-</div>
+{{left-menu}}
+
 {{action-bar openModalAction=(action 'openTopModal' target=displayService)}}
 {{action-bar-placeholder}}
+
+
 <div id="rhs-container">
 	{{outlet}}
 </div>
+
 
 {{#if displayService.modalIsOpen}}
 	{{#modal-dialog close="toggleModal"
@@ -26,4 +18,9 @@
 	{{/modal-dialog}}
 {{/if}}
 
+
 {{feed-back}}
+
+
+<div id="original-map-placeholder">{{google-map}}</div>
+

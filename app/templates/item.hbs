@@ -7,7 +7,7 @@
 <div class="top-content">
 		<div class="rhs">
 			<div class="image-container main-image" style={{model.photoStyle}}></div>
-			<div class="main-map-link"></div>
+			{{map-placeholder model=model}}
 		</div>
 		<div class="lhs">
 			<div class="top-section-title">Description:</div>
@@ -36,5 +36,5 @@
 
 
 {{# if descendants}}
-	{{major-sections-holder model=descendants majorSectionType='item'}}
+	{{major-sections-holder model=descendants majorSectionType='item' prefilterAttribute='trackingStatus'}}
 {{/if}}

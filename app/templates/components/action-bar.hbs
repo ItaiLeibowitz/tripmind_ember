@@ -1,7 +1,13 @@
 <div class="cancel-btn" {{action 'clearSelection'}}>✕</div>
 <div class="num-selected">{{service.numOfSelected}} Selected</div>
 <div class="action-buttons">
-	<div class="action-btn icon-share"></div>
-	<div class="action-btn icon-plus" {{action 'openTopModal' 'addToCollection'}}></div>
-	<div class="action-btn icon-trash" {{action 'trashSelected'}}></div>
+	<div class="action-btn icon-share has-tooltip tooltip-below">
+		<div class="tooltip">Share</div>
+	</div>
+	<div class="action-btn icon-plus has-tooltip tooltip-below" {{action 'openTopModal' 'addToCollection'}}>
+		<div class="tooltip">Add to collection</div>
+	</div>
+	<div class="action-btn icon-trash has-tooltip tooltip-below" {{action 'trashSelected'}}>
+		<div class="tooltip">Delete (stop tracking)</div>
+	</div>
 </div>

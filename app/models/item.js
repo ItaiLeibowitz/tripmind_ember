@@ -104,8 +104,8 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 	}.property('externalLinks'),
 
 	mapLink: function(){
-		return `http://maps.google.com/maps?daddr=${this.get('latitude')},${this.get('longitude')}&amp;ll=`;
-	}.property('latitude', 'longitude'),
+		return `http://maps.google.com/maps?daddr=${this.get('lat')},${this.get('lng')}&amp;ll=`;
+	}.property('lat', 'lng'),
 
 	phoneLink: function(){
 			return `tel:${this.get('phone')}`;

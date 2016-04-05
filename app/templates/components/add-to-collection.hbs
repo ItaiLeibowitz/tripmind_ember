@@ -1,7 +1,13 @@
 <div class="modal-title">Add to Collection</div>
 <div class="modal-content">
-	<div class="collection-option" {{action 'chooseCollection'}}>New Collection</div>
+	<div class="collection-option new" {{action 'chooseCollection'}}>
+		<div class="image-container"></div>
+		<div class="name">New Collection</div>
+	</div>
 	{{#each collections as |collection|}}
-		<div class="collection-option" {{action 'chooseCollection' collection}}>{{collection.name}}</div>
+		<div class="collection-option" {{action 'chooseCollection' collection}}>
+			<div class="image-container" style={{collection.items.firstObject.photoStyle}}></div>
+			<div class="name">{{collection.name}}</div>
+		</div>
 	{{/each}}
 </div>
