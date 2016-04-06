@@ -128,6 +128,22 @@ var Constants = Ember.Object.create({
 		sublocality_level_1: 'sublocality',
 		establishment: 'attraction'
 	},
+	allowedLocationTypes: [
+		"country",
+		"locality",
+		"administrative_area_level_1",
+		"administrative_area_level_2",
+		"administrative_area_level_3",
+		"administrative_area_level_4",
+		"administrative_area_level_5",
+		"colloquial_area",
+		"sublocality"
+	],
+	allowedLocationTypesLimited: [
+		"country",
+		"locality",
+		"administrative_area_level_1"
+	],
 	GOOGLE_PLACE_DESTINATION_TYPES: ["country",
 		"locality",
 		"administrative_area_level_1",

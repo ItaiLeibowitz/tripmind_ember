@@ -73,6 +73,7 @@ $gray-reg: #5c6a73;
 $gray-dark: #333;
 
 
+
 $black-1qtrans: rgba(0,0,0,0.25);
 $black-semitrans: rgba(0,0,0,0.5);
 $black-3qtrans: rgba(0,0,0,0.75);
@@ -425,6 +426,68 @@ a {
 	padding: 1em;
 	background: #efefef;
 }
+
+
+
+.search-field-wrapper {
+	position: fixed;
+	top: 0;
+	left: 15em;
+	right: 0;
+	margin: 0;
+	z-index: 997;
+}
+
+
+
+.search-field {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	max-width: 35em;
+	right: 0;
+	left: 0;
+	margin: 0 auto;
+	padding: 1em 3em 1em 3em;
+	@include box-shadow(0 1px 1px $black-3qtrans);
+	border: none;
+	font-size: 1em;
+	@include box-sizing(border-box);
+	outline: none;
+}
+
+
+.clear-search {
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 998;
+	line-height: 3em;
+	width: 3em;
+	font-size: 1em;
+	text-align: center;
+}
+
+.ui-autocomplete{
+	line-height: 1.5em;
+	color: $gray-dark;
+	border: none;
+	max-width: 35em;
+}
+
+.ui-menu .ui-menu-item {
+	margin: 1em
+}
+
+.ui-widget-content .ui-state-focus {
+	background: $red-flat-light;
+	color: white;
+	border: none;
+	border-radius: 5px;
+}
+
+
+
 
 .options-menu{
 	.toggle-btn{

@@ -10,6 +10,7 @@ Router.map(function() {
 	});
 	this.route('trash');
 	this.route('collections');
+	this.route('search');
 	this.route('collection', { resetNamespace: true, path: '/collections/:collection_slug' }, function () {
 	});
 });

@@ -8,6 +8,10 @@ export default Ember.Component.extend({
 		Ember.run.scheduleOnce('afterRender', this, 'attachMap');
 	},
 
+	willDestroyElement: function(){
+		this.detachMap();
+	},
+
 	modelDidChange: function(){
 		Ember.run.scheduleOnce('afterRender', this, 'attachMap');
 	}.observes('model').on('init'),
@@ -24,5 +28,16 @@ export default Ember.Component.extend({
 		});
 		mapService.set('centerMarkerModel', this.get('model'));
 	},
+
+	detachMap: function(){
+		var mapService = this.get('mapService'),
+			container = $('#original-map-placeholder');
+			mapService.moveDomToElement(container);
+		mapService.setProperties({
+			draggable: true,
+			disableDefaultUI: false,
+			bounds: this.get('boundsForMap')
+		});
+	}
 
 });
