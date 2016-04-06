@@ -4,3 +4,9 @@
 		<div class="clear-search" {{action 'clearSearch'}}>✕</div>
 	</div>
 </div>
+{{#if results}}
+	<div class="search-field-spacer"></div>
+	{{#each results as |item|}}
+		{{temp-item-card model=item}}
+	{{/each}}
+{{/if}}

@@ -20,25 +20,49 @@ export default Ember.Service.extend(GoogleItemSerializer, {
 		});
 	},
 
+	googleTextQuery: function(query, location) {
+		var self = this;
+		if (undefined === location) {
+			var request = {query: query};
+		} else {
+			var request = {query: query, location: location, radius: 1000};
+		}
+		//ga('send', 'event', 'search', 'googleTextQuery', query);
+
+		return new Ember.RSVP.Promise(function (resolve, reject) {
+			self.get('googlePlaces.service').textSearch(request, function (results, status) {
+				if (status == google.maps.places.PlacesServiceStatus.OK) {
+					Ember.run(null, resolve, results);
+				} else {
+					Ember.run(null, reject, status);
+				}
+			})
+		});
+	},
+
 
 	executeQuery: function (query) {
-		var self = this;
-		return self._loadWanderantItems(query).then(function (wanderantItems) {
-			return self._getGoogleItems(query).then(function (googleItems) {
-
-				var allItems = Ember.ArrayProxy.create({ content: [] });
-
-				allItems.addObjects(wanderantItems);
-				allItems.addObjects(googleItems);
-
-				if (typeof("".distance) == "function") {
-					return allItems.toArray().sort(function (a, b) {
-						return self.searchRank(b, query, wanderantItems, googleItems) - self.searchRank(a, query, wanderantItems, googleItems);
-					});
+		var self = this,
+			store = this.get('store'),
+			itemDetailsService = this.get('itemDetailsService');
+		return self.googleTextQuery(query).then(function (results) {
+			var existingItems = [],
+				itemsToBuild = [];
+			for (var i = 0; i < results.length; i++) {
+				var result = results[i];
+				var itemRecord = store.peekRecord('item', result.place_id)
+				if (itemRecord) {
+					existingItems.push(itemRecord);
 				} else {
-					return allItems.toArray();
+					itemsToBuild.push({
+						id: result.place_id,
+						type: 'item',
+						attributes: itemDetailsService.buildItemInfoFromResults({isTemporary: true}, result)
+					})
 				}
-			});
+			}
+			var newItems = store.push({data:itemsToBuild});
+			return existingItems.concat(newItems);
 		});
 	},
 

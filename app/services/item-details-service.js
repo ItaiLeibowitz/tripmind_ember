@@ -168,6 +168,7 @@ export default Ember.Service.extend({
 		item.address = result.formatted_address;
 		item.rating = result.rating;
 		if (!item.name) item.name = result.name;
+		if (!item.id) item.id = result.place_id;
 		return item
 	}
 

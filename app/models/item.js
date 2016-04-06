@@ -59,6 +59,10 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 	trackingStatus: DS.attr('boolean', {defaultValue: true}),
 	trippointsCount: DS.attr('number'),
 	destinationRoute: 'item.overview',
+	isTemporary: DS.attr('boolean', {defaultValue: false}),
+
+	itemDetailsService:Ember.inject.service('item-details-service'),
+
 
 	imageUrl: Ember.computed.alias('itemImageUrl'),
 	imageStyle: Ember.computed.alias('itemImageStyle'),
@@ -90,6 +94,11 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 		}).compact()
 	}.property('reviewDigest'),
 
+
+	getAdditionalItemInfo: function(){
+		console.log('getting more infor for ', this.get('name'))
+		this.get('itemDetailsService').getAdditionalItemInfo(this.get('id'))
+	},
 
 	isRegion: function(){
 		 return Utils.itemTypeIsRegion(this.get('itemType'));
