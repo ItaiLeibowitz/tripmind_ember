@@ -49,13 +49,14 @@ export default Ember.TextField.extend(Autocomplete, {
 		var self = this;
 		this.$().autocomplete('close');
 		this.$().blur();
-		this.get('targetObject').sendAction('loading');
+		this.get('targetObject.targetObject').send('loading');
 
 		// if user selected a specific place, we immediately look for it in Wanderant's db then google's
 		if (selectedPrediction.place_id) {
 			var searchService = this.get('searchService');
 			searchService.findOrCreateFromPlaceId(selectedPrediction.place_id).then(function(item){
 				self.sendAction('foundItem', 'item', item.get('slug'));
+				self.get('targetObject.targetObject').send('stopLoading');
 			}, function(status){
 				console.log('no results found')
 			});
