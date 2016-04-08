@@ -141,18 +141,6 @@ a {
 	display: none !important;
 }
 
-#original-map-placeholder {
-	z-index: -1;
-	opacity: 0;
-	display: none;
-
-	.map-holder {
-		position: fixed;
-		z-index: -1;
-		height: 100%;
-		width: 100%
-	}
-}
 
 .map-canvas, #actual-map {
 	height:100%;
@@ -388,8 +376,8 @@ a {
 	height: 4em;
 	background: #E74C3C;
 	color: white;
-	left: 15em;
-	right: 0;
+	left: 3em;
+	right: 3em;
 	position: fixed;
 	box-shadow: 0 1px 1px rgba(0,0,0,0.25);
 	transform: translate3d(0,-5em,0);
@@ -422,7 +410,7 @@ a {
 			font-size: 1.5em;
 			width: 2em;
 			text-align: center;
-			line-height: 3em;
+			line-height: 2.6em;
 			vertical-align: top;
 			cursor: pointer;
 		}
@@ -444,8 +432,50 @@ a {
 
 #rhs-container {
 	border-left: 5em solid transparent;
+	border-right: 0em solid transparent;
 	padding: 1em;
 	background: #efefef;
+}
+
+.map-expand-toggle{
+	@extend .icon-map;
+	@extend .has-tooltip;
+	background: #777;
+	color: white;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+	height: 2.66em;
+	line-height: 2.66em;
+	width: 2em;
+	right: 0;
+	top: 0;
+	position: fixed;
+	text-align: center;
+	font-size: 1.5em;
+	cursor: pointer;
+	z-index: 11;
+
+	&:before{
+		@extend .wa-font;
+	}
+
+	&:hover{
+		opacity: 1;
+	}
+
+	&.is-expanded{
+		@extend .icon-remove;
+		top:0;
+	}
+}
+
+#expanded-map{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 100%;
+	background: red;
+	box-shadow: -1px 0 1px rgba(0, 0, 0, 0.25);
+	width: 1em;
 }
 
 
@@ -521,7 +551,7 @@ a {
 .options-menu{
 	.toggle-btn{
 		display: inline-block;
-		line-height: 3em;
+		line-height: 2em;
 		padding: 0 1em;
 		background: white;
 		box-shadow: 0 1px 1px rgba(0,0,0,0.25);
@@ -535,7 +565,7 @@ a {
 	.menu-body{
 		font-size: 0.9em;
 		position: absolute;
-		top: 3em;
+		top: 2em;
 		right: 0;
 		background: white;
 		box-shadow: 0 1px 1px rgba(0,0,0,0.25);
@@ -590,7 +620,8 @@ a {
 
 .section-options-menu{
 	position: absolute;
-	right: 0;
+	right: 3em;
+	top:1em;
 	z-index: 9;
 }
 
@@ -774,8 +805,8 @@ a {
 
 .collection-title{
 	font-size: 2em;
-	margin:0.25em auto 1em auto;
-	width: 100%;
+	margin:0.25em 0 1em;
+	width: 80%;
 	display: block;
 	background: none;
 	border: none;
@@ -1165,7 +1196,6 @@ a {
 	font-variant: normal !important;
 	text-transform: none !important;
 	speak: none;
-	line-height: 1;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
@@ -1179,7 +1209,6 @@ a {
 	font-variant: normal !important;
 	text-transform: none !important;
 	speak: none;
-	line-height: 1;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }

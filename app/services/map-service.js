@@ -24,6 +24,7 @@ export default Ember.Service.extend({
 	bounds: {swLat: -1, swLng: -1, neLat: 1, neLng: 1},
 	lastHolder: null,
 	googleMapObject: null,
+	isExpanded: true,
 
 	init: function(){
 		this._super();
@@ -123,6 +124,7 @@ export default Ember.Service.extend({
 		$('#actual-map').appendTo(elem);
 		var map = this.get('googleMapObject');
 		google.maps.event.trigger(map, 'resize');
+		this.set('currentElement', elem);
 	},
 
 	changeCenter: function(lat, lng){
@@ -130,33 +132,46 @@ export default Ember.Service.extend({
 			centerLat: lat,
 			centerLng: lng
 		});
+		this.reCenter();
+	},
+
+	reCenter: function(){
 		this.get('googleMapObject').setCenter(this.get('center'));
 	},
+
+	toggleExpanded: function(){
+		if (this.get('isExpanded')){
+			this.minimizeMap();
+		} else {
+			this.expandMap();
+		}
+	},
+
 	expandMap: function(currentElem){
-		this.set('lastHolder', currentElem);
-		this.set('lastItemCardPosition', this.get('currentItem.isOpen'));
+		this.set('isExpanded', true);
 		this.set('lastCurrentItem', this.get('currentItem.item'));
-		this.set('currentItem.isOpen', false);
 		this.set('withAllMarkers', true)
 		$('#actual-map').appendTo('#expanded-map');
-		$('#expanded-map').addClass('is-expanded');
 		this.resizeMap();
+		this.reCenter();
 		this.setProperties({
 			draggable: true,
 			disableDefaultUI: false
 		})
 	},
 	minimizeMap: function(options){
+		this.set('isExpanded', false);
 		var closeAll = options ? options.closeAll : false;
-		if (this.get('lastHolder')) {$('#actual-map').appendTo(this.get('lastHolder'));}
-		this.get('currentItem').setProperties({
-			isOpen: closeAll ? false : this.get('lastItemCardPosition'),
-			item: this.get('lastCurrentItem'),
-			withMap: true,
-			withPhoto: false
-		});
+		if (this.get('minimizedHolder')) {$('#actual-map').appendTo(this.get('minimizedHolder'));}
+//		this.get('currentItem').setProperties({
+//			isOpen: closeAll ? false : this.get('lastItemCardPosition'),
+//			item: this.get('lastCurrentItem'),
+//			withMap: true,
+//			withPhoto: false
+//		});
 		this.set('withAllMarkers', false);
 		this.resizeMap();
+		this.reCenter();
 		$('#expanded-map').removeClass('is-expanded');
 		this.setProperties({
 			draggable: false,
@@ -214,6 +229,6 @@ export default Ember.Service.extend({
 		} else {
 			return false;
 		}
-	},
+	}
 
 });

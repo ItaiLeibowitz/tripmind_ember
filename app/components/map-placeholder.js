@@ -19,20 +19,24 @@ export default Ember.Component.extend({
 	attachMap: function(){
 		var container = this.$(),
 			mapService = this.get('mapService');
-		mapService.moveDomToElement(container);
 		mapService.changeCenter(this.get('model.lat'), this.get('model.lng'));
-		mapService.setProperties({
-			draggable: false,
-			disableDefaultUI: true,
-			bounds: this.get('boundsForMap')
-		});
 		mapService.set('centerMarkerModel', this.get('model'));
+		mapService.set('minimizedHolder', container);
+		if(!mapService.get('isExpanded')) {
+			mapService.moveDomToElement(container);
+			mapService.setProperties({
+				draggable: false,
+				disableDefaultUI: true,
+				bounds: this.get('boundsForMap')
+			});
+		}
 	},
 
 	detachMap: function(){
 		var mapService = this.get('mapService'),
-			container = $('#original-map-placeholder');
+			container = $('#expanded-map');
 			mapService.moveDomToElement(container);
+		mapService.set('minimizedHolder', null);
 		mapService.setProperties({
 			draggable: true,
 			disableDefaultUI: false,
