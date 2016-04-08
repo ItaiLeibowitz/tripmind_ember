@@ -18,48 +18,52 @@ export default Ember.Service.extend({
 				self.get('googlePlaces.service').getDetails({placeId: placeId}, function (result) {
 					//console.log(result);
 					var item = store.peekRecord('item', placeId);
-					if (!item || !result) reject({message: "didn't find the item or its representation in the store"});
-					item.set('phone', result.international_phone_number);
-					if (!item.get('name')) item.set('name', result.name);
-					if (!item.get('lat')){
-						item.set('lat', result.geometry.location.lat());
-						item.set('lng', result.geometry.location.lng());
-					}
-					if (!item.get('image') && result.photos && result.photos[0]){
-						item.set('image', result.photos[0].getUrl({maxWidth: 3000}));
-						//item.set('imageAttribution', result.photos[0].html_attributions[0]);
-					}
-					//TODO: save additional photos
-					//TODO: Save reviews
-					if (result.address_components) {
-						var ancestryNames = self.getAncestryFromAddress(result.address_components, result.name);
-						//console.log('ancestryNames', ancestryNames);
-						// Update the item record with the proper ancestry names
-						item.set('ancestryNames', ancestryNames);
-						// Save an index in the store to easily find this item based on its pathname
-						var pathNames = item.get('pathNames');
-						store.push({data: {id: pathNames,
-							type: 'pathIndex',
-							attributes: {
-								itemId: placeId
-							}}
-						});
-						self.findParentFromAncestry(ancestryNames, item.get('lat'), item.get('lng'), item)
-							.then(function (parent) {
-								if (parent) {
-									item.set('ancestryNames', parent.get('pathNames'));
-									item.set('ancestry', parent.get('path'));
-								}
-								item.save()
-									.then(function (savedItem) {
-										resolve(savedItem);
-									});
-							});
+					if (!item || !result) {
+						reject({message: "didn't find the item or its representation in the store"});
 					} else {
-						item.save()
-							.then(function (savedItem) {
-								resolve(savedItem);
+						item.set('phone', result.international_phone_number);
+						if (!item.get('name')) item.set('name', result.name);
+						if (!item.get('lat')) {
+							item.set('lat', result.geometry.location.lat());
+							item.set('lng', result.geometry.location.lng());
+						}
+						if (!item.get('image') && result.photos && result.photos[0]) {
+							item.set('image', result.photos[0].getUrl({maxWidth: 3000}));
+							//item.set('imageAttribution', result.photos[0].html_attributions[0]);
+						}
+						//TODO: save additional photos
+						//TODO: Save reviews
+						if (result.address_components) {
+							var ancestryNames = self.getAncestryFromAddress(result.address_components, result.name);
+							//console.log('ancestryNames', ancestryNames);
+							// Update the item record with the proper ancestry names
+							item.set('ancestryNames', ancestryNames);
+							// Save an index in the store to easily find this item based on its pathname
+							var pathNames = item.get('pathNames');
+							store.push({data: {id: pathNames,
+								type: 'pathIndex',
+								attributes: {
+									itemId: placeId
+								}}
 							});
+							self.findParentFromAncestry(ancestryNames, item.get('lat'), item.get('lng'), item)
+								.then(function (parent) {
+									if (parent) {
+										item.set('ancestryNames', parent.get('pathNames'));
+										item.set('ancestry', parent.get('path'));
+									}
+									item.save()
+										.then(function (savedItem) {
+											resolve(savedItem);
+										});
+								});
+
+						} else {
+							item.save()
+								.then(function (savedItem) {
+									resolve(savedItem);
+								});
+						}
 					}
 				});
 			}, 1100);

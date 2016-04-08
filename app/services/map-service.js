@@ -130,6 +130,7 @@ export default Ember.Service.extend({
 			centerLat: lat,
 			centerLng: lng
 		});
+		this.get('googleMapObject').setCenter(this.get('center'));
 	},
 	expandMap: function(currentElem){
 		this.set('lastHolder', currentElem);

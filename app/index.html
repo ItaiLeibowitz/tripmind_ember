@@ -22,7 +22,9 @@
     <script src="ember/vendor.js"></script>
     <script src="ember/tripmind.js"></script>
 
-	<div class="map-canvas"></div>
+	<div id="original-map-placeholder">
+		<div id="actual-map" class="map-canvas"></div>
+	</div>
 
 	{{content-for "body-footer"}}
   </body>
