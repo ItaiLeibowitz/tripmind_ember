@@ -1,13 +1,12 @@
-<div id="left-menu">
-	{{#link-to "index" id="top-logo"}}<b>Trip</b>Mind{{/link-to}}
-	{{link-to "Search" "search" class="menu-link"}}
-	<a class="menu-link recent">Recent</a>
-	<a class="menu-link starred">Starred</a>
-	{{link-to "Places" "index" class="menu-link"}}
-	{{link-to "collections" "collections" class="menu-link"}}
-	<div class="menu-line"></div>
-	<a class="menu-link shared-collections">Shared collections</a>
-	{{link-to "Trash" "trash" class="menu-link"}}
-	<div class="menu-line"></div>
-	<a class="menu-link trash">Settings</a>
-</div>
+{{#link-to "index" id="top-logo"}}<b>Trip</b>Mind{{/link-to}}
+{{link-to "Search" "search" class="menu-link icon-search"}}
+<a class="menu-link recent icon-history">Recent</a>
+<a class="menu-link starred icon-star">Starred</a>
+{{link-to "Places" "index" class="menu-link icon-pin"}}
+{{link-to "collections" "collections" class="menu-link icon-collections"}}
+<div class="menu-line"></div>
+<a class="menu-link shared-collections icon-group">Shared collections</a>
+{{link-to "Trash" "trash" class="menu-link icon-trash"}}
+<div class="menu-line"></div>
+<a class="menu-link settings icon-cog">Settings</a>
+

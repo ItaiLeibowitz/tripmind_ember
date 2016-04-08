@@ -326,25 +326,34 @@ a {
 	bottom: 0;
 	background: white;
 	box-shadow: 1px 0 1px rgba(0, 0, 0, 0.25);
-	width: 15em;
+	width: 3em;
+	white-space: nowrap;
+	overflow: hidden;
+	z-index: 5;
+	transition: width 0.2s;
+	&:hover{
+		width: 15em;
+	}
+
 }
 
 #top-logo {
 	width: 100%;
 	line-height: 4em;
 	display: block;
-	padding: 0 0 0 5em;
+	padding: 0 0 0 4em;
 	box-sizing: border-box;
 	color: #E74C3C;
 
 	&:before{
 		background-image: url("/assets/images/128_icon.png");
 		height: 3em;
-		width: 3em;
+		width: 2.5em;
 		position: absolute;
 		background-size: contain;
-		left: 1em;
-		margin: 0.5em;
+		background-repeat: no-repeat;
+		left: .25em;
+		top: .75em;
 		content: "";
 	}
 }
@@ -355,9 +364,17 @@ a {
 	color: #333;
 	font-weight: bold;
 	cursor: pointer;
-	padding: 0 1em;
+	padding: 0 .75em;
 	&.active {
 		background: #eee;
+	}
+
+	&:before {
+		font-size: 1.5em;
+		top: .2em;
+		display: inline-block;
+		position: relative;
+		padding-right: 1em;
 	}
 }
 
@@ -426,7 +443,7 @@ a {
 }
 
 #rhs-container {
-	border-left: 15em solid transparent;
+	border-left: 5em solid transparent;
 	padding: 1em;
 	background: #efefef;
 }
@@ -436,7 +453,7 @@ a {
 .search-field-wrapper {
 	position: fixed;
 	top: 0;
-	left: 15em;
+	left: 3em;
 	right: 0;
 	margin: 0;
 	z-index: 997;
@@ -1262,6 +1279,12 @@ a {
 }
 .icon-check-circle:before {
 	content: "O";
+}
+.icon-collections:before {
+	 content: "E";
+ }
+.icon-cog:before {
+	content: "F";
 }
 
 
