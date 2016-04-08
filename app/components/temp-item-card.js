@@ -19,7 +19,6 @@ export default ItemCard.reopen({
 
 	actions: {
 		persistItem: function () {
-			alert('clicked first to persist')
 			this.set('persistRecord', true);
 		}
 	}

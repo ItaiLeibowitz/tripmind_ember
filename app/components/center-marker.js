@@ -5,7 +5,7 @@ import MapMarker from 'tripmind/components/map-marker'
 export default MapMarker.extend({
 	currentCollection: Ember.inject.service('current-collection'),
 	visible: Ember.computed.bool('model.lat'),
-	map: Ember.computed.alias('mapService.mapComponent.googleMapObject'),
+	map: Ember.computed.alias('mapService.googleMapObject'),
     baseDepth: 0,
 	addedLabelClass: 'center',
 	model: Ember.computed.alias('mapService.centerMarkerModel'),

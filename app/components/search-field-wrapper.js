@@ -9,7 +9,7 @@ export default Ember.Component.extend({
 	actions: {
 		clearSearch: function () {
 			this.set('wrappedField.query', '');
-			this.set('results', []);
+			this.get('targetObject').send('transitionToSearch');
 		},
 		foundItem: function (route, payload) {
 			this.sendAction('foundItem', route, payload)
@@ -18,13 +18,9 @@ export default Ember.Component.extend({
 			this.get('targetObject').send('loading');
 			this.get('wrappedField').$().autocomplete('close');
 			var self = this;
-			this.get('searchService').executeQuery(query)
-				.then(function (results) {
-					self.get('targetObject').send('stopLoading');
-					self.set('results', results);
-					self.get('wrappedField').$().autocomplete("close");
-					self.get('wrappedField').$().blur();
-				})
+			if (query.length > 0) this.get('targetObject').send('transitionToResults', query)
+			this.get('wrappedField').$().autocomplete("close");
+			this.get('wrappedField').$().blur();
 		}
 	}
 

@@ -1,7 +1,7 @@
 {
   "name": "tripmind",
   "dependencies": {
-    "ember": "2.2.0",
+    "ember": "2.4.0",
     "ember-cli-shims": "0.1.0",
     "ember-cli-test-loader": "0.2.2",
     "ember-load-initializers": "0.1.7",
@@ -13,6 +13,6 @@
     "moment": "momentjs#^2.12.0"
   },
   "resolutions": {
-    "ember": "2.2.0"
+    "ember": "2.4.0"
   }
 }

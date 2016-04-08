@@ -23,6 +23,85 @@ export default Ember.Service.extend({
 	disableDefaultUI: false,
 	bounds: {swLat: -1, swLng: -1, neLat: 1, neLng: 1},
 	lastHolder: null,
+	googleMapObject: null,
+
+	init: function(){
+		this._super();
+		var container = $('.map-canvas')[0];
+		var options = this.get('options');
+		var map = new window.google.maps.Map(container, options);
+		this.set('googleMapObject', map);
+		this._setMapListeners(map);
+	},
+
+	_setMapListeners: function(map) {
+		var self = this;
+
+		google.maps.event.addListener(map, 'zoom_changed', function () {
+			/*var zoomLevel = this.getZoom();
+			 this.setOptions({ styles: WA.Gmaps.styles.originalStyles[WA.Gmaps.stylesByZoomLevel[zoomLevel]] });
+			 Ember.run.debounce(self, '_addMarkersFromBounds', map, 200);
+			 Ember.run.debounce(self, '_toggleRoutes', zoomLevel, 200);
+			 Ember.run.debounce(self, '_addClassToTiles', 200);*/
+		});
+
+		google.maps.event.addListener(map, 'click', function () {
+			/*	self.get('mapService.collectionMarkers').send('minimizeAllMarkers');
+			 self.get('generatedMarkersList').invoke('reset');
+			 self.get('currentCollectionMarkersList').invoke('reset');
+			 self.get('currentRoute').reset();
+			 self.get('viewedRoute').reset();*/
+		});
+
+		google.maps.event.addListener(map, 'resize', function () {
+			self.scheduleFitBounds();
+			//	self.get('mapService.collectionMarkers').send('minimizeAllMarkers');
+		});
+
+		google.maps.event.addListener(map, 'dragend', function () {
+			/*
+			 self._addMarkersFromBounds(map);
+			 */
+		});
+
+	},
+
+
+	resizeMap: function(){
+		Ember.run.scheduleOnce('afterRender', this, '_resizeMap');
+	},
+
+	_resizeMap: function(){
+		google.maps.event.trigger(this.get('googleMapObject'), 'resize');
+	},
+
+	mapOptionsDidChange: function(){
+		Ember.run.scheduleOnce('afterRender', this, 'updateOptions')
+	}.observes('mapService.options'),
+
+	mapBoundsDidChange: function(){
+		Ember.run.scheduleOnce('afterRender', this, 'fitToBounds')
+	}.observes('mapService.bounds'),
+
+	updateOptions: function(){
+		var options = this.get('mapService.options');
+		this.get('googleMapObject').setOptions(options);
+	},
+
+	scheduleFitBounds: function(){
+		Ember.run.scheduleOnce('afterRender', this, 'fitToBounds');
+	},
+
+	fitToBounds: function(){
+		/*var bounds = this.get('mapService.bounds');
+		 var map = this.get('googleMapObject');
+		 var sw = new google.maps.LatLng(bounds.swLat, bounds.swLng);
+		 var ne = new google.maps.LatLng(bounds.neLat, bounds.neLng);
+
+		 map.fitBounds(new google.maps.LatLngBounds(sw, ne));*/
+	},
+
+
 
 	center: function(){
 		return new window.google.maps.LatLng(
@@ -42,7 +121,7 @@ export default Ember.Service.extend({
 
 	moveDomToElement: function(elem){
 		$('#actual-map').appendTo(elem);
-		var map = this.get('mapComponent.googleMapObject');
+		var map = this.get('googleMapObject');
 		google.maps.event.trigger(map, 'resize');
 	},
 
@@ -60,7 +139,7 @@ export default Ember.Service.extend({
 		this.set('withAllMarkers', true)
 		$('#actual-map').appendTo('#expanded-map');
 		$('#expanded-map').addClass('is-expanded');
-		this.get('mapComponent').resizeMap();
+		this.resizeMap();
 		this.setProperties({
 			draggable: true,
 			disableDefaultUI: false
@@ -76,7 +155,7 @@ export default Ember.Service.extend({
 			withPhoto: false
 		});
 		this.set('withAllMarkers', false);
-		this.get('mapComponent').resizeMap();
+		this.resizeMap();
 		$('#expanded-map').removeClass('is-expanded');
 		this.setProperties({
 			draggable: false,

@@ -28,7 +28,10 @@ Router.map(function() {
 	});
 	this.route('trash');
 	this.route('collections');
-	this.route('search');
+	this.route('search', function(){
+		this.route('index', {path: '/'});
+		this.route('results', {path: '/:query'});
+	});
 	this.route('collection', { resetNamespace: true, path: '/collections/:collection_slug' }, function () {
 	});
 });

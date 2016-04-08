@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Service.extend({
 	gmaps: Ember.inject.service('map-service'),
-	map: Ember.computed.alias('gmaps.mapComponent.googleMapObject'),
+	map: Ember.computed.alias('gmaps.googleMapObject'),
 	service: null,
 
 	init: function(){
