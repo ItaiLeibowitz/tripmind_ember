@@ -17,6 +17,15 @@ export default Ember.Component.extend({
 		}
 	},
 
+	willDestroyElement: function(){
+		var mapService = this.get('mapService');
+		mapService.setProperties({
+			collectionMarkers: null,
+			bounds: null
+		});
+		this._super();
+	},
+
 	markerWrappers: function () {
 		if (!this.get('model')) {return []};
 		var self = this;
@@ -37,6 +46,26 @@ export default Ember.Component.extend({
 		});
 		return wrappers
 	}.property('model.[]'),
+
+	ZoomToModel: function(){
+		this.set('mapService.bounds', this.get('mapBoundingBox'));
+		this.get('mapService').scheduleFitBounds();
+	}.observes('model.[].lat', 'model.[].lng').on('init'),
+
+
+	mapBoundingBox: function() {
+		var coordsArray = [],
+			bound = 0.001;
+		var items = (this.get('model') || []).toArray();
+		items.forEach(function(item){
+			var swLat = item.get('boundSwLat') || item.get('lat') - bound;
+			var swLng = item.get('boundSwLng') || item.get('lng') - bound;
+			var neLat = item.get('boundNeLat')|| item.get('lat') + bound;
+			var neLng = item.get('boundNeLng') || item.get('lng') + bound;
+			if (swLat && neLng && swLng && neLat) coordsArray.push([swLat, swLng],[neLat, neLng]);
+		});
+		return this.get('mapService').getBoundingBox(coordsArray);
+	}.property('model.[].lat','model.[].lng'),
 
 	actions: {
 		minimizeAllMarkers: function () {

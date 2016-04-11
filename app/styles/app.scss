@@ -154,39 +154,6 @@ a {
 	margin-left: 4px !important;
 	cursor: pointer;
 
-	&.center {
-		height: 24px;
-		margin-top: -23px !important;
-		margin-left: 9px !important;
-		@include box-shadow(8px 10px 2px -8px $black-3qtrans);
-		padding-left: 15px;
-
-		.marker-label{
-			font-size: 14px;
-			border: 2px solid red;
-		}
-
-		&:before{
-			content: "";
-			border-top: 3px dotted red;
-			width: 15px;
-			left: 0px;
-			top: 11px;
-			position: absolute;
-		}
-
-		&.collection{
-			.marker-label{
-				border: 2px solid orange;
-			}
-
-			&:before{
-				border-top: 3px dotted orange;
-			}
-		}
-
-	}
-
 	.marker-image-container {
 		display: none;
 	}

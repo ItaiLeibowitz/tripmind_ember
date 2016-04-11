@@ -21,7 +21,7 @@ export default Ember.Service.extend({
 	zoom: 15,
 	draggable: true,
 	disableDefaultUI: false,
-	bounds: {swLat: -1, swLng: -1, neLat: 1, neLng: 1},
+	bounds: null,
 	lastHolder: null,
 	googleMapObject: null,
 	isExpanded: true,
@@ -90,16 +90,19 @@ export default Ember.Service.extend({
 	},
 
 	scheduleFitBounds: function(){
-		Ember.run.scheduleOnce('afterRender', this, 'fitToBounds');
+		if (this.get('isExpanded')) {
+			Ember.run.scheduleOnce('afterRender', this, 'fitToBounds');
+		}
 	},
 
-	fitToBounds: function(){
-		/*var bounds = this.get('mapService.bounds');
-		 var map = this.get('googleMapObject');
-		 var sw = new google.maps.LatLng(bounds.swLat, bounds.swLng);
-		 var ne = new google.maps.LatLng(bounds.neLat, bounds.neLng);
+	fitToBounds: function () {
+		var bounds = this.get('bounds');
+		if (!bounds) return;
+		var map = this.get('googleMapObject');
+		var sw = new google.maps.LatLng(bounds.swLat, bounds.swLng);
+		var ne = new google.maps.LatLng(bounds.neLat, bounds.neLng);
 
-		 map.fitBounds(new google.maps.LatLngBounds(sw, ne));*/
+		map.fitBounds(new google.maps.LatLngBounds(sw, ne));
 	},
 
 
@@ -139,6 +142,10 @@ export default Ember.Service.extend({
 		this.get('googleMapObject').setCenter(this.get('center'));
 	},
 
+	scheduleReCenter: function(){
+		Ember.run.scheduleOnce('afterRender', this, 'reCenter');
+	},
+
 	toggleExpanded: function(){
 		if (this.get('isExpanded')){
 			this.minimizeMap();
@@ -150,10 +157,11 @@ export default Ember.Service.extend({
 	expandMap: function(currentElem){
 		this.set('isExpanded', true);
 		this.set('lastCurrentItem', this.get('currentItem.item'));
-		this.set('withAllMarkers', true)
+		this.set('withAllMarkers', true);
 		$('#actual-map').appendTo('#expanded-map');
 		this.resizeMap();
-		this.reCenter();
+		this.scheduleReCenter();
+		this.scheduleFitBounds();
 		this.setProperties({
 			draggable: true,
 			disableDefaultUI: false
@@ -171,7 +179,8 @@ export default Ember.Service.extend({
 //		});
 		this.set('withAllMarkers', false);
 		this.resizeMap();
-		this.reCenter();
+		this.scheduleReCenter();
+		this.scheduleFitBounds();
 		$('#expanded-map').removeClass('is-expanded');
 		this.setProperties({
 			draggable: false,
@@ -192,19 +201,7 @@ export default Ember.Service.extend({
 		});
 	},
 
-	mapBoundingBox: function() {
-		var coordsArray = [],
-			bound = 0.001;
-		var items = (this.get('markerItems') || []).toArray();
-		items.forEach(function(item){
-			var swLat = item.get('boundSwLat') || item.get('lat') - bound;
-			var swLng = item.get('boundSwLng') || item.get('lng') - bound;
-			var neLat = item.get('boundNeLat')|| item.get('lat') + bound;
-			var neLng = item.get('boundNeLng') || item.get('lng') + bound;
-			if (swLat && neLng && swLng && neLat) coordsArray.push([swLat, swLng],[neLat, neLng]);
-		});
-		return this.getBoundingBox(coordsArray);
-	}.property('markerItems.[].lat','markerItems.[].lng'),
+
 
 	getBoundingBox: function (coordsArray) {
 		if (coordsArray.length > 0) {

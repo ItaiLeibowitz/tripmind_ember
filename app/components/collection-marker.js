@@ -37,14 +37,15 @@ export default MapMarker.extend({
 	itemImageStyle: Ember.computed.alias('model.photoStyle'),
 
 
-	centerMarker: function () {
+	centerMarker: function (centerYToo) {
 		var map = this.get('map'),
 			zoomLevel = map.getZoom(),
 			zoomFactor = Math.pow(2, zoomLevel),
 			p = map.getProjection(),
 			markerPos = this.get('_marker').getPosition(),
+			currentCenterXy = p.fromLatLngToPoint(map.getCenter()),
 			xyOrig = p.fromLatLngToPoint(markerPos),
-			xyNew = new google.maps.Point(xyOrig.x + 100 / zoomFactor, xyOrig.y),
+			xyNew = new google.maps.Point(xyOrig.x + 100 / zoomFactor, centerYToo ? xyOrig.y : currentCenterXy.y),
 			latLngNew = p.fromPointToLatLng(xyNew);
 		map.panTo(latLngNew);
 	},
@@ -68,18 +69,22 @@ export default MapMarker.extend({
 
 	updateHoveredState: function(){
 		var targetState = this.get('lastHoveredState');
-		if (targetState && this.get('minimizeAllAction')) { this.get('minimizeAllAction')()}
+		if (targetState) {
+			if (this.get('minimizeAllAction')) { this.get('minimizeAllAction')()}
+			this.centerMarker();
+		}
 		this.set('isExpanded', targetState)
+
 	},
 
 	hoverMarker: function(){
 		this.set('lastHoveredState', true);
-		Ember.run.debounce(this, 'updateHoveredState', 200)
+		Ember.run.debounce(this, 'updateHoveredState', 300)
 	},
 
 	unhoverMarker: function(){
 		this.set('lastHoveredState', false);
-		Ember.run.debounce(this, 'updateHoveredState', 200)
+		Ember.run.debounce(this, 'updateHoveredState', 300)
 	},
 
 
