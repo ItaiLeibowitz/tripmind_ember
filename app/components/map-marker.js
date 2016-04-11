@@ -37,6 +37,8 @@ var MapMarker =  Ember.Component.extend({
 	hoveredIcon: gmaps.markerIcons.dot,
 	unhoveredIcon: gmaps.markerIcons.dot,
 
+	hoverMarker: function(){},
+	unhoverMarker: function(){},
 
 	isItemHovered: Ember.computed.alias('model.isHovered'),
 

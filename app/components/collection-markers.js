@@ -6,15 +6,9 @@ export default Ember.Component.extend({
 	model: null,
 
 
-	init: function(){
+	didInsertElement: function(){
 		this._super();
 		this.get('mapService').set('collectionMarkers', this);
-		var map = this.get('mapService.mapComponent');
-		if (map) {
-			console.log('already has map')
-		} else {
-			console.log('map not ready')
-		}
 	},
 
 	willDestroyElement: function(){
@@ -49,7 +43,6 @@ export default Ember.Component.extend({
 
 	ZoomToModel: function(){
 		this.set('mapService.bounds', this.get('mapBoundingBox'));
-		this.get('mapService').scheduleFitBounds();
 	}.observes('model.[].lat', 'model.[].lng').on('init'),
 
 

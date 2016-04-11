@@ -20,6 +20,7 @@ export default Ember.Service.extend({
 	centerLng: -82.399752,
 	zoom: 15,
 	draggable: true,
+	scrollwheel: true,
 	disableDefaultUI: false,
 	bounds: null,
 	lastHolder: null,
@@ -78,14 +79,14 @@ export default Ember.Service.extend({
 
 	mapOptionsDidChange: function(){
 		Ember.run.scheduleOnce('afterRender', this, 'updateOptions')
-	}.observes('mapService.options'),
+	}.observes('options'),
 
 	mapBoundsDidChange: function(){
-		Ember.run.scheduleOnce('afterRender', this, 'fitToBounds')
-	}.observes('mapService.bounds'),
+		if (this.get('bounds')) this.scheduleFitBounds();
+	}.observes('bounds'),
 
 	updateOptions: function(){
-		var options = this.get('mapService.options');
+		var options = this.get('options');
 		this.get('googleMapObject').setOptions(options);
 	},
 
@@ -119,9 +120,10 @@ export default Ember.Service.extend({
 			center: this.get('center'),
 			zoom: this.get('zoom'),
 			draggable: this.get('draggable'),
+			scrollwheel: this.get('scrollwheel'),
 			disableDefaultUI: this.get('disableDefaultUI')
 		});
-	}.property('center','zoom', 'draggable', 'disableDefaultUI'),
+	}.property('center','zoom', 'draggable', 'disableDefaultUI', 'scrollwheel'),
 
 	moveDomToElement: function(elem){
 		$('#actual-map').appendTo(elem);
@@ -164,6 +166,7 @@ export default Ember.Service.extend({
 		this.scheduleFitBounds();
 		this.setProperties({
 			draggable: true,
+			scrollwheel: true,
 			disableDefaultUI: false
 		})
 	},
@@ -184,8 +187,8 @@ export default Ember.Service.extend({
 		$('#expanded-map').removeClass('is-expanded');
 		this.setProperties({
 			draggable: false,
-			disableDefaultUI: true,
-			bounds: this.get('bounds')
+			scrollwheel: false,
+			disableDefaultUI: true
 		})
 	},
 

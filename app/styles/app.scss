@@ -839,6 +839,16 @@ a {
 		height: 13em;
 		width: 13em;
 		display: inline-block;
+		position: relative;
+
+		.map-expand-toggle{
+			position: absolute;
+			height: 2em;
+			line-height: 2em;
+			&:before{
+				content:"o";
+			}
+		}
 	}
 }
 
@@ -979,12 +989,9 @@ a {
 	vertical-align: top;
 	.sub-section-title {
 		margin: 2em 0 0 0.5em;
+		white-space: nowrap;
+		max-width: 240px
 	}
-
-	&.is-minimized .toggle-minimized{
-		float: right;
-	}
-	
 
 }
 
