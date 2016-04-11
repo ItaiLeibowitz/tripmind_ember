@@ -10,7 +10,7 @@ export default Ember.Component.extend(Draggable, {
 	drag_axis: 'x',
 
 	drag_containment: function(){
-		return [ 500, 0, this.get('screenDefService.screenWidth') - 200, 10 ];
+		return [ 600, 0, this.get('screenDefService.screenWidth') - 200, 10 ];
 	}.property('screenDefService.screenWidth'),
 
 	drag_stop: function(event, ui){

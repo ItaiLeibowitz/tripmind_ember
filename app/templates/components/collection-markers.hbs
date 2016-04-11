@@ -1,5 +1,5 @@
 {{#each markerWrappers as |wrapper|}}
 	{{collection-marker model=wrapper.item
-	isExpanded=wrapper.isExpanded
+	isExpanded=wrapper.isExpanded isClicked=wrapper.isClicked
 	minimizeAllAction=(action 'minimizeAllMarkers')}}
 {{/each}}

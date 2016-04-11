@@ -114,12 +114,10 @@ _initOptions: function() {
 			self.clickMarker(e);
 		});
 		google.maps.event.addListener(marker, 'mouseover', function(e){
-			console.log('hover!')
 			self.set('hovered', true);
 			self.hoverMarker(e);
 		});
 		google.maps.event.addListener(marker, 'mouseout', function(e){
-			console.log('unhover')
 			self.set('hovered', false);
 			self.unhoverMarker(e);
 		});

@@ -36,7 +36,8 @@ export default MapMarker.extend({
 	labelOneliner: Ember.computed.alias('model.onelinerOrAlt'),
 	itemImageStyle: Ember.computed.alias('model.photoStyle'),
 
-
+	// here we calculate the XY position needed to offset the marker left by half its width, which is 100px
+	// change the "100/2^zoomlevel" here if the styling of the marker with label changes width
 	centerMarker: function (centerYToo) {
 		var map = this.get('map'),
 			zoomLevel = map.getZoom(),
@@ -55,26 +56,27 @@ export default MapMarker.extend({
 			this.openItemMenu();
 			//ga('send', 'event', 'marker', 'readMore');
 		}
-		var currentSetting = this.get('isExpanded');
-		if (this.get('minimizeAllAction')) { this.get('minimizeAllAction')()}
+		var currentSetting = this.get('isClicked');
+		/*if (this.get('minimizeAllAction')) { this.get('minimizeAllAction')()}
+		*/
 		this.set('isExpanded', !currentSetting);
-		if (!currentSetting == true) {
-			// here we calculate the XY position needed to offset the marker left by half its width, which is 100px
-			// change the "100/512" here if the styling of the marker with label changes width
-			// 512 is a constant based on google maps tile size
+		this.set('isClicked', !currentSetting);
+		if (!currentSetting) {
+
 			this.centerMarker();
 			//ga('send', 'event', 'marker', 'enlarge');
 		}
+		return false;
 	},
 
 	updateHoveredState: function(){
+		if (this.get('isClicked')) return;
 		var targetState = this.get('lastHoveredState');
 		if (targetState) {
 			if (this.get('minimizeAllAction')) { this.get('minimizeAllAction')()}
 			this.centerMarker();
 		}
 		this.set('isExpanded', targetState)
-
 	},
 
 	hoverMarker: function(){

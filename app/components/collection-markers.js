@@ -34,6 +34,7 @@ export default Ember.Component.extend({
 				},
 				minimize: function() {
 					this.set('isExpanded', false);
+					this.set('isClicked', false);
 				}
 			});
 			return object;
