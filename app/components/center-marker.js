@@ -8,7 +8,6 @@ export default MapMarker.extend({
 	map: Ember.computed.alias('mapService.googleMapObject'),
     baseDepth: 0,
 	addedLabelClass: 'center',
-	model: Ember.computed.alias('mapService.centerMarkerModel'),
 	unhoveredIcon: gmaps.markerIcons.largeRed,
 
 	lat: Ember.computed.alias('model.lat'),
@@ -16,7 +15,7 @@ export default MapMarker.extend({
 	labelName: Ember.computed.alias('model.name'),
 	labelType: Ember.computed.alias('model.itemTypeName'),
 	labelOneliner: Ember.computed.alias('model.onelinerOrAlt'),
-	itemImageStyle: Ember.computed.alias('model.smallImageStyle'),
+	itemImageStyle: Ember.computed.alias('model.photoStyle'),
 
 	didInsertElement: function(){
 		this._super();

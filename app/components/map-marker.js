@@ -87,10 +87,9 @@ var MapMarker =  Ember.Component.extend({
 	labelContent: function() {
 		var markerImageString = `<div class="marker-image-container"><div class="marker-image photo-div" style="${this.get('labelImageStyle')}"></div></div>`,
 			markerLabelString = `<div class="marker-label">${this.get('labelName')}</div>`,
-			markerTypeString = this.get('labelType') ? `<div class="marker-type">${this.get('labelType')}</div>` : "",
 			markerOnlinerString = this.get('labelOneliner') ? `<div class="marker-oneliner">${this.get('labelOneliner')}</div>`: "",
 			markerReadMoreString = '<div class="read-more">READ MORE</div>',
-			markerDetailsString = '<div class="marker-details">' + markerLabelString + markerTypeString + markerOnlinerString + markerReadMoreString +  '</div>';
+			markerDetailsString = '<div class="marker-details">' + markerLabelString + markerOnlinerString + markerReadMoreString +  '</div>';
 		return markerImageString + markerDetailsString;
 	}.property('labelName', 'labelImageStyle', 'labelType','labelOneliner'),
 
@@ -109,11 +108,15 @@ _initOptions: function() {
 		google.maps.event.addListener(marker, 'click', function(e){
 			self.clickMarker(e);
 		});
-		google.maps.event.addListener(marker, 'mouseover', function(){
+		google.maps.event.addListener(marker, 'mouseover', function(e){
+			console.log('hover!')
 			self.set('hovered', true);
+			self.hoverMarker(e);
 		});
-		google.maps.event.addListener(marker, 'mouseout', function(){
+		google.maps.event.addListener(marker, 'mouseout', function(e){
+			console.log('unhover')
 			self.set('hovered', false);
+			self.unhoverMarker(e);
 		});
 		google.maps.event.addListener(marker, 'dragend', function(){
 			console.log(marker.getPosition().lat(), marker.getPosition().lng())

@@ -47,8 +47,8 @@ export default Ember.Service.extend({
 		});
 
 		google.maps.event.addListener(map, 'click', function () {
-			/*	self.get('mapService.collectionMarkers').send('minimizeAllMarkers');
-			 self.get('generatedMarkersList').invoke('reset');
+				self.get('collectionMarkers').send('minimizeAllMarkers');
+			 /*self.get('generatedMarkersList').invoke('reset');
 			 self.get('currentCollectionMarkersList').invoke('reset');
 			 self.get('currentRoute').reset();
 			 self.get('viewedRoute').reset();*/

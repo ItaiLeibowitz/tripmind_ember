@@ -20,7 +20,6 @@ export default Ember.Component.extend({
 		var container = this.$(),
 			mapService = this.get('mapService');
 		mapService.changeCenter(this.get('model.lat'), this.get('model.lng'));
-		mapService.set('centerMarkerModel', this.get('model'));
 		mapService.set('minimizedHolder', container);
 		if(!mapService.get('isExpanded')) {
 			mapService.moveDomToElement(container);

@@ -249,6 +249,13 @@ var gmaps = {};
 			scaledSize: new google.maps.Size(100, 66)
 		};
 
+		var markerIconInvisRed = {
+			url: '/assets/images/picture1.png',
+			size: new google.maps.Size(220, 230),
+			origin: new google.maps.Point(0, 0),
+			anchor: new google.maps.Point(3, 158)
+		};
+
 		var markerIconLargeRedMain = {
 			url: '/assets/images/markers4.png',
 			size: new google.maps.Size(20, 28),
@@ -300,6 +307,7 @@ var gmaps = {};
 		return {
 			dot: markerIconDot,
 			smallRed: markerIconSmallRed,
+			invisRed: markerIconInvisRed,
 			smallBlue: markerIconSmallBlue,
 			smallGreen: markerIconSmallGreen,
 			smallOrange: markerIconSmallOrange,
