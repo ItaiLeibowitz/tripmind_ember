@@ -3,23 +3,35 @@ import Ember from 'ember';
 export default Ember.Component.extend({
 	elementId: 'action-bar',
 	service: Ember.inject.service('action-service'),
-	classNameBindings: ['isActive'],
+	classNameBindings: ['isActive','addedClass'],
 	isActive: Ember.computed.alias('service.hasSelected'),
 
+	isTrash: Ember.computed.equal('addedClass','trash'),
+
+	showActionButtons: function(){
+		return !(this.get('service.hasSelected') && this.get('targetModel'));
+	}.property('targetModel','service.hasSelected'),
+
+	currentIsSelected: function(){
+		return this.get('service').selectedIncludes(this.get('targetModel.id'));
+	}.property('targetModel.id', 'service.selectedIds.[]'),
 
 	actions: {
 		clearSelection: function(){
 			this.get('service').clearSelected();
 		},
-		addSelected: function(){
-			this.send('openTopModal', 'addToCollection', this.get('service'))
+		addSelected: function(targetModel){
+			this.send('openTopModal', 'addToCollection', targetModel)
 		},
-		trashSelected: function(){
-			this.get('service').trashSelected();
+		trashSelected: function(targetModel){
+			this.get('service').trashSelected(targetModel);
 		},
-		openTopModal: function(modalName, model){
-			this.get('openModalAction')(modalName, model)
-		}
+		openTopModal: function(modalName, targetModel){
+			this.get('openModalAction')(modalName, targetModel)
+		},
+		toggleSelected: function(targetModel){
+			this.get('service').toggleSelected(targetModel.get('id'));
+		},
 	}
 
 

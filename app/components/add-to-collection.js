@@ -20,7 +20,8 @@ export default Ember.Component.extend({
 			var currentTime = moment().format("X");
 			var self = this,
 				selectedIds = this.get('actionService.selectedIds'),
-				itemsToAdd = this.get('store').peekAll('item').filter(function (item) {
+				targetModel = this.get('model'),
+				itemsToAdd =  targetModel ? [targetModel] : this.get('store').peekAll('item').filter(function (item) {
 					return selectedIds.indexOf(item.get('id')) > -1;
 				});
 			// Create a new collection if there is no input
@@ -29,6 +30,7 @@ export default Ember.Component.extend({
 			}
 			collection.get('items').addObjects(itemsToAdd).then(function(results){
 				collection.set('updatedAt',currentTime);
+				collection.save();
 				self.get('actionService').clearSelected();
 				self.get('closeAction')();
 				self.get('feedbackService').setProperties({

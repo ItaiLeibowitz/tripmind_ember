@@ -64,6 +64,8 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 	itemDetailsService:Ember.inject.service('item-details-service'),
 
 
+	deletedStatus: Ember.computed.not('trackingStatus'),
+
 	imageUrl: Ember.computed.alias('itemImageUrl'),
 	imageStyle: Ember.computed.alias('itemImageStyle'),
 

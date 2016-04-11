@@ -13,9 +13,17 @@ export default Ember.Service.extend({
 		this.get('selectedIds').clear();
 	},
 
-	trashSelected: function(){
+	toggleSelected: function(targetId){
+		if (this.selectedIncludes(targetId)) {
+			this.get('selectedIds').removeObject(targetId);
+		} else {
+			this.get('selectedIds').addObject(targetId);
+		}
+	},
+
+	trashSelected: function(targetModel){
 		var selectedIds = this.get('selectedIds');
-		var itemsToTrash = this.get('store').peekAll('item').filter(function (item) {
+		var itemsToTrash = targetModel ? [targetModel] : this.get('store').peekAll('item').filter(function (item) {
 			return selectedIds.indexOf(item.get('id')) > -1;
 		});
 		itemsToTrash.forEach(function(item){
@@ -28,6 +36,10 @@ export default Ember.Service.extend({
 	numOfSelected: function(){
 		return this.get('selectedIds.length');
 	}.property('selectedIds.[]'),
+
+	selectedIncludes: function(id){
+		return this.get('selectedIds').indexOf(id) > -1;
+	},
 
 	hasSelected: function(){
 		return this.get('numOfSelected') > 0;

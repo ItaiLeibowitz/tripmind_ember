@@ -27,7 +27,7 @@ export default MapMarker.extend({
 	},
 
 	clickMarker: function(){
-		this.get('mapService').minimizeMap();
+		$('body').animate({scrollTop: 0}, 200);
 	},
 
 	/*collItemsDidChange: function(){

@@ -16,5 +16,6 @@ export default Ember.Route.extend({
 	setupController: function(controller,model){
 		this._super(controller, model);
 		controller.set('prefilterAttribute','trackingStatus-not');
+		controller.set('actionBarVersion', 'trash')
 	}
 });

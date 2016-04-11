@@ -1,4 +1,9 @@
+{{action-bar openModalAction=(action 'openTopModal' target=displayService)}}
+{{action-bar-placeholder}}
+
 {{input-with-default value=model.name addedClass="collection-title" default="Untitled" saveOnExit=model}}
 {{#each model.items as |item|}}
 	{{item-card model=item}}
 {{/each}}
+
+{{collection-markers model=model.items}}

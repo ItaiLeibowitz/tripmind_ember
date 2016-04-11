@@ -1,3 +1,12 @@
+{{#if descendants}}
+	{{action-bar openModalAction=(action 'openTopModal' target=displayService)}}
+	{{action-bar-placeholder}}
+{{else}}
+	{{action-bar openModalAction=(action 'openTopModal' target=displayService) addedClass='in' targetModel=model isTrash=model.deletedStatus}}
+	{{action-bar-placeholder addedClass='in'}}
+{{/if}}
+
+
 <div class="title-ancestry">
 	{{#each model.ancestorsArray as |ancestor|}}
 		{{#link-to ancestor.target ancestor.slug}}{{ancestor.name}}{{/link-to}} >

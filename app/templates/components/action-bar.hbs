@@ -1,13 +1,38 @@
-<div class="cancel-btn" {{action 'clearSelection'}}>✕</div>
-<div class="num-selected">{{service.numOfSelected}} Selected</div>
+{{#if service.numOfSelected}}
+	<div class="cancel-btn has-tooltip" {{action 'clearSelection'}}>✕
+		<div class="tooltip from-left">Clear selection</div>
+	</div>
+	<div class="num-selected">{{service.numOfSelected}} Selected</div>
+{{/if}}
 <div class="action-buttons">
-	<div class="action-btn icon-share has-tooltip tooltip-below">
-		<div class="tooltip">Share</div>
-	</div>
-	<div class="action-btn icon-plus has-tooltip tooltip-below" {{action 'openTopModal' 'addToCollection'}}>
-		<div class="tooltip">Add to collection</div>
-	</div>
-	<div class="action-btn icon-trash has-tooltip tooltip-below" {{action 'trashSelected'}}>
-		<div class="tooltip">Delete (stop tracking)</div>
-	</div>
+	{{#if showActionButtons}}
+		<div class="action-btn icon-share has-tooltip tooltip-below">
+			<div class="tooltip">Share</div>
+		</div>
+		<div class="action-btn icon-plus has-tooltip tooltip-below" {{action 'openTopModal' 'addToCollection' targetModel}}>
+			<div class="tooltip">Add to collection</div>
+		</div>
+		{{#if isTrash}}
+			<div class="action-btn icon-trash has-tooltip tooltip-below undo" {{action 'trashSelected' targetModel}}>
+				<div class="tooltip">Undelete</div>
+			</div>
+		{{else}}
+			<div class="action-btn icon-trash has-tooltip tooltip-below" {{action 'trashSelected' targetModel}}>
+				<div class="tooltip">Delete (stop tracking)</div>
+			</div>
+		{{/if}}
+	{{else}}
+		{{#if currentIsSelected}}
+			<div class="action-btn icon-check-circle has-tooltip tooltip-below undo" {{action 'toggleSelected' targetModel}}>
+				<div class="tooltip">Remove from selection</div>
+			</div>
+		{{else}}
+			<div class="action-btn icon-check-circle has-tooltip tooltip-below" {{action 'toggleSelected' targetModel}}>
+				<div class="tooltip">Add to selection</div>
+			</div>
+		{{/if}}
+	{{/if}}
+
+
+
 </div>
