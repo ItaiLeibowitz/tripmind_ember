@@ -152,6 +152,19 @@ a {
 	width: 100%;
 }
 
+#map-resize{
+	position: fixed;
+	top:0;
+	width: 10px;
+	bottom:0;
+	z-index: 11;
+	right: 295px;
+	cursor:e-resize;
+	&:hover, &.ui-draggable-dragging{
+		background-color: rgba(0,0,0,0.5);
+	}
+}
+
 .map-marker {
 	width: auto;
 	height: 20px;
@@ -467,7 +480,6 @@ a {
 	top: 0;
 	bottom: 0;
 	left: 100%;
-	background: red;
 	box-shadow: -1px 0 1px rgba(0, 0, 0, 0.25);
 	width: 1em;
 }

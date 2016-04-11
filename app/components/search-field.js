@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import Autocomplete from 'tripmind/mixins/widget';
+import Autocomplete from 'tripmind/mixins/autocomplete';
 
 
 export default Ember.TextField.extend(Autocomplete, {

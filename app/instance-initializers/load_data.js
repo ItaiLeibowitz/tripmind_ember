@@ -109,13 +109,6 @@ var addlData = {data: [
 				]
 			}
 		}
-	},
-	{
-		id: 2,
-		type: 'collection',
-		attributes:{
-			name: "itai's other collection"
-		}
 	}
 ]};
 
