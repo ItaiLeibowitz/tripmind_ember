@@ -94,5 +94,7 @@ export default MapMarker.extend({
 
 	unhoveredIcon: gmaps.markerIcons.smallRed,
 	hoveredIcon: gmaps.markerIcons.invisRed,
+	itemHoveredIcon: gmaps.markerIcons.largeBlue,
+
 });
 

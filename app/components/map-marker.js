@@ -38,6 +38,8 @@ var MapMarker =  Ember.Component.extend({
 	unhoveredIcon: gmaps.markerIcons.dot,
 
 
+	isItemHovered: Ember.computed.alias('model.isHovered'),
+
 	didInsertElement: function () {
 		this._super();
 		//console.log('building marker', this.get('labelName'))
@@ -56,8 +58,9 @@ var MapMarker =  Ember.Component.extend({
 	},
 
 	icon: function () {
+		if (this.get('isItemHovered')) return this.get('itemHoveredIcon');
 		return (this.get('isExpanded') ? this.get('hoveredIcon') : this.get('unhoveredIcon'));
-	}.property('isExpanded', 'unhoveredIcon'),
+	}.property('isItemHovered', 'isExpanded', 'unhoveredIcon'),
 
 
 	depth: function() {

@@ -12,6 +12,13 @@ export default Ember.Component.extend({
 
 	inSelectMode: Ember.computed.alias('actionService.hasSelected'),
 
+	mouseEnter: function(){
+		this.set('model.isHovered', true);
+	},
+	mouseLeave: function(){
+		this.set('model.isHovered', false);
+	},
+
 	actions: {
 		    toggleSelected: function(){
 				if (this.get('isSelected')) {
