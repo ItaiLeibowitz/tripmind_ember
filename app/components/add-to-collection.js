@@ -26,13 +26,16 @@ export default Ember.Component.extend({
 				});
 			// Create a new collection if there is no input
 			if (!collection){
-				collection = this.get('store').createRecord('collection',{name: "Untitled", createdAt: currentTime});
+				collection = this.get('store').createRecord('collection',{name: "Untitled", createdAt: currentTime, items: []});
 			}
-			collection.get('items').addObjects(itemsToAdd).then(function(results){
-				collection.set('updatedAt',currentTime);
+			collection.get('items')
+				.then(function(currentItems) {
+				currentItems.addObjects(itemsToAdd);
+				collection.set('updatedAt', currentTime);
 				collection.save();
-				console.log('collection:', collection.toJSON())
-				console.log(lzwCompress.pack(collection.toJSON()))
+					var js = JSON.stringify(collection.toJSON());
+				console.log('collection:', js)
+				js = lzwCompress.pack(js)
 				self.get('actionService').clearSelected();
 				self.get('closeAction')();
 				self.get('feedbackService').setProperties({
@@ -45,7 +48,8 @@ export default Ember.Component.extend({
 					feedbackAddedClass: 'success',
 					feedbackDuration: 3000
 				});
-			})
+			});
+			return false;
 		}
 	}
 

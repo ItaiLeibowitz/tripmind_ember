@@ -5,8 +5,6 @@
  * Licensed under the MIT license.
  */
 
-'use strict';
-
 (function () {
   var root = this;
 
@@ -118,7 +116,7 @@
     (function (self, Array) {
       var compress = function (uncompressed) {
             if (typeof(uncompressed) !== 'string') {
-				_lzwLoggingEnabled && _lzwLog('Didnt get string to compress, returning original');
+				_lzwLoggingEnabled && _lzwLog('Didnt get string to ko_compress, returning original');
 				return uncompressed;
             }
             var i,

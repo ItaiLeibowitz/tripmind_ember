@@ -13,10 +13,7 @@ DS.Model.extend({
 	updatedAt: DS.attr('string'),
 
 	slug: function () {
-		return `${this.get('id')}
-		-
-		${this.get('name')}
-		`;
+		return `${this.get('id')}-${this.get('name')}`;
 	}.property('id', 'name'),
 
 	getTmToken: function () {
@@ -25,14 +22,16 @@ DS.Model.extend({
 			if (self.get('tmToken')) {
 				resolve(self.get('tmToken'))
 			} else {
-				return promiseFromAjax({
+				promiseFromAjax({
 					url: '/api/tm/tm_collections/',
 					type: 'POST'
 				}).then(function (result) {
 					self.set('tmToken', result.tm_token);
 					self.save().then(function () {
 						resolve(self.get('tmToken'));
-					}, reject(status));
+					}, function() {
+						reject('could not save')
+					});
 				}, function (status) {
 					reject(status)
 				});
@@ -57,21 +56,22 @@ DS.Model.extend({
 				}
 			});
 		serializedRecords = serializedRecords.concat(serializedItems);
-		var compressedJSON = lzwCompress.pack(serializedRecords);
-		var stringifiedRecords = JSON.stringify(serializedRecords)
+		var stringifiedRecords = JSON.stringify(serializedRecords);
+		var compressedJSON = lzwCompress.pack(stringifiedRecords);
 		var compressed = JSON.stringify(compressedJSON).length < stringifiedRecords.length;
+		var compressedData = compressed ? compressedJSON : stringifiedRecords;
 		return headOnlyPromiseFromAjax({
 			url: '/api/tm/tm_collections/' + this.get('tmToken'),
 			type: 'PATCH',
 			data: {
 				tm_collection: {
 					is_compressed: compressed,
-					data: compressed ? compressedJSON : stringifiedRecords
+					data: compressedData
 				}
 			}
-		}).then(function (result) {
-			console.log("resolve: ", result)
-			return result
+		}).then(function () {
+			console.log("resolve: ", compressedData)
+			return compressedData
 		}, function (status) {
 			console.log('reject:', status)
 			return status

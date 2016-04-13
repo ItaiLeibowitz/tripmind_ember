@@ -109,6 +109,19 @@ var addlData = {data: [
 				]
 			}
 		}
+	},
+	{
+		id: 2,
+		type: 'collection',
+		attributes:{
+			name: "itai's other collection"
+		},
+		relationships: {
+			items: {
+				data: [
+				]
+			}
+		}
 	}
 ]};
 
@@ -119,12 +132,25 @@ var formatPlace = function(place){
 	} else {
 		var path = place.name
 	}
-	path = path.replace(/\//g,"_");
-	return {
+	path = path.replace(/\//g, "_");
+	var item = {
 		id: place.place_id,
 		type: 'item',
 		attributes: place
 	};
+	/*if (["ChIJD3uTd9hx5kcR1IQvGfr8dbk", "ChIJdbbQwbZx5kcRs7Qu5nPw18g"].indexOf(place.place_id) > -1) {
+		item = $.extend(item, {
+				relationships: {
+					collections: {
+						data: [
+							{type: "collection", id: "1"}
+						]
+					}
+				}
+			}
+		)
+	}*/
+	return item;
 };
 
 

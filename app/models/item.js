@@ -38,7 +38,7 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 	canHaveChildren: DS.attr('boolean'),
 	hasSuggestedTrips: DS.attr('boolean'),
 	isEditLocked: DS.attr('boolean', {defaultValue: false}),
-	collection: DS.hasMany('collection'),
+	collections: DS.hasMany('collection'),
 	//trip: DS.belongsTo('trip', {inverse: 'items'}),
 	//potentialTrip: DS.belongsTo('trip', {inverse: 'potentialItems'}),
 	parent: DS.belongsTo('item'),
@@ -71,11 +71,11 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 
 	photoStyle: function(){
 		if (this.get('image')) {
-			return `background-image: url(${this.get('image')})`;
+			return Ember.String.htmlSafe(`background-image: url(${this.get('image')})`);
 		} else {
 			var colorLength = Constants.FLAT_DESIGN_COLORS.length,
 				color = Constants.FLAT_DESIGN_COLORS[Math.floor(Math.random()*colorLength)];
-			return `background-image: url('assets/images/background-pattern.png'); background-color: ${color};`
+			return Ember.String.htmlSafe(`background-image: url('assets/images/background-pattern.png'); background-color: ${color};`);
 		}
 	}.property('image'),
 
