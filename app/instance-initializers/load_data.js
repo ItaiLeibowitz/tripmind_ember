@@ -96,7 +96,7 @@ var places = [
 
 var addlData = {data: [
 	{
-		id: 1,
+		id: "tmp1",
 		type: 'collection',
 		attributes:{
 			name: "itai's collection"
@@ -111,7 +111,7 @@ var addlData = {data: [
 		}
 	},
 	{
-		id: 2,
+		id: "tmp2",
 		type: 'collection',
 		attributes:{
 			name: "itai's other collection"

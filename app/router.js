@@ -34,6 +34,8 @@ Router.map(function() {
 	});
 	this.route('collection', { resetNamespace: true, path: '/collections/:collection_slug' }, function () {
 	});
+	this.route('collectionnew', { resetNamespace: true, path: '/collections/new/:collection_slug' }, function () {
+	});
 });
 
 export default Router;

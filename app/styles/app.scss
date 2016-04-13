@@ -431,12 +431,15 @@ a {
 	}
 }
 
-#selected-action-bar{
+.action-bar{
 	background: #E74C3C;
 	color: white;
 	position: fixed;
 	z-index: 15;
 	box-shadow: 0 1px 1px rgba(0,0,0,0.25);
+}
+#collection-action-bar {
+	left: auto;
 }
 #action-bar-placeholder {
 	height: 0;

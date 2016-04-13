@@ -26,7 +26,12 @@ export default Ember.Component.extend({
 				});
 			// Create a new collection if there is no input
 			if (!collection){
-				collection = this.get('store').createRecord('collection',{name: "Untitled", createdAt: currentTime, items: []});
+				collection = this.get('store').createRecord('collection',{
+					id: `tmp${Math.random()}`,
+					name: "Untitled",
+					createdAt: currentTime,
+					items: []
+				});
 			}
 			collection.get('items')
 				.then(function(currentItems) {

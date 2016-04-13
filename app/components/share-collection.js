@@ -14,7 +14,10 @@ export default Ember.Component.extend({
 			model = this.get('model');
 		this.set('loading', true);
 		model.getTmToken()
-			.then(function () {
+			.then(function (result) {
+				if (result.redirect){
+					self.get('targetObject').send('triggerTransition', 'collection', result.token);
+				}
 				return model.postToServer();
 			})
 			.then(function (result) {

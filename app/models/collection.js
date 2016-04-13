@@ -17,18 +17,30 @@ DS.Model.extend({
 	}.property('id', 'name'),
 
 	getTmToken: function () {
-		var self = this;
+		var self = this,
+			store = this.store;
 		return new Ember.RSVP.Promise(function (resolve, reject) {
 			if (self.get('tmToken')) {
-				resolve(self.get('tmToken'))
+				resolve({token: self.get('tmToken')});
 			} else {
 				promiseFromAjax({
 					url: '/api/tm/tm_collections/',
 					type: 'POST'
 				}).then(function (result) {
 					self.set('tmToken', result.tm_token);
-					self.save().then(function () {
-						resolve(self.get('tmToken'));
+					// Here we replace the collection with a new copy that has the tmToken as its id as well
+					var attributes = self.serialize();
+					attributes.items = attributes.items.map(function(id){
+						return store.peekRecord('item', id);
+					});
+					var newCollection = store.createRecord('collection', $.extend(attributes, {id: result.tm_token, tmToken: result.tm_token}));
+
+					newCollection.save().then(function () {
+						self.destroyRecord();
+						resolve({
+								token: self.get('tmToken'),
+								redirect: true
+							});
 					}, function() {
 						reject('could not save')
 					});
@@ -45,7 +57,13 @@ DS.Model.extend({
 				{
 					attributes: this.toJSON(),
 					type: 'collection',
-					id: this.get('tmToken')
+					id: this.get('tmToken'),
+					relationships: {
+						items: {
+							data: this.get('items').map(function(item){return {type: 'item', id: item.get('id')}})
+						}
+
+					}
 				}
 			],
 			serializedItems = this.get('items').map(function (item) {
