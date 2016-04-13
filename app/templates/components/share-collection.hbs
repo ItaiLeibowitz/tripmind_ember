@@ -1,0 +1,12 @@
+<div class="modal-title">Share Collection</div>
+<div class="modal-content">
+	{{#if loading}}
+		Loading...
+	{{else}}
+		Ready to share!
+		<div>{{model.name}}  {{model.tmToken}}</div>
+		<div>{{code}}</div>
+		<div>{{code.length}}</div>
+		<div>{{codeSystem}}</div>
+	{{/if}}
+</div>

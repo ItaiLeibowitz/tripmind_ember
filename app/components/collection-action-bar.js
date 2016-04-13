@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-	elementId: 'selected-action-bar',
+	elementId: 'collection-action-bar',
 	service: Ember.inject.service('action-service'),
 	classNames: ['action-bar'],
 	classNameBindings: ['isActive','addedClass'],

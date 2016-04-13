@@ -38,5 +38,6 @@ module.exports = function(defaults) {
 	app.import('vendor/jquery-ui.min.js');
 	app.import('vendor/jquery-ui.min.css');
 	app.import('vendor/markerwithlabel.min.js');
+	app.import('vendor/lzwcompress.js');
 	return app.toTree();
 };
