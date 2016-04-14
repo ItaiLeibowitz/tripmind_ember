@@ -174,7 +174,7 @@ export function initialize(applicationInstance) {
 			return formatPlace(place)
 		});
 	}
-	store.push({data: formattedData});
+	if (formattedData) store.push({data: formattedData});
 };
 
 
