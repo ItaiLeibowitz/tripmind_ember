@@ -71,7 +71,14 @@ DS.Model.extend({
 				return {
 					id: item.get('id'),
 					type: 'item',
-					attributes: item.toJSON()
+					attributes: item.toJSON(),
+					relationships: {
+						collections: {
+							data: [
+								{type: 'collection', id: self.get('tmToken')}
+							]
+						}
+					}
 				}
 			});
 		serializedRecords = serializedRecords.concat(serializedItems);
@@ -85,6 +92,7 @@ DS.Model.extend({
 			data: {
 				tm_collection: {
 					is_compressed: compressed,
+					last_saved: this.get('updatedAt'),
 					data: compressedData
 				}
 			}

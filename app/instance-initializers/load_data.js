@@ -1,4 +1,6 @@
 import Ember from 'ember';
+import ENV from 'tripmind/config/environment';
+
 var places = [
 	{
 		ancestryNames: "France/Paris",
@@ -156,13 +158,17 @@ var formatPlace = function(place){
 
 export function initialize(applicationInstance) {
 	let store = applicationInstance.lookup('service:store');
-	if (chrome.extension){
+	if (chrome.extension) {
 		var backgroundPage = chrome.extension.getBackgroundPage();
 		var trackedPlaces = backgroundPage.TripMinder.trackedPlaces;
 		var formattedData = Object.keys(trackedPlaces)
-			.map(function(key){ return trackedPlaces[key].item})
-			.map(function (place) {	return formatPlace(place)});
-	} else {
+			.map(function (key) {
+				return trackedPlaces[key].item
+			})
+			.map(function (place) {
+				return formatPlace(place)
+			});
+	} else if (ENV.environment === 'development') {
 		store.push(addlData);
 		var formattedData = places.map(function (place) {
 			return formatPlace(place)

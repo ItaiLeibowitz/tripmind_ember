@@ -13,7 +13,11 @@ export default Ember.Component.extend({
 	}),
 	focusOut: function(){
 		var modelToSave = this.get('saveOnExit');
-		if (modelToSave) modelToSave.save();
-		console.log('focused out!')
+		if (modelToSave) {
+			if (modelToSave.get('updatedAt')){
+				modelToSave.set('updatedAt', moment().format("X"));
+			}
+			modelToSave.save();
+		}		console.log('focused out!')
 	}
 });

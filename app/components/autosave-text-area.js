@@ -17,7 +17,12 @@ export default Ember.TextArea.extend({
 
 	focusOut: function(){
 		var modelToSave = this.get('saveOnExit');
-		if (modelToSave) modelToSave.save();
+		if (modelToSave) {
+			if (modelToSave.get('updatedAt')){
+				modelToSave.set('updatedAt', moment().format("X"));
+			}
+			modelToSave.save();
+		}
 		console.log('focused out!')
 	}
 });
