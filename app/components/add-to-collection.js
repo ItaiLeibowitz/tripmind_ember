@@ -33,8 +33,8 @@ export default Ember.Component.extend({
 					items: []
 				});
 			}
-			collection.get('items')
-				.then(function (currentItems) {
+			var currentItems = collection.get('items');
+				//.then(function (currentItems) {
 					currentItems.addObjects(itemsToAdd);
 					collection.set('updatedAt', currentTime);
 					collection.save();
@@ -56,7 +56,7 @@ export default Ember.Component.extend({
 						feedbackAddedClass: 'success',
 						feedbackDuration: 3000
 					});
-				});
+				//});
 			return false;
 		}
 	}

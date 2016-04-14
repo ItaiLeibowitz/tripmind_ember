@@ -36,7 +36,16 @@ DS.Model.extend({
 					});
 					var newCollection = store.createRecord('collection', $.extend(attributes, {id: result.tm_token, tmToken: result.tm_token}));
 
-					newCollection.save().then(function () {
+					newCollection.save()
+						.then(function(){
+							attributes.items.forEach(function(item){
+								var itemCollections = item.get('collections');
+								itemCollections.removeObject(self);
+								itemCollections.addObject(newCollection);
+								item.save();
+							});
+						})
+						.then(function () {
 						self.destroyRecord();
 						resolve({
 								token: self.get('tmToken'),
@@ -92,7 +101,7 @@ DS.Model.extend({
 			data: {
 				tm_collection: {
 					is_compressed: compressed,
-					last_saved: this.get('updatedAt'),
+					last_updated: this.get('updatedAt'),
 					data: compressedData
 				}
 			}
