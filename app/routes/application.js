@@ -9,6 +9,10 @@ export default Ember.Route.extend({
 		stopLoading: function (transition, originRoute) {
 			$('.loader.main-loader').addClass('hidden');
 		},
+		error: function (transition, originRoute) {
+			$('.loader.main-loader').addClass('hidden');
+			return this.transitionTo('error');
+		},
 		triggerTransition: function(destination, payload) {
 			this.transitionTo(destination, payload);
 		},
