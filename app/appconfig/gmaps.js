@@ -234,7 +234,7 @@ var gmaps = {};
 		};
 
 		var markerIconSmallRed = {
-			url: '/assets/images/markers4.png',
+			url: '/assets//markers4.png',
 			size: new google.maps.Size(16, 16),
 			origin: new google.maps.Point(8, 85),
 			anchor: new google.maps.Point(8, 12),
@@ -242,7 +242,7 @@ var gmaps = {};
 		};
 
 		var markerIconLargeRed = {
-			url: '/assets/images/markers4.png',
+			url: '/assets//markers4.png',
 			size: new google.maps.Size(20, 28),
 			origin: new google.maps.Point(0, 0),
 			anchor: new google.maps.Point(10, 24),
@@ -250,14 +250,14 @@ var gmaps = {};
 		};
 
 		var markerIconInvisRed = {
-			url: '/assets/images/picture1.png',
+			url: '/assets//picture1.png',
 			size: new google.maps.Size(220, 230),
 			origin: new google.maps.Point(0, 0),
 			anchor: new google.maps.Point(3, 158)
 		};
 
 		var markerIconLargeRedMain = {
-			url: '/assets/images/markers4.png',
+			url: '/assets//markers4.png',
 			size: new google.maps.Size(20, 28),
 			origin: new google.maps.Point(0, 0),
 			anchor: new google.maps.Point(10, 24),
@@ -269,7 +269,7 @@ var gmaps = {};
 		};
 
 		var markerIconLargeBlue = {
-			url: '/assets/images/markers4.png',
+			url: '/assets//markers4.png',
 			size: new google.maps.Size(20, 28),
 			origin: new google.maps.Point(27, 0),
 			anchor: new google.maps.Point(9, 24),
@@ -281,7 +281,7 @@ var gmaps = {};
 		};
 
 		var markerIconLargeGreen = {
-			url: '/assets/images/markers4.png',
+			url: '/assets//markers4.png',
 			size: new google.maps.Size(20, 28),
 			origin: new google.maps.Point(54, 0),
 			anchor: new google.maps.Point(8, 24),
@@ -289,7 +289,7 @@ var gmaps = {};
 		};
 
 		var markerIconSmallOrange = {
-			url: '/assets/images/markers4.png',
+			url: '/assets//markers4.png',
 			size: new google.maps.Size(16, 16),
 			origin: new google.maps.Point(126, 85),
 			anchor: new google.maps.Point(8, 12),
@@ -297,7 +297,7 @@ var gmaps = {};
 		};
 
 		var markerIconLargeOrange = {
-			url: '/assets/images/markers4.png',
+			url: '/assets//markers4.png',
 			size: new google.maps.Size(20, 28),
 			origin: new google.maps.Point(81, 0),
 			anchor: new google.maps.Point(8, 24),

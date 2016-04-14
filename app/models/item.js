@@ -75,7 +75,7 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 		} else {
 			var colorLength = Constants.FLAT_DESIGN_COLORS.length,
 				color = Constants.FLAT_DESIGN_COLORS[Math.floor(Math.random()*colorLength)];
-			return Ember.String.htmlSafe(`background-image: url('assets/images/background-pattern.png'); background-color: ${color};`);
+			return Ember.String.htmlSafe(`background-image: url('assets//background-pattern.png'); background-color: ${color};`);
 		}
 	}.property('image'),
 
@@ -84,7 +84,8 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 	}.property('itemType'),
 
 	slug: function(){
-		return [this.get('id').toString(), this.get('name').toLowerCase()].join(' ').replace(/ /g, '+');
+		var name = this.get('name');
+		return [this.get('id').toString(), name ? name.toLowerCase() : ""].join(' ').replace(/ /g, '+');
 	}.property('id', 'name'),
 
 	reviewedByArray: function(){

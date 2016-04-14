@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ENV from 'tripmind/config/environment';
 
 
 var Constants = Ember.Object.create({
@@ -259,6 +260,14 @@ var Constants = Ember.Object.create({
 	SECTION_ORDER: ["Famous for", "Main destinations", "If you're into...", "Top attractions", "Suggested itineraries", "Good for a day trip"],
 	REVIEW_SOURCE_NAMES: <%= REVIEW_SOURCE_NAMES %>*/
 });
+
+if (ENV.environment === 'development'){
+	Constants.BASE_SERVER_URL = "";
+}
+
+if (ENV.environment === 'production'){
+	Constants.BASE_SERVER_URL = "https://www.wanderant.com";
+}
 
 
 Constants.ITEM_TYPES_ARRAY[1] = {name: 'continent', duration: 1209600};

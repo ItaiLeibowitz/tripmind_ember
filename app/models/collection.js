@@ -2,6 +2,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 import promiseFromAjax from 'tripmind/appconfig/promise_from_ajax';
 import headOnlyPromiseFromAjax from 'tripmind/appconfig/head_only_promise_from_ajax';
+import Constants from 'tripmind/appconfig/constants';
 
 
 export default
@@ -24,7 +25,7 @@ DS.Model.extend({
 				resolve({token: self.get('tmToken')});
 			} else {
 				promiseFromAjax({
-					url: '/api/tm/tm_collections/',
+					url: Constants.BASE_SERVER_URL + '/api/tm/tm_collections/',
 					type: 'POST'
 				}).then(function (result) {
 					self.set('tmToken', result.tm_token);
@@ -79,7 +80,7 @@ DS.Model.extend({
 		var compressed = JSON.stringify(compressedJSON).length < stringifiedRecords.length;
 		var compressedData = compressed ? compressedJSON : stringifiedRecords;
 		return headOnlyPromiseFromAjax({
-			url: '/api/tm/tm_collections/' + this.get('tmToken'),
+			url: Constants.BASE_SERVER_URL + '/api/tm/tm_collections/' + this.get('tmToken'),
 			type: 'PATCH',
 			data: {
 				tm_collection: {
@@ -94,6 +95,10 @@ DS.Model.extend({
 			console.log('reject:', status)
 			return status
 		});
-	}
+	},
+
+	itemsChange:function(){
+		console.log('items changed!')
+	}.observes('items.[]')
 
 });
