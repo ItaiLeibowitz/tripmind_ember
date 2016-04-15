@@ -1,5 +1,5 @@
-{{action-bar openModalAction=(action 'openTopModal' target=displayService)}}
-{{collection-action-bar openModalAction=(action 'openTopModal' target=displayService) addedClass='in' targetModel=model isTrash=model.deletedStatus}}
+{{action-bar openModalAction=(action 'openTopModal' target=displayService) targetModel=model isInCollection=true}}
+{{collection-action-bar openModalAction=(action 'openTopModal' target=displayService) addedClass='in' targetModel=model}}
 
 {{input-with-default value=model.name addedClass="collection-title" default="Untitled" saveOnExit=model}}
 {{#each model.items as |item|}}

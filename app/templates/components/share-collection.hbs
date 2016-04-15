@@ -3,10 +3,13 @@
 	{{#if loading}}
 		Loading...
 	{{else}}
-		Ready to share!
-		<div>{{model.name}}  {{model.tmToken}}</div>
-		<div>{{code}}</div>
-		<div>{{code.length}}</div>
-		<div>{{codeSystem}}</div>
+		<div class="collection-option">
+			<div class="image-container" style={{model.items.firstObject.photoStyle}}></div>
+			<div class="name">{{model.name}}</div>
+		</div>
+		<br/>
+		<a href={{sharedLink}} target="_blank" class="share-link">{{sharedLink}}</a>
+		<div class="share-copy" {{action 'copyLink'}}>COPY</div>
+		{{input value=sharedLink class="share-input"}}
 	{{/if}}
 </div>

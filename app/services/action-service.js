@@ -13,6 +13,19 @@ export default Ember.Service.extend({
 		this.get('selectedIds').clear();
 	},
 
+	removeFromCollection: function(collection){
+		var selectedIds = this.get('selectedIds');
+		var itemsToRemove = this.get('store').peekAll('item').filter(function (item) {
+			return selectedIds.indexOf(item.get('id')) > -1;
+		});
+		collection.get('items').removeObjects(itemsToRemove);
+		collection.save();
+		itemsToRemove.forEach(function(item){
+			item.save();
+		});
+		this.clearSelected();
+	},
+
 	toggleSelected: function(targetId){
 		if (this.selectedIncludes(targetId)) {
 			this.get('selectedIds').removeObject(targetId);

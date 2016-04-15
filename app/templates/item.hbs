@@ -2,7 +2,7 @@
 	{{action-bar openModalAction=(action 'openTopModal' target=displayService)}}
 	{{action-bar-placeholder}}
 {{else}}
-	{{action-bar openModalAction=(action 'openTopModal' target=displayService) addedClass='in' targetModel=model isTrash=model.deletedStatus}}
+	{{action-bar openModalAction=(action 'openTopModal' target=displayService) addedClass='in' targetModel=model isTrash=model.deletedStatus canBeSelected=true}}
 	{{action-bar-placeholder addedClass='in'}}
 {{/if}}
 

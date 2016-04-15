@@ -5,6 +5,10 @@ export default Ember.Component.extend({
 	actionService: Ember.inject.service('action-service'),
 	feedbackService: Ember.inject.service('feedback-service'),
 
+	sharedLink: function(){
+		return `https://www.tripmind.online/#/collections/${this.get('model.tmToken')}`;
+	}.property('model.tmToken'),
+
 	didInsertElement: function () {
 		Ember.run.scheduleOnce('afterRender', this, 'sendSharingData');
 	},
@@ -30,6 +34,26 @@ export default Ember.Component.extend({
 
 
 	actions: {
+		copyLink: function(){
+			var copyTextarea = this.$('.share-input:eq(0)');
+			copyTextarea.select();
+
+			try {
+				var successful = document.execCommand('copy');
+				var msg = successful ? 'successful' : 'unsuccessful';
+				var feedbackSentence = successful ? "Link has been copied to clipboard" : "Couldn't copy link",
+					feedbackAddedClass = successful ? 'success' : 'failure';
+			} catch (err) {
+				var feedbackSentence = "Couldn't copy link",
+					feedbackAddedClass = 'failure';
+			}
+			this.get('feedbackService').setProperties({
+				isShowing: true,
+				feedbackSentence: feedbackSentence,
+				feedbackAddedClass: feedbackAddedClass,
+				feedbackDuration: 3000
+			});
+		}
 	}
 
 

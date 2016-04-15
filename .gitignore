@@ -8,6 +8,9 @@
 /dist
 /tmp
 
+# env variables
+.env*
+
 # dependencies
 /node_modules
 /bower_components

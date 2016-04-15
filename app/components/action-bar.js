@@ -10,7 +10,7 @@ export default Ember.Component.extend({
 	isTrash: Ember.computed.equal('addedClass','trash'),
 
 	showActionButtons: function(){
-		return !(this.get('service.hasSelected') && this.get('targetModel'));
+		return !(this.get('service.hasSelected') && this.get('canBeSelected'));
 	}.property('targetModel','service.hasSelected'),
 
 	currentIsSelected: function(){
@@ -23,6 +23,9 @@ export default Ember.Component.extend({
 		},
 		addSelected: function(targetModel){
 			this.send('openTopModal', 'addToCollection', targetModel)
+		},
+		removeFromCollection: function(targetModel){
+			this.get('service').removeFromCollection(targetModel);
 		},
 		trashSelected: function(targetModel){
 			this.get('service').trashSelected(targetModel);

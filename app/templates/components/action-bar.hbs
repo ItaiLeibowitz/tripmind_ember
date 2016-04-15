@@ -16,6 +16,10 @@
 			<div class="action-btn icon-trash has-tooltip tooltip-below undo" {{action 'trashSelected' targetModel}}>
 				<div class="tooltip">Undelete</div>
 			</div>
+		{{else if isInCollection}}
+			<div class="action-btn icon-trash has-tooltip tooltip-below" {{action 'removeFromCollection' targetModel}}>
+				<div class="tooltip">Remove from collection</div>
+			</div>
 		{{else}}
 			<div class="action-btn icon-trash has-tooltip tooltip-below" {{action 'trashSelected' targetModel}}>
 				<div class="tooltip">Delete (stop tracking)</div>
