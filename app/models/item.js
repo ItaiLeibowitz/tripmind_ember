@@ -75,7 +75,7 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 		} else {
 			var colorLength = Constants.FLAT_DESIGN_COLORS.length,
 				color = Constants.FLAT_DESIGN_COLORS[Math.floor(Math.random()*colorLength)];
-			return Ember.String.htmlSafe(`background-image: url('assets//background-pattern.png'); background-color: ${color};`);
+			return Ember.String.htmlSafe(`background-image: url('assets/images/background-pattern.png'); background-color: ${color};`);
 		}
 	}.property('image'),
 

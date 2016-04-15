@@ -16,10 +16,7 @@ module.exports = function(defaults) {
 			  css: '/ember/vendor.css',
 			  js: '/ember/vendor.js'
 		  }
-	  },
-	  fingerprint:{
-		enabled: false
-	}
+	  }
   });
 
   // Use `app.import` to add additional libraries to the generated
