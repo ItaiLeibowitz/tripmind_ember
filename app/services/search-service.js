@@ -74,7 +74,8 @@ export default Ember.Service.extend(GoogleItemSerializer, {
 		return store.find('item', placeId).then(function(item){
 			return item;
 		}, function(status){
-			var itemRecord = store.createRecord('item', {id: placeId, name: ""});
+			var currentTime = moment().format("X"),
+				itemRecord = store.createRecord('item', {id: placeId, name: "", updatedAt: currentTime});
 			return self.get('itemDetailsService').getAdditionalItemInfo(placeId)
 		})
 	}

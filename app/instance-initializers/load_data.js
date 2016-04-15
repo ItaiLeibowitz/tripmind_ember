@@ -13,7 +13,8 @@ var places = [
 		name: "The Louvre",
 		place_id: "ChIJD3uTd9hx5kcR1IQvGfr8dbk",
 		oneliner: "Palace in Paris, France",
-		itemType: "museum"
+		itemType: "museum" ,
+		updatedAt: "1460548462"
 	},
 	{
 		ancestryNames: "France/Paris",
@@ -27,7 +28,8 @@ var places = [
 		place_id: "ChIJ442GNENu5kcRGYUrvgqHw88",
 		oneliner: "Church in Paris, France",
 		itemType: "place of worship",
-		trackingStatus: false
+		trackingStatus: false,
+		updatedAt: "1465948462"
 	},
 	{
 		ancestryNames: "France/Paris",
@@ -40,7 +42,8 @@ var places = [
 		name: "Catacombs of Paris",
 		place_id: "ChIJdbbQwbZx5kcRs7Qu5nPw18g",
 		oneliner: "Cemetery",
-		itemType: "cemetery"
+		itemType: "cemetery",
+		updatedAt: "1460712462"
 	},
 	{
 		ancestryNames: "",
@@ -53,7 +56,8 @@ var places = [
 		name: "France",
 		place_id: "ChIJMVd4MymgVA0R99lHx5Y__Ws",
 		oneliner: "Country",
-		itemType: "country"
+		itemType: "country",
+		updatedAt: "1460248462"
 	},
 	{
 		ancestryNames: "",
@@ -66,7 +70,8 @@ var places = [
 		name: "USA",
 		place_id: "ChIJCzYy5IS16lQRQrfeQ5K5Oxw",
 		oneliner: "Country",
-		itemType: "country"
+		itemType: "country",
+		updatedAt: "1460648462"
 	},
 	{
 		ancestryNames: "France",
@@ -79,7 +84,8 @@ var places = [
 		name: "Paris",
 		place_id: "ChIJD7fiBh9u5kcRYJSMaMOCCwQ",
 		oneliner: "Capital of France",
-		itemType: "locality"
+		itemType: "locality",
+		updatedAt: "1460348462"
 	},
 	{
 		ancestryNames: "France",
@@ -92,7 +98,8 @@ var places = [
 		name: "Lyon",
 		place_id: "ChIJl4foalHq9EcR8CG75CqrCAQ",
 		oneliner: "City in France",
-		itemType: "locality"
+		itemType: "locality",
+		updatedAt: "1460738462"
 	}
 ];
 

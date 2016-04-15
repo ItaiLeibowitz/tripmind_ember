@@ -52,6 +52,7 @@ export default Ember.Service.extend({
 										item.set('ancestryNames', parent.get('pathNames'));
 										item.set('ancestry', parent.get('path'));
 									}
+									item.set('updatedAt', moment().format("X"));
 									item.save()
 										.then(function (savedItem) {
 											resolve(savedItem);
@@ -59,6 +60,7 @@ export default Ember.Service.extend({
 								});
 
 						} else {
+							item.set('updatedAt', moment().format("X"));
 							item.save()
 								.then(function (savedItem) {
 									resolve(savedItem);

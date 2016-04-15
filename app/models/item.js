@@ -60,11 +60,24 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 	trippointsCount: DS.attr('number'),
 	destinationRoute: 'item.overview',
 	isTemporary: DS.attr('boolean', {defaultValue: false}),
+	updatedAt: DS.attr('string'),
 
 	itemDetailsService:Ember.inject.service('item-details-service'),
 
 
 	deletedStatus: Ember.computed.not('trackingStatus'),
+
+	updatedAtRecently: function(){
+		return moment(this.get('updatedAt'), "X").startOf('day').calendar(null, {
+			sameDay: '[Today]',
+			nextDay: '[Tomorrow]',
+			nextWeek: 'dddd',
+			lastDay: '[Yesterday]',
+			lastWeek: 'MM/DD',
+			sameElse: 'DD/MM/YYYY'
+		})
+	}.property('updatedAt'),
+
 
 	imageUrl: Ember.computed.alias('itemImageUrl'),
 	imageStyle: Ember.computed.alias('itemImageStyle'),
@@ -99,7 +112,7 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 
 
 	getAdditionalItemInfo: function(){
-		console.log('getting more infor for ', this.get('name'))
+		console.log('getting more info for ', this.get('name'))
 		this.get('itemDetailsService').getAdditionalItemInfo(this.get('id'))
 	},
 

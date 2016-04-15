@@ -299,6 +299,22 @@ export default Ember.Component.extend({
 				sectionsObject[itemType].items.pushObject(item);
 			});
 			var orderedKeys = Object.keys(sectionsObject).sort();
+		}  else if (sectionType == 'date') {
+			// Organize items into sections
+			items.forEach(function(item){
+				var updatedDate = item.get('updatedAtRecently');
+				sectionsObject[updatedDate] = sectionsObject[updatedDate] || Ember.Object.create({
+					title: updatedDate,
+					value: item.get('updatedAt'),
+					scrollSlug: updatedDate.replace(/[\/\s]/g,"_"),
+					items: Ember.ArrayProxy.create({content: []}),
+					innerSort: 'date'
+				});
+				sectionsObject[updatedDate].items.pushObject(item);
+			});
+			var orderedKeys = Object.keys(sectionsObject).sort(function (a, b) {
+				return sectionsObject[a].value > sectionsObject[b].value ? -1 : 1;
+			})
 		}
 
 
