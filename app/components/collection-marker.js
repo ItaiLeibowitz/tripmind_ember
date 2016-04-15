@@ -52,8 +52,11 @@ export default MapMarker.extend({
 	},
 
 	clickMarker: function(e){
-		if ($(e.target).hasClass('read-more')) {
-			this.openItemMenu();
+		// If we clicked on the area around the read-more
+		// (This is determined by click offset because the click itself is registered on an image w/o access to the button
+		if (e.Qb.offsetX >= 120 && e.Qb.offsetX <= 220 && e.Qb.offsetY >= 180 && e.Qb.offsetY <= 220) {
+			console.log('going to item!', this.get('model.name'))
+			this.get('targetObject.targetObject').send('triggerTransition', 'item', this.get('model.slug'));
 			//ga('send', 'event', 'marker', 'readMore');
 		}
 		var currentSetting = this.get('isClicked');
@@ -90,9 +93,6 @@ export default MapMarker.extend({
 	},
 
 
-	openItemMenu: function() {
-		this.get('mapService').openItemMenu(this.get('model'));
-	},
 
 	unhoveredIcon: gmaps.markerIcons.smallRed,
 	hoveredIcon: gmaps.markerIcons.invisRed,
