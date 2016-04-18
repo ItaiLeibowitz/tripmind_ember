@@ -9,6 +9,7 @@ export default MapMarker.extend({
     baseDepth: 0,
 	addedLabelClass: 'center',
 	unhoveredIcon: gmaps.markerIcons.largeRed,
+	hoveredIcon: gmaps.markerIcons.largeRed,
 
 	lat: Ember.computed.alias('model.lat'),
 	lng: Ember.computed.alias('model.lng'),

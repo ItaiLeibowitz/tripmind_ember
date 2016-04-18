@@ -82,6 +82,10 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 		return moment(this.get('updatedAt'), "X").format('MM/DD/YYYY')
 	}.property('updatedAt'),
 
+	itemTypeClean: function(){
+		return this.get('itemType').replace(/_/g," ");
+	}.property('itemType'),
+
 
 	imageUrl: Ember.computed.alias('itemImageUrl'),
 	imageStyle: Ember.computed.alias('itemImageStyle'),

@@ -3,30 +3,10 @@ import gmaps from 'tripmind/appconfig/gmaps';
 import MapMarker from 'tripmind/components/map-marker'
 
 export default MapMarker.extend({
-	//currentCollection: Ember.inject.service('current-collection'),
-	visible: true, //Ember.computed.and('markerListVisible','notSameAsCenter'),
-	/*markerListVisible:  Ember.computed.alias('mapService.withAllMarkers'),
-	notSameAsCenter: function(){
-		return this.get('model.id')!=this.get('mapService.centerMarkerModel.id')
-	}.property('model.id','mapService.centerMarkerModel.id'),*/
+	visible: true,
 	map: Ember.computed.alias('mapService.googleMapObject'),
 	baseDepth: 2,
 	addedLabelClass: null,
-
-	/*collItemsDidChange: function(){
-		var isInCollection = this.get('currentCollection.itemIds').indexOf(this.get('model.id')) > -1;
-		if (isInCollection) {
-			this.setProperties({
-				addedLabelClass: 'collection',
-				unhoveredIcon: gmaps.markerIcons.smallOrange
-			})
-		} else {
-			this.setProperties({
-				addedLabelClass: '',
-				unhoveredIcon: gmaps.markerIcons.smallRed
-			})
-		}
-	}.observes('currentCollection.itemIds.[]', 'model.id').on('init'),*/
 
 
 	lat: Ember.computed.alias('model.lat'),
