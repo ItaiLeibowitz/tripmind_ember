@@ -32,6 +32,8 @@ Router.map(function() {
 		this.route('index', {path: '/'});
 		this.route('results', {path: '/:query'});
 	});
+	this.route('recent', { resetNamespace: true, path: '/recent' }, function () {
+	});
 	this.route('collection', { resetNamespace: true, path: '/collections/:collection_slug' }, function () {
 	});
 	this.route('error');

@@ -780,6 +780,67 @@ a {
 			height: 100%;
 		}
 	}
+
+	&.horizontal {
+		margin: -2px 0;
+		background: none;
+		box-shadow: none;
+		white-space: nowrap;
+		overflow: hidden;
+		display: block;
+		width: auto;
+		height: auto;
+		border: 2px solid transparent;
+
+		.image-container, .name, .type, .date {
+			display: inline-block;
+			vertical-align: middle;
+			margin-right: 1em;
+			font-size: 1em;
+		}
+
+		.image-container{
+			margin-left: 3em;
+			height: 5em;
+			width:5em;
+		}
+		.name{
+			width: 10em;
+		}
+		.type{
+			width: 10em;
+		}
+
+		.selector-holder{
+			left: 0em;
+			width: 3em;
+			bottom: 0;
+			background: transparent;
+			.selector {
+				margin: 0.25em;
+				color: #777;
+				top: 1em;
+				bottom: 1em;
+				position: relative;
+				padding: 0;
+			}
+		}
+
+		&.is-selected{
+			border-color: #E74C3C;
+			.selector{
+				color: #E74C3C;
+				background-color: white;
+				opacity: 1;
+			}
+			.selector-holder{
+				background: none;
+				opacity: 1;
+			}
+		}
+
+
+	}
 }
 
 .collection-card, .item-card.sub-section-minimized {
@@ -843,6 +904,24 @@ a {
 
 }
 
+.recent-titles{
+	white-space: nowrap;
+	margin: 1em 2px;
+
+	.title{
+		display: inline-block;
+		vertical-align: middle;
+		font-weight: bold;
+	}
+
+	.image-container{
+		width: 9em;
+	}
+
+	.name, .type{
+		width: 11em;
+	}
+}
 
 .title-ancestry {
 	font-size: 1.2em;

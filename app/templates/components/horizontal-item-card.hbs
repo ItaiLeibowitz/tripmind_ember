@@ -1,0 +1,19 @@
+{{#if inSelectMode}}
+	<div class="card-link" {{action 'toggleSelected'}}></div>
+	{{#link-to 'item' model.slug class="zoom-btn icon-zoom"}}{{/link-to}}
+{{ else }}
+	{{#link-to 'item' model.slug class="card-link"}}{{/link-to}}
+{{/if}}
+<div class="selector-holder">
+	<div class="selector icon-check-circle" {{action 'toggleSelected'}}></div>
+</div>
+
+<div class="image-container" style={{model.photoStyle}}></div>
+
+<div class="name">{{model.name}}</div>
+<div class="type">{{model.itemType}}
+	{{#if model.parentName}}
+		in {{model.parentName}}
+	{{/if}}
+</div>
+<div class="date">{{model.updatedAtDate}}</div>

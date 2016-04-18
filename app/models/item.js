@@ -74,8 +74,12 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 			nextWeek: 'dddd',
 			lastDay: '[Yesterday]',
 			lastWeek: 'MM/DD',
-			sameElse: 'DD/MM/YYYY'
+			sameElse: 'MM/DD'
 		})
+	}.property('updatedAt'),
+
+	updatedAtDate: function(){
+		return moment(this.get('updatedAt'), "X").format('MM/DD/YYYY')
 	}.property('updatedAt'),
 
 

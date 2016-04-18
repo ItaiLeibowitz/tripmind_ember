@@ -1,0 +1,13 @@
+{{action-bar openModalAction=(action 'openTopModal' target=displayService) addedClass=actionBarVersion}}
+{{action-bar-placeholder}}
+
+<div class="recent-titles">
+	<div class="title image-container"></div>
+	<div class="title name">Name</div>
+	<div class="title type">Type</div>
+	<div class="title date">Last updated</div>
+</div>
+{{#each model as |item|}}
+	{{horizontal-item-card model=item}}
+{{/each}}
+{{collection-markers model=model}}
