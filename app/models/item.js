@@ -83,7 +83,8 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 	}.property('updatedAt'),
 
 	itemTypeClean: function(){
-		return this.get('itemType').replace(/_/g," ");
+		var itemType = this.get('itemType');
+		return itemType ? itemType.replace(/_/g," ") : null;
 	}.property('itemType'),
 
 

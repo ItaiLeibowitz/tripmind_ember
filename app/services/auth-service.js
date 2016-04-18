@@ -1,4 +1,5 @@
 import Ember from "ember";
+import Constants from 'tripmind/appconfig/constants';
 
 export default Ember.Service.extend({
 	authenticityToken: null,
@@ -9,7 +10,7 @@ export default Ember.Service.extend({
 
 	getTokens: function(){
 		var self = this;
-		$.get('/tokens', function(results) {
+		$.get(Constants.BASE_SERVER_URL + '/tokens', function(results) {
 			self.set('authenticityToken', results.token);
 		});
 	},

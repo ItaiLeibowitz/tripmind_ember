@@ -265,7 +265,7 @@ if (ENV.environment === 'development'){
 	Constants.BASE_SERVER_URL = "";
 }
 
-if (ENV.environment === 'production'){
+if (ENV.environment === 'production' || ENV.environment === 'staging'){
 	Constants.BASE_SERVER_URL = "https://www.wanderant.com";
 }
 
