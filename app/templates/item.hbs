@@ -27,18 +27,16 @@
 <div class="bottom-content">
 
 		<div class="rhs">
-			{{# if links}}
-				{{#each links as |link|}}
-					<div class="link-holder">
-						<div class="link-name">{{link.title}}</div>
-						<img class="link-image" height="50" src={{link.image}}>
-					</div>
 
-				{{/each}}
-			{{/if}}
 		</div>
 		<div class="lhs">
+			{{# if links}}
+				<div class="top-section-title">Links visited and reviews:</div>
 
+				{{#each links as |link|}}
+					{{link-card model=link}}
+				{{/each}}
+			{{/if}}
 		</div>
 </div>
 
