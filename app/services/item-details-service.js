@@ -24,9 +24,12 @@ export default Ember.Service.extend({
 						item.set('phone', result.international_phone_number);
 						if (!item.get('googleHours') && result.opening_hours) item.set('googleHours', result.opening_hours.periods);
 						if (!item.get('name')) item.set('name', result.name);
-						if (!item.get('lat')) {
+						if (!item.get('lat') && result.geometry) {
 							item.set('lat', result.geometry.location.lat());
 							item.set('lng', result.geometry.location.lng());
+						}
+						if (result.types && result.types.length > 0) {
+							item.itemType = result.types[0];
 						}
 						if (!item.get('image') && result.photos && result.photos[0]) {
 							item.set('image', result.photos[0].getUrl({maxWidth: 3000}));

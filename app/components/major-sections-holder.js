@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import constants from 'tripmind/appconfig/constants';
+import Constants from 'tripmind/appconfig/constants';
 
 export default Ember.Component.extend({
 	classNames: ['major-sections-holder'],
@@ -13,10 +13,11 @@ export default Ember.Component.extend({
 	filterItems: function(items, attribute){
 		if (!attribute) return this.get('model');
 		var [filterAttribute, not] = attribute.split("-");
-		var filteringItemTypes = this.get('filterOptions').filter(function(type){
+		var filteringItemTypes = [];
+		this.get('filterOptions').filter(function(type){
 			return type.isSelected
-		}).map(function(typeOption){
-			return typeOption.value;
+		}).forEach(function(typeOption){
+			filteringItemTypes = filteringItemTypes.concat(typeOption.value);
 		});
 		not = (not == 'not');
 		return  items.filter(function(item){
@@ -45,7 +46,7 @@ export default Ember.Component.extend({
 		return this.get('subSortOptions').findBy('isSelected');
 	}.property('subSortOptions.[]'),
 
-	init: function(){
+	init: function () {
 		this._super();
 		var majorSortOptions = [
 				{name: "Geography (auto-sort)", value: 'geo-auto', isSelected: true},
@@ -60,15 +61,49 @@ export default Ember.Component.extend({
 				{name: "Category", value: 'category', isSelected: false},
 				{name: "Date visited", value: 'date', isSelected: false, sortOnly: true},
 				{name: "Name", value: 'name', isSelected: false, sortOnly: true}
+			];
+		var filterOptions = [],
+			filterOptionsHash = {},
+			filterOptionsOrder = ["Art",
+				"Entertainment",
+				"Family",
+				"Landmark",
+				"Lifestyle",
+				"Museum",
+				"Nature",
+				"Religious",
+				"Other",
+				"Restaurants",
+				"Nightlife",
+				"Shopping",
+				"Hotels"
 			],
-			filterOptions = [
-				{name: "Museums", value: 'museum', isSelected: true},
+			filterOptionsWithSeparator = ["Restaurants", "Nightlife", "Shopping", "Hotels"];
+
+		Constants.GOOGLE_TYPE_FILTER_CATEGORIES.forEach(function (type) {
+			filterOptionsHash[type.filterOption] = (filterOptionsHash[type.filterOption] || []).concat(type.type);
+		});
+		filterOptionsHash['Other'] = 	filterOptionsHash['Other'].concat(filterOptionsHash['Destination']);
+		filterOptionsOrder.forEach(function (name) {
+			filterOptions.push({
+				name: name,
+				value: filterOptionsHash[name],
+				hasLineBefore: filterOptionsWithSeparator.indexOf(name) > -1,
+				isSelected: true
+			})
+		});
+
+		/*
+		 filterOptions = [
+				{name: "Museums", value: ['museum'], isSelected: true},
 				{name: "Nature", value: 'nature', isSelected: true},
 				{name: "Art", value: 'art', isSelected: true},
 				{name: "History", value: 'history', isSelected: true},
+				{name: "Other", value: ['history2'], isSelected: true},
 				{name: "Restaurants", value: 'restaurant', isSelected: true, hasLineBefore: true},
 				{name: "Hotels", value: 'lodging', isSelected: true, hasLineBefore: true}
-			];
+			];*/
+
 		majorSortOptions = Ember.ArrayProxy.create({content: majorSortOptions.map(function(el){
 			return Ember.Object.create(el);
 		})});
@@ -163,7 +198,7 @@ export default Ember.Component.extend({
 						treeObject[ancestorId].count ++;
 						//TODO: add a total weight to each node based on this item's weight
 						// If this item is a parent we should put it in the tree even if it doesn't have desc
-						if ( constants.GOOGLE_PLACE_DESTINATION_TYPES.indexOf(item.get('itemType'))> -1) {
+						if ( Constants.GOOGLE_PLACE_DESTINATION_TYPES.indexOf(item.get('itemType'))> -1) {
 							treeObject[itemId] = treeObject[itemId] || {
 								ancestryArray: ancestorsArray,
 								count: 0,
@@ -252,13 +287,13 @@ export default Ember.Component.extend({
 				hotels = Ember.ArrayProxy.create({content: []});
 			items.forEach(function(item){
 				var itemType = item.get('itemType');
-				if (constants.GOOGLE_PLACE_DESTINATION_TYPES.indexOf(itemType) > -1 ){
+				if (Constants.GOOGLE_PLACE_DESTINATION_TYPES.indexOf(itemType) > -1 ){
 					destinations.pushObject(item);
-				} else if (constants.GOOGLE_PLACE_RESTAURANT_TYPES.indexOf(itemType) > -1){
+				} else if (Constants.GOOGLE_PLACE_RESTAURANT_TYPES.indexOf(itemType) > -1){
 					restaurants.pushObject(item);
-				} else if (constants.GOOGLE_PLACE_NIGHTLIFE_TYPES.indexOf(itemType) > -1){
+				} else if (Constants.GOOGLE_PLACE_NIGHTLIFE_TYPES.indexOf(itemType) > -1){
 					restaurants.pushObject(item);
-				} else if (constants.GOOGLE_PLACE_HOTEL_TYPES.indexOf(itemType) > -1) {
+				} else if (Constants.GOOGLE_PLACE_HOTEL_TYPES.indexOf(itemType) > -1) {
 					hotels.pushObject(item);
 				} else {
 					attractions.pushObject(item);
