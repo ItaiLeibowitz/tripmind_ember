@@ -14,30 +14,60 @@
 </div>
 
 <div class="top-content">
-		<div class="rhs">
-			<div class="image-container main-image" style={{model.photoStyle}}></div>
-			{{map-placeholder model=model}}
-		</div>
-		<div class="lhs">
-			<div class="top-section-title">Description:</div>
-			{{autosave-text-area class='long-desc' cols="60" rows="5" value=model.longDesc saveOnExit=model}}
-		</div>
+	<div class="rhs">
+		<div class="image-container main-image" style={{model.photoStyle}}></div>
+		{{map-placeholder model=model}}
+		{{#unless descendants}}
+
+			<div class="details-holder">
+				<table>
+					{{#each model.details as |detail|}}
+						<tr class="detail-line">
+							<td class="detail-title {{detail.name}}">{{detail.name}}</td>
+							<td class="detail-value">{{detail.value}}</td>
+						</tr>
+					{{/each}}
+					{{#if model.textOperatingHours}}
+						<tr class="detail-line">
+							<td class="detail-title">Opening Hours</td>
+							<td class="detail-value">
+								<table>
+								{{#each model.textOperatingHours as |day|}}
+									<tr>
+									<td class="detail-day-title">{{day.title}}</td>
+									{{#each day.periods as |period|}}
+										<td class="detail-hours">{{period.period}}</td>
+									{{/each}}
+									</tr>
+								{{/each}}
+								</table>
+							</td>
+						</tr>
+					{{/if}}
+				</table>
+			</div>
+		{{/unless}}
+	</div>
+	<div class="lhs">
+		<div class="top-section-title">Description:</div>
+		{{autosave-text-area class='long-desc' cols="60" rows="5" value=model.longDesc saveOnExit=model}}
+	</div>
 </div>
 
 <div class="bottom-content">
 
-		<div class="rhs">
+	<div class="rhs">
 
-		</div>
-		<div class="lhs">
-			{{# if links}}
-				<div class="top-section-title">Links visited and reviews:</div>
+	</div>
+	<div class="lhs">
+		{{#if links}}
+			<div class="top-section-title">Links visited and reviews:</div>
 
-				{{#each links as |link|}}
-					{{link-card model=link}}
-				{{/each}}
-			{{/if}}
-		</div>
+			{{#each links as |link|}}
+				{{link-card model=link}}
+			{{/each}}
+		{{/if}}
+	</div>
 </div>
 
 

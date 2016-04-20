@@ -906,12 +906,14 @@ a {
 
 
 .link-card{
+	display: inline-block;
+	vertical-align: top;
 	padding: 0.5em;
 	background: white;
 	box-shadow: 0 1px 1px rgba(0,0,0,0.25);
 	border-radius: 5px;
 	max-width: 20em;
-	max-height: 10em;
+	max-height: 11em;
 	margin: 0 1em 1em 0;
 	overflow: hidden;
 	cursor: pointer;
@@ -939,11 +941,27 @@ a {
 	.description{
 		color: #777;
 		line-height: 1.5em;
+		margin: 1em 0;
+		-webkit-appearance: none;
+		font: inherit;
+		resize: initial;
+		background: none;
+		outline: none;
+		border-color: transparent;
+		white-space: normal;
+		line-height: 1.5em;
+		&:hover, &:focus{
+			border-color: #ccc;
+		}
 	}
 
 	&.is-expanded{
 		max-height: none;
 		max-width: none;
+
+		.expand-hint:before{
+			content: "Minimize";
+		}
 	}
 	.expand-hint{
 		position: absolute;
@@ -955,8 +973,11 @@ a {
 		border-radius: 5px;
 		opacity: 0;
 		transform: opacity 0.2s;
+		&:before{
+			content:"Expand"
+		}
 	}
-	&:hover:not(.is-expanded){
+	&:hover{
 		.expand-hint{
 			opacity: 0.75;
 		}
@@ -1042,6 +1063,43 @@ a {
 				content:"o";
 			}
 		}
+	}
+}
+
+.details-holder{
+	background: white;
+	padding: 1em 1em 0 1em;
+	width: 26.3em;
+	box-sizing: border-box;
+
+	.details-title{
+		font-weight: bold;
+		color: #333;
+		line-height: 2em;
+		border-bottom: 1px solid #ccc;
+		margin-bottom: 1em;
+	}
+
+	.detail-line{
+		height: 3em;
+	}
+
+	.detail-title{
+		font-weight: bold;
+		vertical-align: top;
+		line-height: 1em;
+		&:after{
+			content: ":";
+		}
+	}
+
+	.detail-value{
+		vertical-align: top;
+		line-height: 1em;
+	}
+
+	.detail-hours, .detail-day-title{
+		font-size: 0.9em;
 	}
 }
 

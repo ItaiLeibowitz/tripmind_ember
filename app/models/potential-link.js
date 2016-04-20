@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import DS from "ember-data";
+import Constants from 'tripmind/appconfig/constants';
 
 export default DS.Model.extend({
 	itemId: DS.attr('string'),
@@ -10,9 +11,15 @@ export default DS.Model.extend({
 	title: DS.attr('string'),
 	description: DS.attr('string'),
 
-	noteOrDesc: function(){
-		return this.get('note') || this.get('description');
-	}.property('note', 'description'),
+	noteOrDesc: Ember.computed('note', 'description', {
+		get(key) {
+			return Ember.String.htmlSafe(this.get('note')) || this.get('description');
+		}, set(key, value){
+			var fieldToUpdate = this.get('note') ? 'note' : 'description';
+			this.set(fieldToUpdate, value);
+			return value;
+		}
+	}),
 
 	domain: function(){
 		var a = $('<a>', { href:this.get('id') } )[0];

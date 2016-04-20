@@ -22,6 +22,7 @@ export default Ember.Service.extend({
 						reject({message: "didn't find the item or its representation in the store"});
 					} else {
 						item.set('phone', result.international_phone_number);
+						if (!item.get('googleHours') && result.opening_hours) item.set('googleHours', result.opening_hours.periods);
 						if (!item.get('name')) item.set('name', result.name);
 						if (!item.get('lat')) {
 							item.set('lat', result.geometry.location.lat());

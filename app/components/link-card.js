@@ -6,7 +6,9 @@ export default Ember.Component.extend({
 	addedClass: null,
 	isExpanded: null,
 
-	click: function () {
-		this.toggleProperty('isExpanded');
+	actions: {
+		toggleExpanded: function () {
+			this.toggleProperty('isExpanded');
+		}
 	}
 });

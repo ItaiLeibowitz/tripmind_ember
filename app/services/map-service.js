@@ -25,7 +25,7 @@ export default Ember.Service.extend({
 	bounds: null,
 	lastHolder: null,
 	googleMapObject: null,
-	isExpanded: true,
+	isExpanded: false,
 
 	init: function(){
 		this._super();

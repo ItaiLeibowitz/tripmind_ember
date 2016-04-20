@@ -26,7 +26,7 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 	boundNeLng: DS.attr('number'),
 	userId: DS.attr('number'),
 	itemType: DS.attr('string'),
-	operatingHours: DS.attr(),
+	googleHours: DS.attr(),
 	externalLinks: DS.attr(),
 	phone: DS.attr('string'),
 	rating: DS.attr('number', {defaultValue: 3}),
@@ -87,6 +87,16 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 		return itemType ? itemType.replace(/_/g," ") : null;
 	}.property('itemType'),
 
+	operatingHours: function(){
+		var googleHours = this.get('googleHours');
+		if (googleHours) {
+			return this.convertGoogleHours(googleHours);
+		} else {
+			return this.get('operatingHoursText')
+		}
+	}.property('googleHours', 'operatingHoursText'),
+
+
 
 	imageUrl: Ember.computed.alias('itemImageUrl'),
 	imageStyle: Ember.computed.alias('itemImageStyle'),
@@ -100,6 +110,21 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 			return Ember.String.htmlSafe(`background-image: url('assets/images/background-pattern.png'); background-color: ${color};`);
 		}
 	}.property('image'),
+
+	details: function(){
+		var details = [],
+			detailNames = ['address', 'phone'];
+		for (var i = 0; i < detailNames.length; i++) {
+			var name = detailNames[i];
+			if (this.get(name)){
+				details.push({
+					name: name.capitalize(),
+					value: this.get(name)
+				})
+			}
+		}
+		return details
+	}.property('address', 'phone', 'operatingHours'),
 
 	itemTypeName: function(){
 		return Constants.ITEM_TYPES_ARRAY[this.get('itemType')] ? Constants.ITEM_TYPES_ARRAY[this.get('itemType')].name.capitalize() : 'Attraction';
@@ -143,7 +168,153 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 
 	phoneLink: function(){
 			return `tel:${this.get('phone')}`;
-	}.property('phone')
+	}.property('phone'),
+
+	convertGoogleHours: function (periods) {
+		if (periods) {
+			var nextDayIndex = function (dayIndex) {
+				return (dayIndex + 1) % 7
+			};
+
+
+			var prevDayIndex = function (dayIndex) {
+				return (dayIndex + 6) % 7
+			};
+
+			var daysBetween = function (startDayIndex, endDayIndex) {
+				if (startDayIndex > endDayIndex) {
+					var currentIndex = startDayIndex,
+						result = [];
+					while (currentIndex != prevDayIndex(endDayIndex)) {
+						currentIndex = nextDayIndex(currentIndex);
+						result.push(currentIndex);
+					}
+					return result;
+				} else {
+					var array = new Array(endDayIndex - startDayIndex + 1);
+					for (var i = 0; i < array.length; i++) {
+						array[i] = startDayIndex + i;
+					}
+					return array
+				}
+			};
+
+			var parseTimestring = function (timestring) {
+				return parseInt(timestring.slice(0, 2)) * 3600 + parseInt(timestring.slice(2, 4)) * 60
+			};
+
+			// local constants
+			var startOfDaySeconds = 0,
+				endOfDaySeconds = 86400,
+				allDayPeriod = [0, 86400];
+
+			// Don't calculate anything if there are no periods
+			if (!periods || periods.length == 0) {
+				return null;
+			}
+
+			//periods = JSON.parse(periods) if periods.class.name == "String"
+
+			// Open 24/7
+			if (periods.length == 1 && periods[0].open.time == "0000" && undefined === periods[0].close) {
+				var array = new Array(7);
+				for (var i = 0; i < array.length; i++) {
+					array[i] = [allDayPeriod];
+				}
+				return array
+			}
+
+			//Use this version of Array.new so that all values don't reference the same object
+			var result = new Array(7);
+			for (var i = 0; i < result.length; i++) {
+				result[i] = [];
+			}
+
+			periods.forEach(function (period) {
+
+
+				var dayIndexOpen = period.open.day,
+					dayIndexClose = period.close.day;
+
+				var timeOpenSeconds = parseTimestring(period.open.time),
+					timeCloseSeconds = parseTimestring(period.close.time);
+				//open and close on the same day
+				if (dayIndexOpen == dayIndexClose) {
+					result[dayIndexOpen].push([timeOpenSeconds, timeCloseSeconds])
+					// don't open and close on the same day. Example: Bar opens at 16:00 and closes at 04:00 the next day
+				} else {
+					result[dayIndexOpen].push([timeOpenSeconds, endOfDaySeconds]);
+					if (timeCloseSeconds > startOfDaySeconds) {
+						result[dayIndexClose].push([startOfDaySeconds, timeCloseSeconds]);
+					}
+
+					// if difference between open and close is more than 1 day, set days between as open 24 hours
+					if (nextDayIndex(dayIndexOpen) != dayIndexClose) {
+						daysBetween(dayIndexOpen, dayIndexClose).forEach(function (dayIndex) {
+							result[dayIndex] = [allDayPeriod]
+						});
+					}
+				}
+			});
+			return result
+		} else {
+			return null;
+		}
+	},
+
+	secondsToTime: function(seconds) {
+		var date = new Date(seconds * 1000);
+		var hours = date.getUTCHours(); // returns 0 for both 00:00 and 24:00
+		var minutes = date.getUTCMinutes();
+		var suffix = (hours >= 12) ? "PM" : "AM";
+
+		if (hours == 0) hours = 12;
+		if (hours > 12) hours -= 12;
+
+		//hours = ["0", hours].join("").slice(-2);
+		minutes = ["0", minutes].join("").slice(-2);
+
+		return (minutes > 0) ? [hours, ':', ["0", minutes].join("").slice(-2), suffix].join("") : [hours,suffix].join("");
+	},
+
+	textOperatingHours: function() {
+		var operatingHours = this.get('operatingHours');
+
+		if (operatingHours && operatingHours.length == 7) {
+			var dayNames;
+
+			if (operatingHours.isUniform()) {
+				operatingHours = [operatingHours[0]];
+				dayNames = ["Every day"];
+			} else {
+				operatingHours = operatingHours.rotate();
+				dayNames = Constants.DAY_NAMES.rotate();
+			}
+
+			var result = [];
+
+			for (var i = 0; i < operatingHours.length; i++) {
+				var title = dayNames[i];
+				var periods = operatingHours[i];
+				var resultPeriods = [];
+
+				for (var j = 0; j < periods.length; j++) {
+					var period = periods[j];
+					var startTime = this.secondsToTime(period[0]);
+					var endTime = this.secondsToTime(period[1]);
+					var resultPeriod = (startTime == endTime) ? "Open 24 hours" : [startTime, ' - ', endTime].join("");
+
+					resultPeriods[j] = { period: resultPeriod };
+				}
+
+				result[i] = { title: title, periods: resultPeriods.length ? resultPeriods : [{period: 'Closed'}] };
+			}
+
+			return result;
+		} else {
+			return [];
+		}
+	}.property('operatingHours'),
 
 
 });
