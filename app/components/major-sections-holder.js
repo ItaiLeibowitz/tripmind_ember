@@ -13,9 +13,16 @@ export default Ember.Component.extend({
 	filterItems: function(items, attribute){
 		if (!attribute) return this.get('model');
 		var [filterAttribute, not] = attribute.split("-");
+		var filteringItemTypes = this.get('filterOptions').filter(function(type){
+			return type.isSelected
+		}).map(function(typeOption){
+			return typeOption.value;
+		});
 		not = (not == 'not');
 		return  items.filter(function(item){
 			return not ? !item.get(filterAttribute) : item.get(filterAttribute);
+		}).filter(function(item){
+			return filteringItemTypes.indexOf(item.get('itemType')) > -1
 		})
 	},
 
@@ -366,7 +373,9 @@ export default Ember.Component.extend({
 		},
 		updateFilter: function(){
 			this.notifyPropertyChange('filterOptions');
+			this.shouldRefilterItems();
 			Ember.run.scheduleOnce('sync', this, 'updateSections');
+			console.log('refiltering!')
 		},
 		scrollToSection: function(destination){
 			var newOffset = (destination == "top") ? 0 : $(`#major-section-${destination}`).offset().top;

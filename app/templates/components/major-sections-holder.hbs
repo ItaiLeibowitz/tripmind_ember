@@ -1,6 +1,7 @@
-{{#if filteredItems.length}}
+
 
 <div class="flex-container">
+{{#if filteredItems.length}}
 <div class="scroll-menu">
 	{{#if majorSections}}
 		<div class="scroll-link" {{action 'scrollToSection' 'top'}}>Top</div>
@@ -9,6 +10,7 @@
 		<div class="scroll-link" {{action 'scrollToSection' majorSection.scrollSlug}}>{{majorSection.title}}</div>
 	{{/each}}
 </div>
+{{/if}}
 <div class="scrollable-rhs-content">
 	<div class="options-menu section-options-menu">
 		<div class="toggle-btn">Options</div>
@@ -38,6 +40,6 @@
 </div>
 
 </div>
-{{else}}
-	Nothing here...
-{{/if}}
+
+{{collection-markers model=filteredItems}}
+
