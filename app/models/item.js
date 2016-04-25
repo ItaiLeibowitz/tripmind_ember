@@ -61,6 +61,7 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 	destinationRoute: 'item.overview',
 	isTemporary: DS.attr('boolean', {defaultValue: false}),
 	updatedAt: DS.attr('string'),
+	potentialLinks: DS.hasMany('potentialLink'),
 
 	itemDetailsService:Ember.inject.service('item-details-service'),
 

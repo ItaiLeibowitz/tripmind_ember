@@ -3,17 +3,17 @@ import DS from "ember-data";
 import Constants from 'tripmind/appconfig/constants';
 
 export default DS.Model.extend({
-	itemId: DS.attr('string'),
 	createdAt: DS.attr('string'),
 	lastVisited: DS.attr('string'),
 	note: DS.attr('string'),
 	image: DS.attr('string'),
 	title: DS.attr('string'),
 	description: DS.attr('string'),
+	item: DS.belongsTo('item'),
 
 	noteOrDesc: Ember.computed('note', 'description', {
 		get(key) {
-			return Ember.String.htmlSafe(this.get('note')) || this.get('description');
+			return Ember.String.htmlSafe(this.get('note') || this.get('description'));
 		}, set(key, value){
 			var fieldToUpdate = this.get('note') ? 'note' : 'description';
 			this.set(fieldToUpdate, value);

@@ -139,10 +139,16 @@ var addlData = {data: [
 			itemId: 'ChIJD3uTd9hx5kcR1IQvGfr8dbk',
 			createdAt: '1460248462',
 			lastVisited: '1460248462',
-			note: "The Louvre Palace is a former royal palace located on the Right Bank of the Seine in Paris, between the Tuileries Gardens and the church of Saint-Germain l'Auxerrois. Wikipedia asdkjashkd",
+			//note: "The Louvre Palace is a former royal palace located on the Right Bank of the Seine in Paris, between the Tuileries Gardens and the church of Saint-Germain l'Auxerrois. Wikipedia asdkjashkd",
+			note: '12345',
 			image: "https://lh5.googleusercontent.com/-HIc3V6HYPg4/VrXryykTJ2I/AAAAAAAAmVo/adAXMHlv0Pw/w3000-k/",
 			title: 'louvre museum - the full website',
 			description: ' I dont know what the desc is for really'
+		},
+		relationships: {
+			item: {
+				data: { type: 'item', id: "ChIJD3uTd9hx5kcR1IQvGfr8dbk" }
+			}
 		}
 	}
 

@@ -9,6 +9,9 @@ export default Ember.Component.extend({
 	actions: {
 		toggleExpanded: function () {
 			this.toggleProperty('isExpanded');
+		},
+		deleteLink: function(){
+			this.get('model').destroyRecord();
 		}
 	}
 });

@@ -4,6 +4,7 @@ import betterSanitize from 'tripmind/appconfig/better_sanitize';
 export default Ember.Component.extend({
 	classNameBindings: ['isEditable'],
 	attributeBindings: ['contenteditable'],
+	valueOW: Ember.computed.oneWay('value'),
 
 
 	mouseDown: function(e){
@@ -12,11 +13,21 @@ export default Ember.Component.extend({
 		}
 	},
 
+	_updateValue(value){
+		this.set('value', value);
+		this.$().html(value);
+	},
+
 	focusOut: function(){
-		var modelToSave = this.get('saveOnExit');
+		var modelToSave = this.get('saveOnExit'),
+			self = this;
 		if (modelToSave) {
-			this.set('value', betterSanitize(this.$().html()));
+			var currentValue = this.$().html();
 			this.set('contenteditable', false);
+			this.set('value', null);
+			this.$().html("");
+			this.set('value', currentValue);
+			this.$().html(currentValue);
 			if (modelToSave.get('updatedAt')){
 				modelToSave.set('updatedAt', moment().format("X"));
 			}

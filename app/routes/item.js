@@ -32,7 +32,6 @@ export default Ember.Route.extend({
 		this._super(controller, model.get('item'));
 		controller.setProperties({
 			descendants: model.get('descendants'),
-			links: model.get('links')
 		});
 	}
 });

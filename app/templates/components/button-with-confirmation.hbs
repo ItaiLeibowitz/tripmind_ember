@@ -1,0 +1,9 @@
+{{#if isConfirming}}
+	<div class="confirm-holder">
+		Are you sure?
+		<div class="confirm-button" {{action 'confirm' true}}>Yes</div>
+		<div class="confirm-button" {{action 'confirm' false}}>No</div>
+	</div>
+{{else}}
+	{{yield}}
+{{/if}}

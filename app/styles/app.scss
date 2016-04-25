@@ -970,6 +970,22 @@ a {
 		}
 	}
 
+	.delete-btn{
+		position: absolute;
+		top: 0;
+		right: 0;
+		line-height: 2em;
+		min-width: 2em;
+		display: none;
+		opacity: 0.75;
+		cursor: pointer;
+		color: #E74C3C;
+		font-size: 1.1em;
+		&:hover{
+			opacity: 1;
+		}
+	}
+
 
 
 	&.is-expanded{
@@ -978,6 +994,10 @@ a {
 
 		.expand-hint:before{
 			content: "Minimize";
+		}
+
+		.delete-btn{
+			display: inline-block;
 		}
 	}
 	.expand-hint{
@@ -997,6 +1017,26 @@ a {
 	&:hover{
 		.expand-hint{
 			opacity: 0.75;
+		}
+	}
+}
+
+.confirm-holder{
+	font-size: 0.9em;
+	margin: 1em;
+	position: relative;
+	background: #333;
+	color: white;
+	border-radius: 1em;
+	padding: 0 1em;
+	white-space: nowrap;
+	.confirm-button{
+		display: inline-block;
+		margin-left: 1em;
+		cursor: pointer;
+		color: #ccc;
+		&:hover{
+			color: white;
 		}
 	}
 }

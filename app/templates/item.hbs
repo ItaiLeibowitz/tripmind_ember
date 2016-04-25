@@ -60,10 +60,10 @@
 
 	</div>
 	<div class="lhs">
-		{{#if links}}
+		{{#if model.potentialLinks}}
 			<div class="top-section-title">Links visited and reviews:</div>
 
-			{{#each links as |link|}}
+			{{#each model.potentialLinks as |link|}}
 				{{link-card model=link}}
 			{{/each}}
 		{{/if}}
