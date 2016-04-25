@@ -17,7 +17,7 @@ export default DS.Model.extend({
 		}, set(key, value){
 			var fieldToUpdate = this.get('note') ? 'note' : 'description';
 			this.set(fieldToUpdate, value);
-			return value;
+			return Ember.String.htmlSafe(value);
 		}
 	}),
 
