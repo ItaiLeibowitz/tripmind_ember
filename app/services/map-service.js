@@ -97,6 +97,7 @@ export default Ember.Service.extend({
 	},
 
 	fitToBounds: function () {
+		console.log('fitting bounds!')
 		var bounds = this.get('bounds');
 		if (!bounds) return;
 		var map = this.get('googleMapObject');
@@ -163,7 +164,6 @@ export default Ember.Service.extend({
 		$('#actual-map').appendTo('#expanded-map');
 		this.resizeMap();
 		this.scheduleReCenter();
-		this.scheduleFitBounds();
 		this.setProperties({
 			draggable: true,
 			scrollwheel: true,
@@ -183,7 +183,6 @@ export default Ember.Service.extend({
 		this.set('withAllMarkers', false);
 		this.resizeMap();
 		this.scheduleReCenter();
-		this.scheduleFitBounds();
 		$('#expanded-map').removeClass('is-expanded');
 		this.setProperties({
 			draggable: false,

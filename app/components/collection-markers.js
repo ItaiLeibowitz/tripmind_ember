@@ -42,8 +42,13 @@ export default Ember.Component.extend({
 		return wrappers
 	}.property('model.[]'),
 
-	ZoomToModel: function(){
+	_zoomToModel: function () {
+		console.log('zooming map!')
 		this.set('mapService.bounds', this.get('mapBoundingBox'));
+	}
+
+	, zoomToModel: function(){
+		Ember.run.scheduleOnce('afterRender', this, '_zoomToModel');
 	}.observes('model.[].lat', 'model.[].lng').on('init'),
 
 
