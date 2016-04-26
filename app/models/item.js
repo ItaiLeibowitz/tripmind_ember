@@ -63,6 +63,13 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 	updatedAt: DS.attr('string'),
 	potentialLinks: DS.hasMany('potentialLink'),
 
+
+	visitedLinks: function () {
+		return this.get('potentialLinks').filter(function (link) {
+			return link.get('lastVisited');
+		});
+	}.property('potentialLinks.[].lastVisited'),
+
 	itemDetailsService:Ember.inject.service('item-details-service'),
 
 

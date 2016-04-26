@@ -66,13 +66,18 @@ DS.Model.extend({
 			linksToSend = Ember.ArrayProxy.create({content: []});
 		return this.get('items')
 			.then(function (items) {
-				var potentialLinkPromises = items.map(function (item) {
-					return item.get('potentialLinks');
+				var visitedLinkPromises = items.map(function (item) {
+					return item.get('potentialLinks')
+						.then(function(links){
+							return links.filter(function(link){
+								return link.get('lastVisited') > 0
+							})
+						});
 				});
-				return Ember.RSVP.all(potentialLinkPromises)
-					.then(function (linkLists) {
-						linkLists.forEach(function(list){
-							linksToSend.addObjects(list);
+				return Ember.RSVP.allSettled(visitedLinkPromises)
+					.then(function (array) {
+						array.forEach(function(el){
+							if (el.state=='fulfilled') linksToSend.addObjects(el.value);
 						});
 						var serializedRecords = [
 								{
@@ -90,7 +95,9 @@ DS.Model.extend({
 								}
 							],
 							serializedItems = items.map(function (item) {
-								var potentialLinks = item.get('potentialLinks');
+								var potentialLinks = item.get('potentialLinks').filter(function(link){
+									return link.get('lastVisited') > 0
+								});
 								return {
 									id: item.get('id'),
 									type: 'item',
@@ -143,6 +150,9 @@ DS.Model.extend({
 							console.log('reject:', status)
 							return status
 						});
+					})
+				.catch(function(error){
+						console.log('couldnt find all links', error)
 					})
 			});
 	},

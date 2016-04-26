@@ -8,11 +8,18 @@ export default Ember.Route.extend({
 			store = this.get('store');
 		return store.findRecord('item', itemId)
 			.then(function (itemRecord) {
-			   	return store.findAll('item').then(function(items){
-					var descendants = items.filter(function(i){
-						return i.get('trackingStatus') && i.get('ancestry') && i.get('ancestry').indexOf(itemRecord.get('path')) == 0;
+				return itemRecord.get('potentialLinks').then(function(links){
+					console.log('loaded the links', links)
+					itemRecord.notifyPropertyChange('potentialLinks.[].lastVisited');
+				}, function (s) {
+					console.log('didnt load links', s)
+				}).then(function () {
+					return store.findAll('item').then(function (items) {
+						var descendants = items.filter(function (i) {
+							return i.get('trackingStatus') && i.get('ancestry') && i.get('ancestry').indexOf(itemRecord.get('path')) == 0;
+						});
+						return Ember.Object.create({item: itemRecord, descendants: descendants})
 					});
-					return Ember.Object.create({item: itemRecord, descendants: descendants})
 				});
 			});
 	},
