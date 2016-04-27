@@ -50,7 +50,7 @@ export default Ember.Service.extend(GoogleItemSerializer, {
 				itemsToBuild = [];
 			for (var i = 0; i < results.length; i++) {
 				var result = results[i];
-				var itemRecord = store.peekRecord('item', result.place_id)
+				var itemRecord = store.peekRecord('item', result.place_id);
 				if (itemRecord) {
 					existingItems.push(itemRecord);
 				} else {

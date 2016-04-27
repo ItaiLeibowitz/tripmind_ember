@@ -143,10 +143,10 @@ export default Ember.Service.extend({
 						var topResult = filteredResults[0];
 						var massagedResult = $.extend(topResult, {name: topResult.description});
 						var item = self.buildItemInfoFromResults({}, massagedResult);
-						var itemRecord = store.peekRecord('item', item.place_id);
+						var itemRecord = store.peekRecord('item', item.gmapsReference);
 						//if it doesn't exist, create it.
 						if (!itemRecord) {
-							itemRecord = store.createRecord('item', $.extend(item, {id: item.place_id}));
+							itemRecord = store.createRecord('item', $.extend(item, {id: item.gmapsReference}));
 						}
 						resolve(itemRecord)
 					} else {
@@ -174,7 +174,7 @@ export default Ember.Service.extend({
 		if (result.types && result.types.length > 0) {
 			item.itemType = result.types[0];
 		}
-		item.place_id = result.place_id;
+		item.gmapsReference = result.place_id;
 		item.address = result.formatted_address;
 		item.rating = result.rating;
 		if (!item.name) item.name = result.name;

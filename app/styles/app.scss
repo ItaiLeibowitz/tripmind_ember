@@ -952,6 +952,7 @@ a {
 	.description{
 		color: #777;
 		line-height: 1.5em;
+		min-height: 1.5em;
 		margin: 1em 0;
 		-webkit-appearance: none;
 		font: inherit;
@@ -963,6 +964,7 @@ a {
 		&:hover, &:focus{
 			border-color: #ccc;
 		}
+
 
 		a{
 			color: #0077ff;
@@ -998,6 +1000,11 @@ a {
 
 		.delete-btn{
 			display: inline-block;
+		}
+
+		.description:empty:before{
+			content: "Add a note";
+			color: #ccc;
 		}
 	}
 	.expand-hint{
@@ -1094,8 +1101,14 @@ a {
 		border-color: transparent;
 		white-space: normal;
 		line-height: 1.5em;
+		min-height: 1.5em;
 		&:hover, &:focus{
 			border-color: #ccc;
+		}
+
+		&:empty:before{
+			content:"Add a description";
+			color: #ccc;
 		}
 	}
 }
