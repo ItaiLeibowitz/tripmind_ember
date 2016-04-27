@@ -21,8 +21,11 @@ export default Ember.Component.extend({
 			.then(function (result) {
 				if (result.redirect){
 					self.get('targetObject').send('triggerTransition', 'collection', result.token);
+					self.set('model', result.newModel);
+					return result.newModel.postToServer();
+				} else {
+					return model.postToServer();
 				}
-				return model.postToServer();
 			})
 			.then(function (result) {
 				//TODO: Send the code and codesystem to the collection for storage then on acceptance set loading to false
