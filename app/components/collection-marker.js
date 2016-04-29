@@ -34,7 +34,17 @@ export default MapMarker.extend({
 	clickMarker: function(e){
 		// If we clicked on the area around the read-more
 		// (This is determined by click offset because the click itself is registered on an image w/o access to the button
-		if (e.Qb.offsetX >= 120 && e.Qb.offsetX <= 220 && e.Qb.offsetY >= 180 && e.Qb.offsetY <= 220) {
+
+		// First we find the original event
+		var originalEvent;
+		for (var key in e){
+			if (e.hasOwnProperty(key)){
+				if (e[key] && e[key].isTrusted)
+					originalEvent = e[key]
+			}
+		}
+
+		if (originalEvent.offsetX >= 120 && originalEvent.offsetX <= 220 && originalEvent.offsetY >= 180 && originalEvent.offsetY <= 220) {
 			console.log('going to item!', this.get('model.name'))
 			this.get('targetObject.targetObject.targetObject').send('triggerTransition', 'item', this.get('model.slug'));
 			//ga('send', 'event', 'marker', 'readMore');
