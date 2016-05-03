@@ -60,19 +60,19 @@ export default Ember.TextField.extend(Autocomplete, {
 			}, function(status){
 				console.log('no results found')
 			});
-			//ga('send', 'search', 'autocompleteSelect', selectedPrediction.place_id);
+			ga('send', 'event', 'search', 'autocompleteSelect', selectedPrediction.place_id);
 
 		} else {
 			//submit the search
 			self.get('parentView').send('submit', this.get('query'));
-			//ga('send', 'search', 'searchSubmit', this.get('query'));
+			ga('send', 'event', 'search', 'searchSubmit', this.get('query'));
 		}
 	},
 
 	actions: {
 		clearSearch: function(){
 			this.set('query', '');
-			//ga('send', 'search', 'clearSearch');
+			ga('send', 'event', 'search', 'clearSearch');
 		}
 	}
 

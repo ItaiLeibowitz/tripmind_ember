@@ -7,10 +7,10 @@ const Router = Ember.Router.extend({
 
 	doSomethingOnUrlChange: function () {
 		Ember.run.schedule('afterRender', this, 'prepView');
-		/*ga('send', 'pageview', {
+		ga('send', 'pageview', {
 			'page': this.get('url'),
 			'title': this.get('url')
-		});*/
+		});
 	}.on('didTransition'),
 
 	// Close any menus, and send a message to applicationRouter to scroll to the appropriate tab

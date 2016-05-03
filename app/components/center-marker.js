@@ -29,22 +29,7 @@ export default MapMarker.extend({
 
 	clickMarker: function(){
 		$('body').animate({scrollTop: 0}, 200);
-	},
-
-	/*collItemsDidChange: function(){
-		var isInCollection = this.get('currentCollection.itemIds').indexOf(this.get('model.id')) > -1;
-		if (isInCollection) {
-			this.setProperties({
-				addedLabelClass: 'center collection',
-				unhoveredIcon: gmaps.markerIcons.largeOrange
-			})
-		} else {
-			this.setProperties({
-				addedLabelClass: 'center',
-				unhoveredIcon: gmaps.markerIcons.largeRed
-			})
-		}
-	}.observes('currentCollection.itemIds.[]', 'model.id').on('init'),*/
+	}
 
 });
 

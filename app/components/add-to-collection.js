@@ -12,6 +12,7 @@ export default Ember.Component.extend({
 		this.get('store').findAll('collection').then(function (result) {
 			self.set('collections', result.sortBy('updatedAt').reverse());
 		})
+		ga('send', 'event', 'addToCollection', 'init');
 	},
 
 
@@ -41,9 +42,7 @@ export default Ember.Component.extend({
 					itemsToAdd.forEach(function (item) {
 						item.save();
 					});
-					var js = JSON.stringify(collection.toJSON());
-					console.log('collection:', js)
-					js = lzwCompress.pack(js)
+
 					self.get('actionService').clearSelected();
 					self.get('closeAction')();
 					self.get('feedbackService').setProperties({
@@ -57,6 +56,7 @@ export default Ember.Component.extend({
 						feedbackDuration: 3000
 					});
 				//});
+			ga('send', 'event', 'addToCollection', 'choseCollection');
 			return false;
 		}
 	}

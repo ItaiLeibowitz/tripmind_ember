@@ -21,6 +21,7 @@ export default Ember.Component.extend({
 			if (query.length > 0) this.get('targetObject').send('transitionToResults', query)
 			this.get('wrappedField').$().autocomplete("close");
 			this.get('wrappedField').$().blur();
+			ga('send', 'event', 'search', 'searchFieldSubmit');
 		}
 	}
 

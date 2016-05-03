@@ -17,6 +17,7 @@ export default Ember.Component.extend(Draggable, {
 		var newWidth = $(document).innerWidth() - ui.offset.left - 5;
 		this.set('screenDefService.mapWidth', newWidth);
 		this.get('mapService').resizeMap();
+		ga('send', 'event', 'map', 'resize');
 	}
 
 

@@ -24,6 +24,8 @@ export default Ember.Service.extend({
 			Ember.run.schedule('afterRender', this, function() {
 				$('.top-modal, .modal-dialog').addClass('in');
 			});
+			ga('send', 'event', 'topModal', modalName)
+
 		},
 
 	}

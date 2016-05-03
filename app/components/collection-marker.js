@@ -47,7 +47,7 @@ export default MapMarker.extend({
 		if (originalEvent.offsetX >= 120 && originalEvent.offsetX <= 220 && originalEvent.offsetY >= 180 && originalEvent.offsetY <= 220) {
 			console.log('going to item!', this.get('model.name'))
 			this.get('targetObject.targetObject.targetObject').send('triggerTransition', 'item', this.get('model.slug'));
-			//ga('send', 'event', 'marker', 'readMore');
+			ga('send', 'event', 'marker', 'readMore');
 		}
 		var currentSetting = this.get('isClicked');
 		/*if (this.get('minimizeAllAction')) { this.get('minimizeAllAction')()}
@@ -57,7 +57,7 @@ export default MapMarker.extend({
 		if (!currentSetting) {
 
 			this.centerMarker();
-			//ga('send', 'event', 'marker', 'enlarge');
+			ga('send', 'event', 'marker', 'enlarge');
 		}
 		return false;
 	},

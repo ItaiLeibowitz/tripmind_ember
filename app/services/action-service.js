@@ -24,6 +24,7 @@ export default Ember.Service.extend({
 			item.save();
 		});
 		this.clearSelected();
+		ga('send', 'event', 'removeFromCollection')
 	},
 
 	toggleSelected: function(targetId){
@@ -44,6 +45,8 @@ export default Ember.Service.extend({
 			item.save();
 		});
 		this.clearSelected();
+		ga('send', 'event', 'sendToTrash')
+
 	},
 
 	numOfSelected: function(){

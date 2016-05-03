@@ -27,7 +27,7 @@ export default Ember.Service.extend(GoogleItemSerializer, {
 		} else {
 			var request = {query: query, location: location, radius: 1000};
 		}
-		//ga('send', 'event', 'search', 'googleTextQuery', query);
+		ga('send', 'event', 'search', 'googleTextQuery', query);
 
 		return new Ember.RSVP.Promise(function (resolve, reject) {
 			self.get('googlePlaces.service').textSearch(request, function (results, status) {

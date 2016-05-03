@@ -32,6 +32,8 @@ export default Ember.Component.extend({
 				self.set('code', result.code);
 				self.set('codeSystem', result.compressed);
 				self.set('loading', false);
+				ga('send', 'event', 'shareCollection', 'success');
+
 			})
 	},
 
