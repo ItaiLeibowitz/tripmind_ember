@@ -9,5 +9,7 @@
 </div>
 {{#each model as |item|}}
 	{{horizontal-item-card model=item}}
+{{else}}
+	Nothing has been tracked yet. Try searching for something on Google or using the search bar to the left.
 {{/each}}
 {{collection-markers model=model}}

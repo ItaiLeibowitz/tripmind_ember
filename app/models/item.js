@@ -64,6 +64,12 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 	potentialLinks: DS.hasMany('potentialLink'),
 
 
+
+	save: function(options){
+		if (this.currentState.stateName.indexOf('deleted') == -1) this.set('updatedAt', moment().format("X"));
+		return this._super(options);
+	},
+
 	visitedLinks: function () {
 		return this.get('potentialLinks').filter(function (link) {
 			return link.get('lastVisited');
