@@ -10,36 +10,44 @@
 		<div class="scroll-link" {{action 'scrollToSection' majorSection.scrollSlug}}>{{majorSection.title}}</div>
 	{{/each}}
 </div>
-{{/if}}
-<div class="scrollable-rhs-content">
-	<div class="options-menu section-options-menu">
-		<div class="toggle-btn">Options</div>
-		<div class="menu-body two-column">
-			<div class="menu-column">
-				{{#unless majorSectionType}}
+	<div class="scrollable-rhs-content">
+		<div class="options-menu section-options-menu">
+			<div class="toggle-btn">Options</div>
+			<div class="menu-body two-column">
+				<div class="menu-column">
+					{{#unless majorSectionType}}
+						<div class="menu-section">
+							<div class="menu-section-title">Sort by:</div>
+							{{select-one options=majorSortOptions onChange=(action 'updateSortOptions')}}
+						</div>
+					{{/unless}}
 					<div class="menu-section">
-						<div class="menu-section-title">Sort by:</div>
-						{{select-one options=majorSortOptions onChange=(action 'updateSortOptions')}}
+						<div class="menu-section-title">Sort subsections by:</div>
+						{{select-one options=subSortOptions onChange=(action 'updateSortOptions')}}
 					</div>
-				{{/unless}}
-				<div class="menu-section">
-					<div class="menu-section-title">Sort subsections by:</div>
-					{{select-one options=subSortOptions onChange=(action 'updateSortOptions')}}
 				</div>
-			</div>
-			<div class="menu-column">
-				<div class="menu-section">
-					{{select-many options=filterOptions onChange=(action 'updateFilter')}}
+				<div class="menu-column">
+					<div class="menu-section">
+						{{select-many options=filterOptions onChange=(action 'updateFilter')}}
+					</div>
 				</div>
 			</div>
 		</div>
+		{{#each majorSections as |majorSection|}}
+			{{major-section model=majorSection}}
+		{{else}}
+			Nothing left here to see.. maybe remove some filters?
+		{{/each}}
 	</div>
-	{{#each majorSections as |majorSection|}}
-		{{major-section model=majorSection}}
+{{else}}
+	{{#if isTrash}}
+		Your trashcan is empty. This will hold any items you decide not to track.
 	{{else}}
-		Nothing left here to see.. maybe remove some filters?
-	{{/each}}
-</div>
+		You don't have any tracked items yet. Try searching for something on Google, or use the search bar on the left.
+
+	{{/if}}
+{{/if}}
+
 
 </div>
 

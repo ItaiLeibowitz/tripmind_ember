@@ -239,7 +239,7 @@ var formatPlace = function(place){
 
 
 export function initialize(applicationInstance) {
-	let store = applicationInstance.lookup('service:store');
+	/*let store = applicationInstance.lookup('service:store');
 	if (chrome.extension) {
 		var backgroundPage = chrome.extension.getBackgroundPage();
 		var trackedPlaces = backgroundPage.TripMinder.trackedPlaces;
@@ -256,7 +256,7 @@ export function initialize(applicationInstance) {
 			return formatPlace(place)
 		});
 	}
-	if (formattedData) store.push({data: formattedData});
+	if (formattedData) store.push({data: formattedData});*/
 };
 
 
