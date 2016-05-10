@@ -7,10 +7,13 @@
 
 {{collection-markers model=model.items }}
 
-<div class="add-date" {{action 'addDate'}}>Add date</div>
+<div class="add-date" {{action 'addDate' 'before'}}>Add a day</div>
 
 {{#if model.dates}}
-	{{#each model.dates as |date|}}
+	{{#each model.orderedDates as |date|}}
 		{{date-view model=date}}
 	{{/each}}
 {{/if}}
+
+<div class="add-date" {{action 'addDate' 'after'}}>Add a day</div>
+

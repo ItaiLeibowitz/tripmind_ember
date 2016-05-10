@@ -56,11 +56,16 @@ export default Ember.Component.extend({
 		var directionsDisplay = this.get('directionsDisplay');
 
 		directionsDisplay.setDirections(response);
+		directionsDisplay.setMap(this.get('mapService.googleMapObject'));
 
 	},
 
 	didInsertElement: function () {
 		this._super();
+		var displayOptions = $.extend(gmaps.directionsDisplayOptions, {
+				polylineOptions: gmaps.createPolylineOptions(this.get('color')).default
+			}
+		);
 		var directionsDisplay = new google.maps.DirectionsRenderer(gmaps.directionsDisplayOptions);
 		this.set('directionsDisplay', directionsDisplay);
 		directionsDisplay.setMap(this.get('mapService.googleMapObject'));
@@ -69,12 +74,21 @@ export default Ember.Component.extend({
 
 	},
 
+	colorDidChange: function(){
+		var directionsDisplay = this.get('directionsDisplay');
+		if (directionsDisplay){
+			directionsDisplay.polylineOptions = gmaps.createPolylineOptions(this.get('color')).default;
+		}
+	}.observes('color').on('init'),
+
 	_refreshDirections: function(){
 		var self = this;
 		this._getDirections()
 			.then(function(response){
 				if (response != 0) {
 					self._drawDirections(response);
+				} else {
+					self.get('directionsDisplay').setMap(null);
 				}
 			})
 	},

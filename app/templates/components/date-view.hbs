@@ -2,6 +2,6 @@
 
 {{items-sorter model=model.items update=true modelToUpdate=model addedClass="small"}}
 {{collection-markers model=model.items }}
-{{map-route items=model.items}}
+{{map-route items=model.items color=model.color}}
 
 <div class="delete-date icon-trash" {{action 'deleteDate'}}></div>

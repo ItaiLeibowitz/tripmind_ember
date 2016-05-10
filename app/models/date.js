@@ -6,6 +6,7 @@ export default DS.Model.extend({
 	order: DS.attr('number'),
 	collection: DS.belongsTo('collection'),
 	trippoints: DS.hasMany('trippoint'),
+	color: DS.attr('string'),
 
 	title: function(){
 		var date = this.get('date');

@@ -401,6 +401,7 @@ var gmaps = {};
 		stylesByZoomLevel: stylesByZoomLevel,
 		markerIcons: createMarkerIcons(),
 		polylineOptions: createPolylineOptions('#7CCC34', '#00aa55'),
+		createPolylineOptions: createPolylineOptions,
 		polylineAlternateOptions: createPolylineOptions('#5ba0d0', '#0078b4'),
 		directionsDisplayOptions: {
 			suppressMarkers: true,

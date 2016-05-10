@@ -1,7 +1,23 @@
 import Ember from 'ember';
+import generateColor from 'tripmind/appconfig/color_generation';
+
 
 export default Ember.Component.extend({
 	classNames: ['date-view'],
+	attributeBindings: ['backgroundColor:style'],
+
+	backgroundColor: function(){
+		return `background-color:${this.get('model.color')}`;
+	}.property('model.color'),
+
+	didInsertElement: function(){
+		this._super();
+		var model = this.get('model');
+		if (!model.get('color')) {
+			model.set('color', generateColor(true, 0.99, 0.99));
+			model.save();
+		}
+	},
 
 	actions: {
 		deleteDate: function () {
@@ -33,6 +49,7 @@ export default Ember.Component.extend({
 										.then(function () {
 											model.destroy();
 											model.save();
+											collection.reorderDates();
 										});
 								});
 						});

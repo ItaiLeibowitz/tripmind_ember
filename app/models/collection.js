@@ -18,6 +18,33 @@ export default
 			return `${this.get('id')}-${this.get('name')}`;
 		}.property('id', 'name'),
 
+		addDate: function(position){
+			var order = position == "before" ? 0 : 99999,
+				self = this;
+			this.get('dates')
+			.then(function(dates){
+					var date = self.store.createRecord('date',{order: order});
+					dates.addObject(date);
+					self.reorderDates();
+					self.save();
+				});
+		},
+
+		reorderDates: function(){
+			this.get('dates')
+			.then(function(dates){
+					var orderedDates = dates.sortBy('order');
+					orderedDates.forEach(function(date, idx){
+						date.set('order', idx + 1);
+						date.save();
+					})
+				})
+		},
+
+		orderedDates: function(){
+			return this.get('dates').sortBy('order');
+		}.property('dates.[].order'),
+
 		getTmToken: function () {
 			var self = this,
 				store = this.store;
