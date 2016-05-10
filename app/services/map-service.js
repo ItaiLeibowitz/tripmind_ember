@@ -34,6 +34,7 @@ export default Ember.Service.extend({
 		var map = new window.google.maps.Map(container, options);
 		this.set('googleMapObject', map);
 		this._setMapListeners(map);
+		this.set('directionsService',new google.maps.DirectionsService());
 	},
 
 	_setMapListeners: function(map) {

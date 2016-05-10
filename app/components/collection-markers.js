@@ -21,7 +21,7 @@ export default Ember.Component.extend({
 	},
 
 	markerWrappers: function () {
-		if (!this.get('model')) {return []};
+		if (!this.get('model') || typeof(this.get('model').map) == "undefined") {return []};
 		var self = this;
 		var wrappers = this.get('model').map(function (item, index) {
 			var object = Ember.Object.create({ // wrapper object

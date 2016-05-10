@@ -405,9 +405,9 @@ var gmaps = {};
 		directionsDisplayOptions: {
 			suppressMarkers: true,
 			preserveViewport: true,
-			polylineOptions: {
+			/*polylineOptions: {
 				strokeOpacity: 0
-			}
+			}*/
 		}
 	});
 

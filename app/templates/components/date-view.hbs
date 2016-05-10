@@ -1,0 +1,7 @@
+<div class="date-name">{{model.title}}</div>
+
+{{items-sorter model=model.items update=true modelToUpdate=model addedClass="small"}}
+{{collection-markers model=model.items }}
+{{map-route items=model.items}}
+
+<div class="delete-date icon-trash" {{action 'deleteDate'}}></div>

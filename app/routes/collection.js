@@ -40,9 +40,30 @@ export default Ember.Route.extend({
 			collectionId = params.collection_slug.split('-')[0],
 			store = this.get('store');
 		return store.findRecord('collection', collectionId).then(function(collection){
-			var items = collection.get('items');
 			Ember.run.scheduleOnce('sync', self, '_checkDateAndUpdate', collection);
-			return collection;
+			return collection.get('items')
+				.then(function(){
+		            return collection.get('dates')
+				}).then(function(dates){
+					var dateTrippointPromises = dates.map(function(date){
+						return date.get('trippoints')
+						.then(function(tps){
+								return tps
+							})
+					});
+					return Ember.RSVP.allSettled(dateTrippointPromises)
+					.then(function(array){
+							var concatenatedTps = Ember.ArrayProxy.create({content: []});
+							array.forEach(function(el){
+								el.value.forEach(function(tp){concatenatedTps.pushObject(tp)});
+							});
+							var trippointItemPromises = concatenatedTps.map(function(tp){ return tp.get('item');})
+							return Ember.RSVP.allSettled(trippointItemPromises);
+						})
+					.then(function(){
+							return collection;
+						})
+				});
 		}, function(){
 			console.log('couldnt find collection, looking on server');
 			return self._reloadFromServer(collectionId)

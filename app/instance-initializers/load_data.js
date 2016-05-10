@@ -158,6 +158,11 @@ var addlData = {data: [
 					{ type: 'item', id: "ChIJD3uTd9hx5kcR1IQvGfr8dbk" },
 					{ type: 'item', id: "ChIJdbbQwbZx5kcRs7Qu5nPw18g" }
 				]
+			},
+			dates: {
+				data: [
+					{type: 'date', id: 'asdas'}
+				]
 			}
 		}
 	},
@@ -203,6 +208,54 @@ var addlData = {data: [
 				data: { type: 'item', id: "ChIJD3uTd9hx5kcR1IQvGfr8dbk" }
 			}
 		}
+	},
+	{
+		id: "asdas",
+		type: 'date',
+		attributes: {
+			order: '1'
+		},
+		relationships: {
+			collection: {
+				data: { type: 'collection', id: "tmp1" }
+			},
+			trippoints: {
+				data: [
+					{type: 'trippoint', id : 'adasdas'},
+					{type: 'trippoint', id : 'adasdas2'}
+				]
+			}
+		}
+	},
+	{
+		id: "adasdas",
+		type: 'trippoint',
+		attributes: {
+			order: '1'
+		},
+		relationships: {
+			date: {
+				data: { type: 'date', id: "asdas" }
+			},
+			item: {
+				data: {type: 'item', id: 'ChIJdbbQwbZx5kcRs7Qu5nPw18g'}
+			}
+		}
+	},
+	{
+		id: "adasdas2",
+		type: 'trippoint',
+		attributes: {
+			order: '2'
+		},
+		relationships: {
+			date: {
+				data: { type: 'date', id: "asdas" }
+			},
+			item: {
+				data: {type: 'item', id: 'ChIJD3uTd9hx5kcR1IQvGfr8dbk'}
+			}
+		}
 	}
 
 ]};
@@ -239,7 +292,7 @@ var formatPlace = function(place){
 
 
 export function initialize(applicationInstance) {
-	/*let store = applicationInstance.lookup('service:store');
+	let store = applicationInstance.lookup('service:store');
 	if (chrome.extension) {
 		var backgroundPage = chrome.extension.getBackgroundPage();
 		var trackedPlaces = backgroundPage.TripMinder.trackedPlaces;
@@ -251,12 +304,11 @@ export function initialize(applicationInstance) {
 				return formatPlace(place)
 			});
 	} else if (ENV.environment === 'development') {
-		store.push(addlData);
-		var formattedData = places.map(function (place) {
-			return formatPlace(place)
+		localforage.getItem('DS.LFAdapter').then(function(result){
+			if (result.item.records.length == 0 ) store.push(addlData);
 		});
 	}
-	if (formattedData) store.push({data: formattedData});*/
+	if (formattedData) store.push({data: formattedData});
 };
 
 

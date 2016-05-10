@@ -36,6 +36,7 @@ Router.map(function() {
 	});
 	this.route('collection', { resetNamespace: true, path: '/collections/:collection_slug' }, function () {
 	});
+	this.route('tutorial');
 	this.route('error');
 });
 

@@ -12,6 +12,7 @@ export default
 		tmToken: DS.attr('string'),
 		createdAt: DS.attr('string'),
 		updatedAt: DS.attr('string'),
+		dates: DS.hasMany('date'),
 
 		slug: function () {
 			return `${this.get('id')}-${this.get('name')}`;
@@ -160,6 +161,7 @@ export default
 
 		itemsChange: function () {
 			console.log('items changed!')
-		}.observes('items.[]')
+		}.observes('items.[]'),
+
 
 	});

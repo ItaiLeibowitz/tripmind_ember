@@ -62,6 +62,7 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 	isTemporary: DS.attr('boolean', {defaultValue: false}),
 	updatedAt: DS.attr('string'),
 	potentialLinks: DS.hasMany('potentialLink'),
+	trippoints: DS.hasMany('trippoint'),
 
 
 
