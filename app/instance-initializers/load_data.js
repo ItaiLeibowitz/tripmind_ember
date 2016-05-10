@@ -305,7 +305,7 @@ export function initialize(applicationInstance) {
 			});
 	} else if (ENV.environment === 'development') {
 		localforage.getItem('DS.LFAdapter').then(function(result){
-			if (result.item.records.length == 0 ) store.push(addlData);
+			if (!result || !result.item || result.item.records.length == 0 ) store.push(addlData);
 		});
 	}
 	if (formattedData) store.push({data: formattedData});
