@@ -185,7 +185,7 @@ export default
 															}
 														}),
 														serializedDates = dates.map(function(date){
-															var tps = date.get('trippoints')
+															var tps = date.get('trippoints');
 															return {
 																id: date.get('id'),
 																type: 'date',

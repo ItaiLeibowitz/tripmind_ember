@@ -7,7 +7,7 @@ export default Ember.Component.extend({
 	attributeBindings: ['backgroundColor:style'],
 
 	backgroundColor: function(){
-		return `background-color:${this.get('model.color')}`;
+		return `border-left: 3px solid ${this.get('model.color')}`;
 	}.property('model.color'),
 
 	didInsertElement: function(){
@@ -28,13 +28,15 @@ export default Ember.Component.extend({
 						.then(function (collectionItems) {
 							model.get('trippoints')
 								.then(function (trippoints) {
-									var itemPromises = trippoints.map(function (tp) {
+									var dateItemPromises = trippoints.map(function (tp) {
 										return tp.get('item');
 									});
-									Ember.RSVP.allSettled(itemPromises)
+									Ember.RSVP.allSettled(dateItemPromises)
 										.then(function (array) {
 											array.forEach(function (el) {
-												collectionItems.addObject(el.value);
+												var item = el.value;
+												collectionItems.addObject(item);
+												item.save();
 											})
 										})
 										.then(function () {

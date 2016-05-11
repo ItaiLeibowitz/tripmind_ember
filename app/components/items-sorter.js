@@ -9,9 +9,6 @@ export default Ember.Component.extend(Sortable, {
 	sortable_update: function(event, ui){
 		Ember.run.schedule('actions', this, '_sortableUpdate', event, ui);
 	},
-	sortable_remove: function(event, ui){
-		Ember.run.schedule('afterRender', this, '_sortableRemove', event, ui);
-	},
 
 	sortable_over: function(event, ui){
 		this.$().addClass('with-border');
@@ -23,17 +20,6 @@ export default Ember.Component.extend(Sortable, {
 
 	sortable_stop: function(event, ui){
 		this.$().removeClass('with-border');
-	},
-
-	_sortableRemove: function(event, ui){
-		if (this.get('remove')) {
-			var collection = this.get('modelToUpdate');
-			var id = $(ui.item).find('.id').attr('data-id');
-			var store = this.get('store');
-			var item = store.peekRecord('item', id);
-			collection.get('items').removeObject(item);
-			collection.save();
-		}
 	},
 
 

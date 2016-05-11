@@ -147,6 +147,30 @@ a {
 }
 
 
+.flat-btn{
+	line-height: 3em;
+	padding: 0 1em;
+	margin: 1em 0;
+	display: inline-block;
+	border-radius: 5px;
+	text-transform: uppercase;
+	color: #777;
+	font-weight: bold;
+	vertical-align: middle;
+	&:hover{
+		background-color: rgba(0,0,0,0.1);
+	}
+
+	&:before{
+		margin-right: 1em;
+		font-size: 1.5em;
+		vertical-align: middle;
+	}
+	&.small{
+		font-size: 0.8em;
+	}
+}
+
 .map-canvas, #actual-map {
 	height:100%;
 	width: 100%;
@@ -1664,6 +1688,9 @@ a {
 .icon-cog:before {
 	content: "F";
 }
+.icon-date:before {
+	content: "G";
+}
 
 
 .loader-dots:before,
@@ -2129,12 +2156,25 @@ a {
 	min-height: 5em;
 	min-width: 15em;
 	border: 1px solid transparent;
-	&:hover, &.with-border{
+	&.with-border{
 		border-color: #333;
+	}
+
+	.sorter-explain{
+		font-size: 0.8em;
+		color: rgba(0,0,0,0.5);
+		margin: 1em;
+		display: none;
+	}
+
+	&:hover, &.with-border{
+		.sorter-explain{
+			display: inline-block;
+		}
 	}
 }
 .date-view{
-	background: #ddd;
+	background: rgba(255,255,255,0.5);
 	display: inline-block;
 	margin: 0 .5em .5em 0;
 	position: relative;
