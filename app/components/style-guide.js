@@ -10,7 +10,7 @@ export default Ember.Component.extend({
 	// Hide all editing elements on the online version
 	hideEditing: function(){
 		return (ENV.environment === 'production');
-	},
+	}.property(),
 	hasExtension: false,
 	requiredVersion: 1.0,
 
