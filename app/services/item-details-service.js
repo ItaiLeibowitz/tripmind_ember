@@ -30,7 +30,7 @@ export default Ember.Service.extend({
 							item.set('lng', result.geometry.location.lng());
 						}
 						if (result.types && result.types.length > 0) {
-							item.itemType = result.types[0];
+							item.set('itemType', result.types[0]);
 						}
 						if (!item.get('image') && result.photos && result.photos[0]) {
 							item.set('image', result.photos[0].getUrl({maxWidth: 3000}));

@@ -1,0 +1,16 @@
+<div class="collection-search-field-wrapper">
+	<div class="search-holder icon-search">
+		{{search-field value=value foundItem="foundItem" action="submit" placeholder="Find something to add..." withAutofocus=false}}
+		<div class="clear-search has-tooltip" {{action 'clearSearch'}}>✕
+		 	<div class="tooltip">Clear</div>
+		</div>
+	</div>
+</div>
+{{#if loading}}
+	Working...
+{{/if}}
+{{#if results}}
+	{{#each results as |item|}}
+		{{temp-item-card model=item addedClass="small inline" withoutLink=true selectAction=(action 'foundItem')}}
+	{{/each}}
+{{/if}}

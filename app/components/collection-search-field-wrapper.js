@@ -9,26 +9,28 @@ export default Ember.Component.extend({
 	actions: {
 		clearSearch: function () {
 			this.set('wrappedField.query', '');
-			this.get('targetObject').send('transitionToSearch');
+			this.set('results', null)
 		},
 		foundItem: function (route, payload) {
+			this.send('clearSearch');
 			this.sendAction('foundItem', route, payload)
 		},
 		loading: function(status){
-			if (status){
-				this.get('targetObject').send('loading');
-			} else {
-				this.get('targetObject').send('stopLoading');
-			}
+			this.set('loading', status);
 		},
 		submit: function (query) {
-			this.get('targetObject').send('loading');
-			this.get('wrappedField').$().autocomplete('close');
 			var self = this;
-			if (query.length > 0) this.get('targetObject').send('transitionToResults', query);
-			this.get('wrappedField').$().autocomplete("close");
+			this.set('loading', true);
+			this.get('wrappedField').$().autocomplete('close');
 			this.get('wrappedField').$().blur();
-			ga('send', 'event', 'search', 'searchFieldSubmit');
+			if (query.length > 0) {
+				this.get('searchService').executeQuery(query)
+					.then(function (results) {
+						self.set('results', results);
+						self.set('loading', false)
+					});
+			}
+			ga('send', 'event', 'search', 'collectionSearchFieldSubmit');
 		}
 	}
 

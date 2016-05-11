@@ -20,6 +20,10 @@ export default ItemCard.reopen({
 	actions: {
 		persistItem: function () {
 			this.set('persistRecord', true);
+		},
+		selectAction: function(type, itemSlug){
+			this.set('persistRecord', true);
+			this.get('selectAction')(type, itemSlug);
 		}
 	}
 

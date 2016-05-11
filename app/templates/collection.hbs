@@ -7,6 +7,8 @@
 
 {{collection-markers model=model.items }}
 
+<br/>
+{{collection-search-field-wrapper value=query foundItem="addToCollection"}}
 
 {{#if model.dates}}
 	<div>
@@ -19,7 +21,6 @@
 	<div class="add-date flat-btn" {{action 'addDate' 'after'}}>+1 day</div>
 	</div>
 {{else}}
-	<br/>
 	<div class="add-date flat-btn icon-date" {{action 'addDate' 'before'}}>Add a daily itinerary</div>
 {{/if}}
 
