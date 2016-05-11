@@ -47,9 +47,6 @@ export default Ember.Route.extend({
 				}).then(function(dates){
 					var dateTrippointPromises = dates.map(function(date){
 						return date.get('trippoints')
-						.then(function(tps){
-								return tps
-							})
 					});
 					return Ember.RSVP.allSettled(dateTrippointPromises)
 					.then(function(array){

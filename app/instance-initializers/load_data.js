@@ -305,7 +305,18 @@ export function initialize(applicationInstance) {
 			});
 	} else if (ENV.environment === 'development') {
 		localforage.getItem('DS.LFAdapter').then(function(result){
-			if (!result || !result.item || result.item.records.length == 0 ) store.push(addlData);
+			if (!result || !result.item || result.item.records.length == 0 ) {
+				store.push(addlData);
+				var array = ['item', 'potential-link', 'collection', 'date', 'trippoint']
+				array.forEach(function(type){
+					store.findAll(type).then(function(records){
+						records.forEach(function(record){
+							record.save();
+						})
+					})
+				})
+
+			}
 		});
 	}
 	if (formattedData) store.push({data: formattedData});

@@ -50,7 +50,7 @@ export default
 				store = this.store;
 			return new Ember.RSVP.Promise(function (resolve, reject) {
 				if (self.get('tmToken')) {
-					resolve();
+					resolve({});
 				} else {
 					promiseFromAjax({
 						url: Constants.BASE_SERVER_URL + '/api/tm/tm_collections/',
@@ -239,6 +239,7 @@ export default
 														.concat(serializedItems)
 														.concat(serializedLinks)
 														.concat(serializedDates)
+														.concat(serializedTrippoints)
 														.concat(serializedDateItems);
 													var stringifiedRecords = JSON.stringify(serializedRecords);
 													var compressedJSON = lzwCompress.pack(stringifiedRecords);
