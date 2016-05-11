@@ -1,6 +1,6 @@
 {{#if model.items}}
 	<div class="section-title sub-section-title">
-		<div class="selector-holder">
+		<div class="selector-holder extension-only">
 			<div class="selector icon-check-circle" {{action 'toggleSelected'}}></div>
 		</div>
 		{{#link-to 'item' model.slug}}{{model.title}} ({{model.items.length}}){{/link-to}}

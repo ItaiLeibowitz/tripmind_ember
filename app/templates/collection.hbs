@@ -8,20 +8,20 @@
 {{collection-markers model=model.items }}
 
 <br/>
-{{collection-search-field-wrapper value=query foundItem="addToCollection"}}
+{{collection-search-field-wrapper value=query foundItem="addToCollection" addedClass="extension-only"}}
 
 {{#if model.dates}}
 	<div>
-	<div class="add-date flat-btn" {{action 'addDate' 'before'}}>+1 day</div>
+	<div class="add-date flat-btn extension-only" {{action 'addDate' 'before'}}>+1 day</div>
 	</div>
 	{{#each model.orderedDates as |date|}}
 		{{date-view model=date}}
 	{{/each}}
 	<div>
-	<div class="add-date flat-btn" {{action 'addDate' 'after'}}>+1 day</div>
+	<div class="add-date flat-btn extension-only" {{action 'addDate' 'after'}}>+1 day</div>
 	</div>
 {{else}}
-	<div class="add-date flat-btn icon-date" {{action 'addDate' 'before'}}>Add a daily itinerary</div>
+	<div class="add-date flat-btn icon-date extension-only" {{action 'addDate' 'before'}}>Add a daily itinerary</div>
 {{/if}}
 
 

@@ -1,4 +1,5 @@
 import Ember from "ember";
+import ENV from 'tripmind/config/environment';
 
 
 export default Ember.Route.extend({
@@ -16,6 +17,12 @@ export default Ember.Route.extend({
 		triggerTransition: function(destination, payload) {
 			this.transitionTo(destination, payload);
 		},
+		openExtension: function(withCurrentRoute) {
+			chrome.runtime.sendMessage(ENV.chromeExtensionId, {
+				message: "openTripmind",
+				addedRoute: withCurrentRoute ? "#" + this.get('router.url') : null
+			});
+		}
 	}
 });
 

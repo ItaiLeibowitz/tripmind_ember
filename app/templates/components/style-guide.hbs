@@ -11,4 +11,28 @@
 	.action-bar {
 		right: {{barRightWidth}}px;
 	}
+
+		{{#if hideEditing}}
+		.extension-only {
+			display: none !important;
+		}
+
+		.online-only {
+			display: block !important;
+		}
+		{{/if}}
+
+	{{#if doneCheckExtension}}
+		{{#if hasExtension}}
+		.has-extension {
+			display: block !important;
+		}
+		{{else}}
+		.no-extension {
+			display: block !important;
+		}
+		{{/if}}
+	{{/if}}
+
+
 </style>

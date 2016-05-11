@@ -26,6 +26,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+	  ENV.chromeExtensionId = "kpagmifmmpfbjmedeapjmnpcalfennbc"
   }
 
   if (environment === 'test') {
@@ -43,6 +44,7 @@ module.exports = function(environment) {
   if (environment === 'production' || environment === 'staging') {
 	  ENV.baseURL = '/';
 	  ENV.locationType = 'hash'
+	  ENV.chromeExtensionId = "jefanopdgmnpggnnicgfkbajikmabhgf"
   }
 
   return ENV;

@@ -157,6 +157,7 @@ a {
 	color: #777;
 	font-weight: bold;
 	vertical-align: middle;
+	text-align: center;
 	&:hover{
 		background-color: rgba(0,0,0,0.1);
 	}
@@ -169,6 +170,22 @@ a {
 	&.small{
 		font-size: 0.8em;
 	}
+}
+
+.online-only, .has-extension, .no-extension{
+	display: none;
+}
+
+.open-tripmind{
+	position: fixed;
+	bottom:0;
+	background:#E74C3C;
+	color: white;
+	font-weight: bold;
+	line-height: 3em;
+	text-align: center;
+	width: 100%;
+	z-index: 19;
 }
 
 .map-canvas, #actual-map {

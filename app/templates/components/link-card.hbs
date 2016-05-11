@@ -1,7 +1,7 @@
 {{#if model}}
 <div class="title">{{model.title}}</div>
 {{#button-with-confirmation onConfirm=(action 'deleteLink') addedClass="delete-btn"}}
-	<div class="has-tooltip icon-trash">
+	<div class="has-tooltip icon-trash extension-only">
 		<div class="tooltip">Delete</div>
 	</div>
 {{/button-with-confirmation}}

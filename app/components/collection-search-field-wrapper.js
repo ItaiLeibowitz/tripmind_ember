@@ -3,6 +3,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 	wrappedField: null,
+	classNameBindings: ['addedClass'],
 	searchService: Ember.inject.service('search-service'),
 	results: [],
 
