@@ -1,5 +1,9 @@
-{{#each model as |item|}}
-	{{item-card model=item addedClass=addedClass}}
+{{#if needsRefresh}}
+	{{refresh-done parentComponent=this}}
 {{else}}
-	<div class="sorter-explain extension-only">Drag stuff here</div>
-{{/each}}
+	{{#each model as |item|}}
+		{{item-card model=item addedClass=addedClass}}
+	{{else}}
+		<div class="sorter-explain extension-only">Drag stuff here</div>
+	{{/each}}
+{{/if}}

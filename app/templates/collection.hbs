@@ -3,9 +3,9 @@
 {{collection-action-bar openModalAction=(action 'openTopModal' target=displayService) addedClass='in' targetModel=model}}
 
 {{input-with-default value=model.name addedClass="collection-title" default="Untitled" saveOnExit=model}}
-{{items-sorter model=model.items modelToUpdate=model update=true}}
+{{items-sorter model=model.items modelToUpdate=model update=true withRefresh=true}}
 
-{{collection-markers model=model.items }}
+{{collection-markers model=model.allItems }}
 
 <br/>
 {{collection-search-field-wrapper value=query foundItem="addToCollection" addedClass="extension-only"}}

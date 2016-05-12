@@ -6,6 +6,7 @@ export default Ember.Component.extend(Sortable, {
 	classNames: ['connected-sortable', 'items-sorter'],
 	sortable_connectWith: '.connected-sortable',
 	sortable_items: '.item-card',
+	sortable_helper: "clone",
 	sortable_update: function(event, ui){
 		Ember.run.schedule('actions', this, '_sortableUpdate', event, ui);
 	},
@@ -22,6 +23,18 @@ export default Ember.Component.extend(Sortable, {
 		this.$().removeClass('with-border');
 	},
 
+	sortable_start: function(event, ui){
+		// if ctrl is held when starting the move, then create another copy of this item when done
+		if (event.ctrlKey){
+			// The original is already kept thanks to the "helper = clone" option
+			$(ui.item).show();
+			//TODO: add a listener to adjust the state of the ctrl key
+			var originalItemId = $(ui.item).find('.id').attr('data-id');
+			this.set('originalItemId', originalItemId);
+		}
+	},
+
+
 
 	_removeItem: function(el){
 		$(el).remove();
@@ -37,9 +50,16 @@ export default Ember.Component.extend(Sortable, {
 				var item = store.peekRecord('item', id);
 				return item
 			});
+			var originalItemId = this.get('originalItemId');
+			if (originalItemId){
+				var item = store.peekRecord('item', originalItemId);
+				newItems.unshiftObject(item);
+				this.set('originalItemId', null);
+			}
 			modelToUpdate.set('items', newItems);
 			//Ember.run.scheduleOnce('afterRender', this, '_removeItem', ui.item)
 			modelToUpdate.save();
+			if (this.get('withRefresh')) this.set('needsRefresh', true);
 		}
 	}
 

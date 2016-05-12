@@ -286,5 +286,13 @@ export default
 			console.log('items changed!')
 		}.observes('items.[]'),
 
+		allItems: function(){
+			var allItems = Ember.ArrayProxy.create({content: []});
+			allItems.addObjects(this.get('items'));
+			this.get('dates').forEach(function(date){
+				allItems.addObjects(date.get('items'));
+			});
+			return allItems;
+		}.property('items.[]','dates.[].items')
 
 	});

@@ -13,4 +13,5 @@
 	{{#each results as |item|}}
 		{{temp-item-card model=item addedClass="small inline" withoutLink=true selectAction=(action 'foundItem')}}
 	{{/each}}
+	{{collection-markers model=results}}
 {{/if}}

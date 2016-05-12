@@ -6,8 +6,9 @@ export default Ember.Mixin.create(Widget, {
 	// we are not using all the resizable options and each one gets an observer above
 	// therefore we only include here options that we need to set
 	sortableUiOptions: ['sortable_appendTo', 'sortable_axis', 'sortable_items',
-		'sortable_handle','sortable_connectWith'],
-	sortableUiEvents: ['sortable_start','sortable_stop','sortable_update','sortable_sort', 'sortable_remove', 'sortable_over', 'sortable_out'],
+		'sortable_handle','sortable_connectWith', 'sortable_helper'],
+	sortableUiEvents: ['sortable_start','sortable_stop','sortable_update',
+		'sortable_sort', 'sortable_remove', 'sortable_over', 'sortable_out'],
 
 
 	init: function () {
