@@ -11,7 +11,7 @@
 {{/if}}
 {{#if results}}
 	{{#each results as |item|}}
-		{{temp-item-card model=item addedClass="small inline" withoutLink=true selectAction=(action 'foundItem')}}
+		{{temp-item-card model=item addedClass="small inline" withoutLink=true selectAction=(action 'foundItem') fromItems=fromItems}}
 	{{/each}}
 	{{collection-markers model=results}}
 {{/if}}

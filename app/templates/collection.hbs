@@ -8,7 +8,7 @@
 {{collection-markers model=model.allItems }}
 
 <br/>
-{{collection-search-field-wrapper value=query foundItem="addToCollection" addedClass="extension-only"}}
+{{collection-search-field-wrapper value=query foundItem="addToCollection" addedClass="extension-only" fromItems=model.allItems}}
 
 {{#if model.dates}}
 	<div>

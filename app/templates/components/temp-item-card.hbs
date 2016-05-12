@@ -7,6 +7,9 @@
 				in {{model.parentName}}
 			{{/if}}
 		</div>
+		{{#if closestDistance}}
+			<div class="distance {{closestDistance.travelClass}}">{{closestDistance.distanceText}}</div>
+		{{/if}}
 	</div>
 </div>
 {{#if withoutLink}}

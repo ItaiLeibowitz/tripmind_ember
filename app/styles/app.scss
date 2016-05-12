@@ -955,6 +955,16 @@ a {
 				white-space: normal;
 				line-height: 1.2em;
 			}
+			.distance{
+				font-size: 0.8em;
+				text-align: right;
+				color: #8FB092;
+				margin-top: .5em;
+				margin-right: -1em;
+				&:before{
+					margin-right: 0.3em;
+				}
+			}
 		}
 
 		&.inline{
@@ -1766,6 +1776,15 @@ a {
 }
 .icon-date:before {
 	content: "G";
+}
+.icon-walk:before {
+	content: "J";
+}
+.icon-drive:before {
+	content: "I";
+}
+.icon-fly:before {
+	content: "H";
 }
 
 

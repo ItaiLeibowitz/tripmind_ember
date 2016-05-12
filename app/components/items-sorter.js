@@ -59,6 +59,7 @@ export default Ember.Component.extend(Sortable, {
 			modelToUpdate.set('items', newItems);
 			//Ember.run.scheduleOnce('afterRender', this, '_removeItem', ui.item)
 			modelToUpdate.save();
+			//This is to refresh the items sorter after we copy from it. Not sure why but the component won't refresh otherwise
 			if (this.get('withRefresh')) this.set('needsRefresh', true);
 		}
 	}
