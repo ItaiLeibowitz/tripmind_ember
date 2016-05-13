@@ -15,7 +15,7 @@
 	<div class="add-date flat-btn extension-only" {{action 'addDate' 'before'}}>+1 day</div>
 	</div>
 	{{#each model.orderedDates as |date|}}
-		{{date-view model=date}}
+		{{date-view model=date orderedDates=model.orderedDates}}
 	{{/each}}
 	<div>
 	<div class="add-date flat-btn extension-only" {{action 'addDate' 'after'}}>+1 day</div>

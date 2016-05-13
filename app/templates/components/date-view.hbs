@@ -1,7 +1,7 @@
 <div class="date-name">{{model.title}}</div>
 
 {{items-sorter model=model.items update=true modelToUpdate=model compToUpdate=this addedClass="small"}}
-{{map-route items=model.items color=model.color modelForDistance=this}}
+{{map-route items=itemsWithPrev color=model.color modelForDistance=this}}
 {{#if model.items}}
 	<div class="time-indicator">
 		<div class="radial-progress" data-fun={{funTimeProgress}}>

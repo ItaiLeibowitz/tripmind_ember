@@ -66,6 +66,15 @@ export default DS.Model.extend({
 	}),
 
 
+	firstItem: function(){
+		return this.get('items.firstObject');
+	}.property('items.[]'),
+
+	lastItem: function(){
+		return this.get('items.lastObject');
+	}.property('items.[]')
+
+
 });
 
 

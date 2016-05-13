@@ -20,6 +20,30 @@ export default Ember.Component.extend({
 		}
 	},
 
+	prevDate: function(){
+		var myOrder = this.get('model.order'),
+			orderedDates = this.get('orderedDates');
+		if (myOrder == 1) return null;
+		var prevDate = orderedDates.find(function(date){
+			return date.get('order') == myOrder - 1;
+		});
+		return prevDate;
+	}.property('model.order','orderedDates.[].order'),
+
+	itemsWithPrev: function(){
+		var myItems = this.get('model.items'),
+			prevDate = this.get('prevDate'),
+			items = Ember.ArrayProxy.create({content: []});
+		myItems.forEach(function(item){
+			items.pushObject(item);
+		});
+		if (prevDate) {
+			var prevItem = prevDate.get('lastItem');
+			if (prevItem) items.unshiftObject(prevItem);
+		}
+		return items;
+	}.property('model.items', 'prevDate.lastItem'),
+
 	travelTimeText: function(){
 		var totalTravel = this.get('totalTravel');
 		if (totalTravel) {
@@ -74,7 +98,7 @@ export default Ember.Component.extend({
 	mapBoundingBox: function() {
 		var coordsArray = [],
 			bound = 0.001;
-		var items = (this.get('model.items') || []).toArray();
+		var items = (this.get('itemsWithPrev') || []).toArray();
 		items.forEach(function(item){
 			var swLat = item.get('boundSwLat') || item.get('lat') - bound;
 			var swLng = item.get('boundSwLng') || item.get('lng') - bound;
