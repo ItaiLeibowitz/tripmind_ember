@@ -33,12 +33,16 @@ export default Ember.Component.extend(Sortable, {
 						distanceTime = Math.max(1, Math.round(minDistance / 50 * 6)) * 10;
 						distanceText = `+${distanceTime}min`;
 						break;
-					case (minDistance < 300):
+					case (minDistance < 200):
 						distanceTime = Math.round(minDistance / 50);
-						distanceText = `+${distanceTime}hr}`;
+						distanceText = `+${distanceTime}hr`;
+						break;
+					case (minDistance < 500):
+						distanceTime = Math.round(minDistance / 75);
+						distanceText = `+${distanceTime}hr`;
 						break;
 					default:
-						distanceText = 'Too far!';
+						distanceText = 'Really far!';
 						break;
 				}
 				this.set('compToUpdate.timeAwayText', distanceText);
