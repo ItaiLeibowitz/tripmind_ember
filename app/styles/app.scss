@@ -2248,7 +2248,7 @@ a {
 }
 
 .items-sorter {
-	min-height: 5em;
+	min-height: 9em;
 	min-width: 15em;
 	border: 1px solid transparent;
 	&.with-border{
@@ -2289,7 +2289,7 @@ a {
 		vertical-align: top;
 	}
 
-	.delete-date{
+	.delete-date, .zoom-date{
 		display: none;
 		opacity: 0.5;
 		position: absolute;
@@ -2304,8 +2304,12 @@ a {
 		}
 	}
 
+	.zoom-date{
+		left: 2em;
+	}
+
 	&:hover{
-		.delete-date{
+		.delete-date, .zoom-date{
 			display: block;
 		}
 	}
@@ -2316,9 +2320,11 @@ a {
 	position: absolute;
 	top: 3em;
 	left: 1em;
+	height: 6em;
+	width: 5em;
 	$circle-size: 5em;
 	$inset-size: 4em;
-	$circle-color: #555;
+	$travel-color: #555;
 	$fun-color: #E74C3C;
 	$inset-color: #fbfbfb;
 	$circle-background: #ddd;
@@ -2346,15 +2352,15 @@ a {
 				clip: rect(0px, $circle-size, $circle-size, $circle-size / 2);
 				.fill {
 					clip: rect(0px, $circle-size / 2, $circle-size, 0px);
-					background-color: $circle-color;
+					background-color: $fun-color;
 				}
 			}
 		}
 
 		$increment: 180deg / 100;
 		@for $i from 1 through 100 {
-			&[data-travel="#{$i}"] {
-				.circle.travel {
+			&[data-fun="#{$i}"] {
+				.circle.fun {
 					.mask.full, .fill {
 						-webkit-transform: rotate($increment * $i);
 						-ms-transform: rotate($increment * $i);
@@ -2369,8 +2375,8 @@ a {
 			}
 		}
 		@for $i from 1 through 100 {
-			&[data-fun="#{$i}"] {
-				.circle.fun {
+			&[data-travel="#{$i}"] {
+				.circle.travel {
 					.mask.full, .fill {
 						-webkit-transform: rotate($increment * $i);
 						-ms-transform: rotate($increment * $i);
@@ -2390,12 +2396,12 @@ a {
 			background: transparent;
 
 			.circle .mask .fill {
-				background-color: $fun-color;
+				background-color: $travel-color;
 			}
 		}
 
 		@for $i from 1 through 100 {
-			&[data-travel="#{$i}"] {
+			&[data-fun="#{$i}"] {
 				.base-rotate {
 					-webkit-transform: rotate($increment * $i * 2);
 					-ms-transform: rotate($increment * $i * 2);
@@ -2424,13 +2430,28 @@ a {
 			&:before{
 				margin-right: 5px;
 			}
+			.tooltip{
+				right: -2em;
+			}
 		}
 		.travel {
-			color: $circle-color;
+			color: $travel-color;
 		}
 		.fun {
 			color: $fun-color;
+			.tooltip{
+				margin-top: -125%;
+			}
 		}
+	}
+
+	.time-away{
+		position: absolute;
+		bottom: 0;
+		font-size: 0.9em;
+		text-align: center;
+		left: 0;
+		right: 0;
 	}
 
 }

@@ -5,6 +5,7 @@ import constants from 'tripmind/appconfig/constants';
 export default Ember.Component.extend({
 	classNames: ['date-view'],
 	attributeBindings: ['backgroundColor:style'],
+	mapService: Ember.inject.service('map-service'),
 
 	backgroundColor: function(){
 		return `border-left: 3px solid ${this.get('model.color')}`;
@@ -70,6 +71,21 @@ export default Ember.Component.extend({
 		return Math.round(this.get('totalFun') / 12 / 3600 * 100);
 	}.property('totalFun'),
 
+	mapBoundingBox: function() {
+		var coordsArray = [],
+			bound = 0.001;
+		var items = (this.get('model.items') || []).toArray();
+		items.forEach(function(item){
+			var swLat = item.get('boundSwLat') || item.get('lat') - bound;
+			var swLng = item.get('boundSwLng') || item.get('lng') - bound;
+			var neLat = item.get('boundNeLat')|| item.get('lat') + bound;
+			var neLng = item.get('boundNeLng') || item.get('lng') + bound;
+			if (swLat && neLng && swLng && neLat) coordsArray.push([swLat, swLng],[neLat, neLng]);
+		});
+		return this.get('mapService').getBoundingBox(coordsArray);
+	}.property('model.items.[].lat','model.items.[].lng'),
+
+
 	actions: {
 		deleteDate: function () {
 			var model = this.get('model');
@@ -107,6 +123,9 @@ export default Ember.Component.extend({
 								});
 						});
 				});
+		},
+		zoomDate: function(){
+			this.set('mapService.bounds', this.get('mapBoundingBox'));
 		}
 	}
 });

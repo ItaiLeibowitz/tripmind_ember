@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import ItemCard from 'tripmind/components/item-card';
-import geoDistance from 'tripmind/appconfig/geo_distance';
+import geoDistances from 'tripmind/appconfig/geo_distance';
 
 export default ItemCard.reopen({
 	classNames: ['temporary'],
@@ -9,17 +9,9 @@ export default ItemCard.reopen({
 
 	closestDistance: function(){
 		var fromItems = this.get('fromItems'),
-			item = this.get('model');
-		if (!fromItems || fromItems.get('length') == 0) return null;
-		var minDistance = 99999,
-			minItem = null;
-			fromItems.forEach(function(otherItem){
-				var distance = geoDistance(item, otherItem);
-				if (distance < minDistance) {
-					minDistance = distance;
-					minItem = otherItem;
-				}
-			});
+			item = this.get('model'),
+			minDistance, minItem;
+		[minDistance, minItem] = geoDistances.minDistance(item, fromItems);
 		var distanceText, distanceTime, travelClass;
 		switch (true) {
 			case (minDistance == 0):

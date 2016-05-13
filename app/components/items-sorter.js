@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import Sortable from 'tripmind/mixins/sortable';
+import geoDistances from 'tripmind/appconfig/geo_distance';
 
 export default Ember.Component.extend(Sortable, {
 	store: Ember.inject.service('store'),
@@ -13,10 +14,46 @@ export default Ember.Component.extend(Sortable, {
 
 	sortable_over: function(event, ui){
 		this.$().addClass('with-border');
+		// update distance from
+		var store = this.get('store'),
+			compToUpdate = this.get('compToUpdate');
+		if (compToUpdate) {
+			var originalItemId = $(ui.item).find('.id').attr('data-id'),
+				item = store.peekRecord('item', originalItemId),
+				otherItems = compToUpdate.get('model.items');
+			var minDistance, minItem, distanceTime, distanceText;
+			var response = geoDistances.minDistance(item, otherItems);
+			if (response) {
+				[minDistance, minItem] = response
+				switch (true) {
+					case (minDistance < 0.1):
+						distanceText = `Already here`;
+						break;
+					case (minDistance < 75):
+						distanceTime = Math.max(1, Math.round(minDistance / 50 * 6)) * 10;
+						distanceText = `+${distanceTime}min`;
+						break;
+					case (minDistance < 300):
+						distanceTime = Math.round(minDistance / 50);
+						distanceText = `+${distanceTime}hr}`;
+						break;
+					default:
+						distanceText = 'Too far!';
+						break;
+				}
+				this.set('compToUpdate.timeAwayText', distanceText);
+			} else {
+				this.set('compToUpdate.timeAwayText', null);
+			}
+		}
 	},
 
 	sortable_out: function(event, ui){
 		this.$().removeClass('with-border');
+		var	compToUpdate = this.get('compToUpdate');
+		if (compToUpdate) {
+			compToUpdate.set('timeAwayText', null);
+		}
 	},
 
 	sortable_stop: function(event, ui){
