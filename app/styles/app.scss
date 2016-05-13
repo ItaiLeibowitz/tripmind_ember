@@ -98,6 +98,10 @@ body {
 a {
 	color: inherit;
 	text-decoration: none;
+
+	&.link-blue{
+		color: #0077ff;
+	}
 }
 
 [data-ember-action]:not(:disabled) {

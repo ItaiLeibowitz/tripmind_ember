@@ -79,6 +79,11 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 
 	itemDetailsService:Ember.inject.service('item-details-service'),
 
+	googleLink: function(){
+		var nameInParent = this.get('name') + ", " + this.get('parentName');
+		return `https://www.google.com/webhp?ie=UTF-8#safe=off&q=${nameInParent.replace(/\s/g,"+")}`
+	}.property('name', 'parentName'),
+
 
 	deletedStatus: Ember.computed.not('trackingStatus'),
 
