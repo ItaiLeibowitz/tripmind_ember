@@ -85,9 +85,19 @@ export default Ember.Component.extend({
 		var self = this;
 		this._getDirections()
 			.then(function(response){
+				var modelForDistance = self.get('modelForDistance');
 				if (response != 0) {
+					if (modelForDistance) {
+						var totalTravel = response.routes[0].legs.reduce(function (pv, el) {
+							return pv + el.duration.value
+						}, 0);
+						modelForDistance.set('totalTravel', totalTravel);
+					}
 					self._drawDirections(response);
 				} else {
+					if (modelForDistance) {
+						modelForDistance.set('totalTravel', 0);
+					}
 					self.get('directionsDisplay').setMap(null);
 				}
 			})

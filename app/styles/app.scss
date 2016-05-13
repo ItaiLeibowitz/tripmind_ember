@@ -2273,12 +2273,15 @@ a {
 	display: inline-block;
 	margin: 0 .5em .5em 0;
 	position: relative;
+	min-height: 9em;
+	min-width: 27em;
 	.date-name {
 		min-height: 3em;
 		font-weight: bold;
 		padding: 1em;
 		display: inline-block;
 		vertical-align: top;
+		width: 4em;
 	}
 
 	.items-sorter{
@@ -2309,4 +2312,125 @@ a {
 
 }
 
+.time-indicator {
+	position: absolute;
+	top: 3em;
+	left: 1em;
+	$circle-size: 5em;
+	$inset-size: 4em;
+	$circle-color: #555;
+	$fun-color: #E74C3C;
+	$inset-color: #fbfbfb;
+	$circle-background: #ddd;
 
+	.radial-progress {
+		position: absolute;
+		width: $circle-size;
+		height: $circle-size;
+
+		background-color: $circle-background;
+		border-radius: 50%;
+		.circle {
+			.mask, .fill, .shadow {
+				width: $circle-size;
+				height: $circle-size;
+				position: absolute;
+				border-radius: 50%;
+			}
+
+			.mask, .fill {
+				-webkit-backface-visibility: hidden;
+				border-radius: 50%;
+			}
+			.mask {
+				clip: rect(0px, $circle-size, $circle-size, $circle-size / 2);
+				.fill {
+					clip: rect(0px, $circle-size / 2, $circle-size, 0px);
+					background-color: $circle-color;
+				}
+			}
+		}
+
+		$increment: 180deg / 100;
+		@for $i from 1 through 100 {
+			&[data-travel="#{$i}"] {
+				.circle.travel {
+					.mask.full, .fill {
+						-webkit-transform: rotate($increment * $i);
+						-ms-transform: rotate($increment * $i);
+						transform: rotate($increment * $i);
+					}
+					.fill.fix {
+						-webkit-transform: rotate($increment * $i * 2);
+						-ms-transform: rotate($increment * $i * 2);
+						transform: rotate($increment * $i * 2);
+					}
+				}
+			}
+		}
+		@for $i from 1 through 100 {
+			&[data-fun="#{$i}"] {
+				.circle.fun {
+					.mask.full, .fill {
+						-webkit-transform: rotate($increment * $i);
+						-ms-transform: rotate($increment * $i);
+						transform: rotate($increment * $i);
+					}
+					.fill.fix {
+						-webkit-transform: rotate($increment * $i * 2);
+						-ms-transform: rotate($increment * $i * 2);
+						transform: rotate($increment * $i * 2);
+					}
+				}
+			}
+		}
+
+		&.base-rotate {
+			margin: 0;
+			background: transparent;
+
+			.circle .mask .fill {
+				background-color: $fun-color;
+			}
+		}
+
+		@for $i from 1 through 100 {
+			&[data-travel="#{$i}"] {
+				.base-rotate {
+					-webkit-transform: rotate($increment * $i * 2);
+					-ms-transform: rotate($increment * $i * 2);
+					transform: rotate($increment * $i * 2);
+				}
+			}
+		}
+
+	}
+
+	.inset {
+		width: $inset-size;
+		height: $inset-size;
+		position: absolute;
+		margin-left: ($circle-size - $inset-size)/2;
+		margin-top: ($circle-size - $inset-size)/2;
+
+		background-color: $inset-color;
+		border-radius: 50%;
+		text-align: center;
+		padding: 1em;
+		box-sizing: border-box;
+
+		.travel, .fun{
+			font-size: 0.8em;
+			&:before{
+				margin-right: 5px;
+			}
+		}
+		.travel {
+			color: $circle-color;
+		}
+		.fun {
+			color: $fun-color;
+		}
+	}
+
+}
