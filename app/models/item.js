@@ -83,9 +83,19 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 	itemDetailsService:Ember.inject.service('item-details-service'),
 
 	googleLink: function(){
-		var nameInParent = this.get('name') + ", " + this.get('parentName');
+		var parentName = this.get('parentName');
+		var nameInParent = parentName ? this.get('name') + ", " + parentName : this.get('name');
 		return `https://www.google.com/webhp?ie=UTF-8#safe=off&q=${nameInParent.replace(/\s/g,"+")}`
 	}.property('name', 'parentName'),
+
+	googleImagesLink: function(){
+		var parentName = this.get('parentName');
+		var nameInParent = parentName ? this.get('name') + ", " + parentName : this.get('name');
+		return `https://www.google.com/search?q=${nameInParent.replace(/\s/g,"+")}&tbm=isch`
+	}.property('name', 'parentName'),
+
+
+
 
 
 	deletedStatus: Ember.computed.not('trackingStatus'),

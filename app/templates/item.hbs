@@ -17,7 +17,7 @@
 	<div class="rhs">
 		<div class="image-container main-image" style={{model.photoStyle}}></div>
 		{{map-placeholder model=model}}
-		{{#unless descendants}}
+
 
 			<div class="details-holder">
 				<table>
@@ -49,11 +49,14 @@
 						<td class="detail-title">More</td>
 						<td class="detail-value">
 							<a class="link-blue" target="_blank" href={{model.googleLink}}>Find this on Google ></a>
+							<br/>
+							<br/>
+							<a class="link-blue" target="_blank" href={{model.googleImagesLink}}>More photos ></a>
+							<br/>
 						</td>
 					</tr>
 				</table>
 			</div>
-		{{/unless}}
 	</div>
 	<div class="lhs">
 		<div class="top-section-title">Description:</div>
