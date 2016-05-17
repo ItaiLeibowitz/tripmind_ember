@@ -70,7 +70,8 @@ export default Ember.Component.extend({
 		items.forEach(function(item){
 			var itemDuration = constants.GOOGLE_TYPE_FILTER_CATEGORIES.find(function(el){
 				return el.type == item.get('itemType')
-			})['duration'];
+			});
+			itemDuration = itemDuration ? itemDuration['duration'] : 1800;
 			totalTime += itemDuration;
 		})
 		return totalTime;

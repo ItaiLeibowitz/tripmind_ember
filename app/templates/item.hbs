@@ -57,7 +57,11 @@
 	</div>
 	<div class="lhs">
 		<div class="top-section-title">Description:</div>
-		{{autosave-editable class="long-desc" canEditContent=true isEditable=true saveOnExit=model value=model.longDescEditable}}
+		{{#if needsRefresh}}
+			{{refresh-done parentComponent=this}}
+		{{else}}
+			{{autosave-editable class="long-desc" canEditContent=true isEditable=true saveOnExit=model value=model.longDescEditable refreshModel=this}}
+		{{/if}}
 	</div>
 </div>
 
@@ -79,9 +83,8 @@
 
 
 
-{{#if descendants}}
-	{{major-sections-holder model=descendants majorSectionType='item' prefilterAttribute='trackingStatus'}}
-{{/if}}
+{{major-sections-holder parentItem=model model=descendants recs=recs majorSectionType='item' prefilterAttribute='trackingStatus'}}
+
 
 {{center-marker model=model}}
 

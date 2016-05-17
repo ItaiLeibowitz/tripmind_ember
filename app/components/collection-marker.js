@@ -8,6 +8,12 @@ export default MapMarker.extend({
 	baseDepth: 2,
 	addedLabelClass: null,
 
+	init:function(){
+		this._super();
+		if (this.get("markerColor")) {
+			this.set('unhoveredIcon', gmaps.markerIcons["small" + this.get('markerColor').capitalize()]);
+		}
+	},
 
 	lat: Ember.computed.alias('model.lat'),
 	lng: Ember.computed.alias('model.lng'),

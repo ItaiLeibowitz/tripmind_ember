@@ -20,6 +20,7 @@ const Router = Ember.Router.extend({
 		}
 		//this.get('mapService').minimizeMap({closeAll: true});
 		$('.loader').addClass('hidden');
+		$(document).scrollTop(0);
 	}
 });
 

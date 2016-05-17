@@ -2,6 +2,7 @@ import Ember from 'ember';
 import Constants from 'tripmind/appconfig/constants';
 
 export default Ember.Component.extend({
+	recsService: Ember.inject.service('recs-service'),
 	classNames: ['major-sections-holder'],
 	classNameBindings: [],
 	model: null,
@@ -9,6 +10,29 @@ export default Ember.Component.extend({
 	orderedMajorSections: null,
 	majorSectionType:null,
 	minorSectionType: null,
+
+	withScrollMenu: function(){
+		return !this.get('isTrash') && (this.get('withRecs') || this.get('majorSections'));
+	}.property('withRecs','majorSections','isTrash'),
+
+	withOptionsMenu: Ember.computed.or('canHaveRecs','majorSections'),
+
+	canHaveRecs: function(){
+		return this.get('model.length') || this.get('parentItem.canHaveChildren') || Constants.GOOGLE_PLACE_DESTINATION_TYPES.indexOf(this.get('parentItem.itemType')) > -1;
+	}.property('parentItem.canHaveChildren','parentItem.itemType','model.length'),
+
+	withRecs: Ember.computed.alias('recsService.withRecs'),
+
+	showRecs: Ember.computed.and('withRecs','canHaveRecs'),
+
+	recsSection:function(){
+		return Ember.Object.create({
+			title: 'Recommendations',
+			items: this.get('recs'),
+			sortedItems: this.get('recs'),
+			scrollSlug: 'recs'
+		});
+	}.property('recs'),
 
 	filterItems: function(items, attribute){
 		if (!attribute) return this.get('model');
@@ -67,6 +91,7 @@ export default Ember.Component.extend({
 			filterOptionsOrder = ["Art",
 				"Entertainment",
 				"Family",
+				"History",
 				"Landmark",
 				"Lifestyle",
 				"Museum",
@@ -415,6 +440,9 @@ export default Ember.Component.extend({
 		scrollToSection: function(destination){
 			var newOffset = (destination == "top") ? 0 : $(`#major-section-${destination}`).offset().top;
 			$('body').animate({scrollTop: newOffset}, 200);
+		},
+		toggleRecs: function(){
+			this.toggleProperty('withRecs');
 		}
 	}
 });

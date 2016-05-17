@@ -11,7 +11,7 @@ var WithItemImage = Ember.Mixin.create({
 
 	imageUrl: "",
 	imageStyle: "",
-	imageProvider: null,
+	//imageProvider: null,
 
 	// for a singular item object
 

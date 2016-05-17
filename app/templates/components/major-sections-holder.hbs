@@ -1,55 +1,86 @@
-
-
 <div class="flex-container">
-{{#if filteredItems.length}}
-<div class="scroll-menu">
-	{{#if majorSections}}
-		<div class="scroll-link" {{action 'scrollToSection' 'top'}}>Top</div>
+	{{#if withScrollMenu}}
+		<div class="scroll-menu">
+			{{#if majorSections}}
+				<div class="scroll-link" {{action 'scrollToSection' 'top'}}>Top</div>
+			{{/if}}
+			{{#each majorSections as |majorSection|}}
+				<div class="scroll-link" {{action 'scrollToSection' majorSection.scrollSlug}}>{{majorSection.title}}</div>
+			{{/each}}
+			{{#if showRecs}}
+				<div class="scroll-link" {{action 'scrollToSection' 'recs'}}>Recommendations</div>
+			{{/if}}
+		</div>
 	{{/if}}
-	{{#each majorSections as |majorSection|}}
-		<div class="scroll-link" {{action 'scrollToSection' majorSection.scrollSlug}}>{{majorSection.title}}</div>
-	{{/each}}
-</div>
 	<div class="scrollable-rhs-content">
-		<div class="options-menu section-options-menu">
-			<div class="toggle-btn">Options</div>
-			<div class="menu-body two-column">
-				<div class="menu-column">
-					{{#unless majorSectionType}}
-						<div class="menu-section">
-							<div class="menu-section-title">Sort by:</div>
-							{{select-one options=majorSortOptions onChange=(action 'updateSortOptions')}}
+		{{#if withOptionsMenu}}
+			<div class="options-menu section-options-menu">
+				<div class="toggle-btn">Options</div>
+				<div class="menu-body {{if majorSections 'two-column'}}">
+					{{#if majorSections}}
+						<div class="menu-column">
+							{{#unless majorSectionType}}
+								<div class="menu-section">
+									<div class="menu-section-title">Sort by:</div>
+									{{select-one options=majorSortOptions onChange=(action 'updateSortOptions')}}
+								</div>
+							{{/unless}}
+							<div class="menu-section">
+								<div class="menu-section-title">Sort subsections by:</div>
+								{{select-one options=subSortOptions onChange=(action 'updateSortOptions')}}
+							</div>
 						</div>
-					{{/unless}}
-					<div class="menu-section">
-						<div class="menu-section-title">Sort subsections by:</div>
-						{{select-one options=subSortOptions onChange=(action 'updateSortOptions')}}
-					</div>
-				</div>
-				<div class="menu-column">
-					<div class="menu-section">
-						{{select-many options=filterOptions onChange=(action 'updateFilter')}}
+					{{/if}}
+					<div class="menu-column">
+						{{#if model}}
+							<div class="menu-section">
+								{{select-many options=filterOptions onChange=(action 'updateFilter')}}
+							</div>
+							{{#if canHaveRecs}}
+								<div class="menu-line"></div>
+							{{/if}}
+						{{/if}}
+						{{#if canHaveRecs}}
+							<div class="menu-option {{if withRecs 'is-selected'}}" {{action 'toggleRecs'}}>
+								Recommendations
+							</div>
+						{{/if}}
 					</div>
 				</div>
 			</div>
-		</div>
+		{{/if}}
 		{{#each majorSections as |majorSection|}}
 			{{major-section model=majorSection}}
-		{{else}}
-			Nothing left here to see.. maybe remove some filters?
 		{{/each}}
-	</div>
-{{else}}
-	{{#if isTrash}}
-		Your trashcan is empty. This will hold any items you decide not to track.
-	{{else}}
-		You don't have any tracked items yet. Try searching for something on Google, or use the search bar on the left.
+		{{#if showRecs}}
+			{{major-section model=recsSection}}
+		{{/if}}
+		{{#if isTrash}}
+			{{#unless majorSections}}
+				Your trashcan is empty. This will hold any items you decide not to track.
+			{{/unless}}
+		{{else}}
+			{{#if canHaveRecs}}
+				{{#unless withScrollMenu}}
 
-	{{/if}}
-{{/if}}
+					You don't have any tracked items yet. Try searching for something on Google, or use the search bar
+					on
+					the left.
+				{{/unless}}
+			{{/if}}
+			{{#if canHaveRecs}}
+				{{#unless withRecs}}
+					<div class="flat-btn blue-text" {{action 'toggleRecs'}}>Find some recommendations</div>
+				{{/unless}}
+			{{/if}}
+		{{/if}}
+
+	</div>
 
 
 </div>
 
 {{collection-markers model=filteredItems}}
-
+{{#if showRecs}}
+	{{collection-markers model=recs markerColor="blue"}}
+{{/if}}

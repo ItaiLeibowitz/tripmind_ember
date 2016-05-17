@@ -6,12 +6,12 @@ export default Ember.Component.extend(sectionMixin, {
 	classNames:['sub-section'],
 
 	mouseEnter: function(){
-		if (this.get('model.count')) return;
+		if (this.get('model.count') || !this.get('model.slug')) return;
 		var item = this.get('store').peekRecord('item', this.get('model.slug').split("+")[0]);
 		item.set('isHovered', true);
 	},
 	mouseLeave: function(){
-		if (this.get('model.count')) return;
+		if (this.get('model.count') || !this.get('model.slug')) return;
 		var item = this.get('store').peekRecord('item', this.get('model.slug').split("+")[0]);
 		item.set('isHovered', false);
 	},

@@ -265,7 +265,11 @@ var gmaps = {};
 		};
 
 		var markerIconSmallBlue = {
-
+			url: '/assets/images/markers4.png',
+			size: new google.maps.Size(16, 16),
+			origin: new google.maps.Point(47, 85),
+			anchor: new google.maps.Point(8, 12),
+			scaledSize: null
 		};
 
 		var markerIconLargeBlue = {

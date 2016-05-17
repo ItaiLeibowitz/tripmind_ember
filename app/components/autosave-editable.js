@@ -18,6 +18,12 @@ export default Ember.Component.extend({
 		this.$().html(value);
 	},
 
+/*
+	valueDidChange: function(){
+		this.set('refreshModel.needsRefresh', true)
+	}.observes('value').on('init'),
+*/
+
 	focusOut: function(){
 		var modelToSave = this.get('saveOnExit'),
 			self = this;
@@ -33,6 +39,7 @@ export default Ember.Component.extend({
 			}
 			modelToSave.save();
 		}
+		this.set('refreshModel.needsRefresh', true)
 		console.log('focused out!')
 	}
 });
