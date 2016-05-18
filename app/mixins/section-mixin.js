@@ -9,7 +9,9 @@ export default Ember.Mixin.create({
 
 	isSelected: function(){
 		var selectedIds = this.get('actionService.selectedIds');
-		return this.get('model.items').every(function(item){
+		var items = this.get('model.items');
+		if (!items) return false;
+		return items.every(function(item){
 			return selectedIds.indexOf(item.get('id')) > -1;
 		})
 	}.property('model.items.[]','actionService.selectedIds.[]'),

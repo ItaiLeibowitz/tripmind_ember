@@ -12,8 +12,8 @@ var ModelWithDescs = Ember.Mixin.create({
 	}.property('longDesc','altLongDesc'),
 
 	onelinerOrAlt:  function(){
-		return this.get('altOneliner') || this.get('oneliner') || this.get('itemTypeInParent');
-	}.property('oneliner','altOneliner','itemTypeInParent'),
+		return this.get('altOneliner') || this.get('oneliner');
+	}.property('oneliner','altOneliner'),
 
 	onelinerOrLong: function() {
 		if (this.get('longDescOrAlt')) return Ember.String.htmlSafe(this.get('longDescOrAlt').replace(/<(?:.|\n)*?>/gm, '').slice(0,80) + "...");

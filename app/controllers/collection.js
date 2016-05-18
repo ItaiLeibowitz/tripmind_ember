@@ -2,10 +2,14 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 	store: Ember.inject.service('store'),
+	withCategories: false,
 
 	actions: {
 		addDate: function(position){
 			this.get('model').addDate(position)
+		},
+		toggleCategories: function(){
+			this.toggleProperty('withCategories')
 		},
 		addToCollection: function(type, itemSlug){
 			var self = this,

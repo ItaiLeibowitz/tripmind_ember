@@ -3,7 +3,19 @@
 {{collection-action-bar openModalAction=(action 'openTopModal' target=displayService) addedClass='in' targetModel=model}}
 
 {{input-with-default value=model.name addedClass="collection-title" default="Untitled" saveOnExit=model}}
-{{items-sorter model=model.items modelToUpdate=model update=true withRefresh=true}}
+
+
+<br/>
+<div class="flat-btn icon-tag" {{action 'toggleCategories'}}>
+	{{if withCategories "Hide Sorting" "Sort by categories"}}
+</div>
+
+{{#if withCategories}}
+	{{major-sections-holder parentItem=model majorSectionType='category' model=model.items canHaveRecs=false }}
+{{else}}
+	{{items-sorter model=model.items modelToUpdate=model update=true withRefresh=true}}
+{{/if}}
+
 
 {{collection-markers model=model.allItems }}
 
