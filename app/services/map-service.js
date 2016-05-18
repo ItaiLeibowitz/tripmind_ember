@@ -37,23 +37,15 @@ export default Ember.Service.extend({
 		this.set('directionsService',new google.maps.DirectionsService());
 	},
 
-	_setMapListeners: function(map) {
+	 _setMapListeners: function(map) {
 		var self = this;
 
 		google.maps.event.addListener(map, 'zoom_changed', function () {
-			/*var zoomLevel = this.getZoom();
-			 this.setOptions({ styles: WA.Gmaps.styles.originalStyles[WA.Gmaps.stylesByZoomLevel[zoomLevel]] });
-			 Ember.run.debounce(self, '_addMarkersFromBounds', map, 200);
-			 Ember.run.debounce(self, '_toggleRoutes', zoomLevel, 200);
-			 Ember.run.debounce(self, '_addClassToTiles', 200);*/
+			Ember.run.debounce(self, '_updateEmberBounds', 200);
 		});
 
 		google.maps.event.addListener(map, 'click', function () {
-				self.get('collectionMarkers').send('minimizeAllMarkers');
-			 /*self.get('generatedMarkersList').invoke('reset');
-			 self.get('currentCollectionMarkersList').invoke('reset');
-			 self.get('currentRoute').reset();
-			 self.get('viewedRoute').reset();*/
+			self.get('collectionMarkers').send('minimizeAllMarkers');
 		});
 
 		google.maps.event.addListener(map, 'resize', function () {
@@ -62,11 +54,34 @@ export default Ember.Service.extend({
 		});
 
 		google.maps.event.addListener(map, 'dragend', function () {
+			Ember.run.debounce(self, '_updateEmberBounds', 200);
 			/*
 			 self._addMarkersFromBounds(map);
 			 */
 		});
 
+		google.maps.event.addListener(map, 'bounds_changed', function () {
+		});
+
+	},
+
+	_updateEmberBounds: function () {
+		if (!this.get('isExpanded'))return;
+		if (this.get('automaticFittingInProgress')) return;
+		console.log('updating bounds')
+		this.set('preventBoundsListener', true)
+		var boundsObject = this.get('googleMapObject').getBounds(),
+			bounds = {
+				neLat: boundsObject.getNorthEast().lat(),
+				neLng: boundsObject.getNorthEast().lng(),
+				swLat: boundsObject.getSouthWest().lat(),
+				swLng: boundsObject.getSouthWest().lng()
+			};
+		this.set('bounds', bounds);
+		var self = this;
+		Ember.run.scheduleOnce('afterRender', this, function(){
+			self.set('preventBoundsListener', false);
+		})
 	},
 
 
@@ -84,7 +99,7 @@ export default Ember.Service.extend({
 
 	mapBoundsDidChange: function(){
 		if (this.get('bounds')) this.scheduleFitBounds();
-	}.observes('bounds'),
+	}.observes('bounds').on('init'),
 
 	updateOptions: function(){
 		var options = this.get('options');
@@ -98,14 +113,20 @@ export default Ember.Service.extend({
 	},
 
 	fitToBounds: function () {
+		if (this.get('preventBoundsListener')) return;
 		console.log('fitting bounds!')
 		var bounds = this.get('bounds');
 		if (!bounds) return;
 		var map = this.get('googleMapObject');
 		var sw = new google.maps.LatLng(bounds.swLat, bounds.swLng);
 		var ne = new google.maps.LatLng(bounds.neLat, bounds.neLng);
-
+		this.set('automaticFittingInProgress', true);
 		map.fitBounds(new google.maps.LatLngBounds(sw, ne));
+		var self = this;
+		Ember.run.later(this, function(){
+			self.set('automaticFittingInProgress', false);
+		}, 1000);
+
 	},
 
 

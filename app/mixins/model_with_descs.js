@@ -12,12 +12,12 @@ var ModelWithDescs = Ember.Mixin.create({
 	}.property('longDesc','altLongDesc'),
 
 	onelinerOrAlt:  function(){
-		return this.get('altOneliner') || this.get('oneliner') || this.get('itemType');
-	}.property('oneliner','altOneliner'),
+		return this.get('altOneliner') || this.get('oneliner') || this.get('itemTypeInParent');
+	}.property('oneliner','altOneliner','itemTypeInParent'),
 
 	onelinerOrLong: function() {
+		if (this.get('longDescOrAlt')) return Ember.String.htmlSafe(this.get('longDescOrAlt').replace(/<(?:.|\n)*?>/gm, '').slice(0,80) + "...");
 		if (this.get('onelinerOrAlt')) return this.get('onelinerOrAlt');
-		if (this.get('longDescOrAlt')) return this.get('longDescOrAlt').replace(/<(?:.|\n)*?>/gm, '').slice(0,80) + "...";
 	}.property('onelinerOrAlt', 'longDescOrAlt'),
 
 	longDescEditable: Ember.computed('longDesc', {

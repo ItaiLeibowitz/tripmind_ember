@@ -67,10 +67,12 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 
 
 	save: function(options){
-		if (this.currentState.stateName.indexOf('deleted') == -1) this.set('updatedAt', moment().format("X"));
-		// next 2 lines are for temporary items so they get properly saved and come up later
-		if (!this.get('trackingStatus')) this.set('trackingStatus', !!this.get('trackingStatus'))
-		this.set('isTemporary', false);
+		if (this.currentState.stateName.indexOf('deleted') == -1) {
+			this.set('updatedAt', moment().format("X"));
+			// next 2 lines are for temporary items so they get properly saved and come up later
+			if (!this.get('trackingStatus')) this.set('trackingStatus', !!this.get('trackingStatus'))
+			this.set('isTemporary', false);
+		}
 		return this._super(options);
 	},
 

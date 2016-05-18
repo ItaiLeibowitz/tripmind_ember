@@ -3,6 +3,7 @@ import Sortable from 'tripmind/mixins/sortable';
 import geoDistances from 'tripmind/appconfig/geo_distance';
 
 export default Ember.Component.extend(Sortable, {
+	screenDefs: Ember.inject.service('screen-defs'),
 	store: Ember.inject.service('store'),
 	classNames: ['connected-sortable', 'items-sorter'],
 	sortable_connectWith: '.connected-sortable',
@@ -10,6 +11,12 @@ export default Ember.Component.extend(Sortable, {
 	sortable_helper: "clone",
 	sortable_update: function(event, ui){
 		Ember.run.schedule('actions', this, '_sortableUpdate', event, ui);
+	},
+
+
+	init: function(){
+		if ((this.get('screenDefs.screenWidth')) < 600) this.set('stopWidget', true);
+		this._super();
 	},
 
 	sortable_over: function(event, ui){

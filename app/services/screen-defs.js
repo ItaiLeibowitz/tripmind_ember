@@ -7,21 +7,24 @@ export default Ember.Service.extend({
 
 	init: function(){
 		this._super();
-		this.setScreenWidth();
+		this.setScreenDims();
 		var self = this;
 		$(window).on('resize.defs', function(){
-			self.setScreenWidth();
+			self.setScreenDims();
 		});
 	},
 
-	setScreenWidth: function(){
-		this.set('screenWidth', $(document).innerWidth());
+	setScreenDims: function(){
+		this.set('screenWidth', $(window).width());
+		this.set('screenHeight', $(window).height());
 		this.get('mapService').resizeMap();
 	},
 
 	actualMapWidth: function(){
-		return this.get('mapService.isExpanded') ? this.get('mapWidth') : 0;
-	}.property('mapWidth','mapService.isExpanded')
+		var screenWidth = this.get('screenWidth');
+		var mapWidth = screenWidth < 500 ? screenWidth : this.get('mapWidth');
+		return this.get('mapService.isExpanded') ? mapWidth : 0;
+	}.property('mapWidth','mapService.isExpanded','screenWidth')
 });
 
 

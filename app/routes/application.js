@@ -17,11 +17,13 @@ export default Ember.Route.extend({
 		triggerTransition: function(destination, payload) {
 			this.transitionTo(destination, payload);
 		},
-		openExtension: function(withCurrentRoute) {
-			chrome.runtime.sendMessage(ENV.chromeExtensionId, {
-				message: "openTripmind",
-				addedRoute: withCurrentRoute ? "#" + this.get('router.url') : null
-			});
+		openExtension: function (withCurrentRoute) {
+			if (typeof(chrome.runtime) != "undefined") {
+				chrome.runtime.sendMessage(ENV.chromeExtensionId, {
+					message: "openTripmind",
+					addedRoute: withCurrentRoute ? "#" + this.get('router.url') : null
+				});
+			}
 		}
 	}
 });

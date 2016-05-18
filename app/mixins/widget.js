@@ -8,7 +8,7 @@ var Widget = Ember.Mixin.create({
 	// e.g. when cards are still moving about.
 	setupWidget: function() {
 		this._super();
-		if (!this.get('widgetIsUp')) {
+		if (!this.get('widgetIsUp') && !this.get('stopWidget')) {
 
 			var self = this;
 			this.get('uiTypes').forEach(function (uiType) {

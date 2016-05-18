@@ -150,6 +150,7 @@ export default Ember.Component.extend({
 				});
 		},
 		zoomDate: function(){
+			console.log('zooming date')
 			this.set('mapService.bounds', this.get('mapBoundingBox'));
 		}
 	}

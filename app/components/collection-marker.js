@@ -45,7 +45,7 @@ export default MapMarker.extend({
 		var originalEvent;
 		for (var key in e){
 			if (e.hasOwnProperty(key)){
-				if (e[key] && e[key].isTrusted)
+				if (e[key] && (e[key].isTrusted || e[key].type == "click"))
 					originalEvent = e[key]
 			}
 		}

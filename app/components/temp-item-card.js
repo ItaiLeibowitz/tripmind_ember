@@ -11,7 +11,12 @@ export default ItemCard.reopen({
 		var fromItems = this.get('fromItems'),
 			item = this.get('model'),
 			minDistance, minItem;
-		[minDistance, minItem] = geoDistances.minDistance(item, fromItems);
+		var result = geoDistances.minDistance(item, fromItems);
+		if (result) {
+			[minDistance, minItem] =  result;
+		} else {
+			return null;
+		}
 		var distanceText, distanceTime, travelClass;
 		switch (true) {
 			case (minDistance == 0):
