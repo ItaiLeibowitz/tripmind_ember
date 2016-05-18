@@ -198,13 +198,14 @@ export default Ember.Component.extend({
 			var treeObject = {};
 			items.forEach(function(item){
 				var ancestry = item.get('ancestry'),
+					ancestryArray = ancestry ? ancestry.split("/") : null,
 					itemId = item.get('id');
-				if (!ancestry || ancestry.length == (options.minDepth - 1 || 0)){
+				if (!ancestryArray || (ancestryArray.length == (options.minDepth - 1 || 0) && Constants.GOOGLE_PLACE_DESTINATION_TYPES.indexOf(item.get('itemType')) > -1)){
 					treeObject[itemId] = treeObject[itemId] || {
 						ancestryArray: [],
 						count: 0,
 						descs:[],
-						depth: 1,
+						depth: (ancestryArray ? ancestryArray.length : 0) + 1,
 						name: item.get('name')
 					}
 				} else {
@@ -257,7 +258,7 @@ export default Ember.Component.extend({
 			var orderedKeys = [];
 			treeArray.forEach(function(itemId){
 				var descCount = treeObject[itemId].count;
-				if (descCount >= options.threshold || treeObject[itemId].depth == options.minDepth) {
+				if (descCount >= options.threshold || treeObject[itemId].depth <= options.minDepth) {
 					if (treeObject[itemId].skipIfEmpty && treeObject[itemId].descs.length == 0) return;
 					// Create the sectionsObject
 					sectionsObject[itemId] = sectionsObject[itemId] || Ember.Object.create({

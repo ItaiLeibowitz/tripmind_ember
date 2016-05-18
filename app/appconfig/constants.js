@@ -432,6 +432,7 @@ var Constants = Ember.Object.create({
 		{type: "physiotherapist", filterOption:"Other", duration: 1800},
 		{type: "plumber", filterOption:"Other", duration: 1800},
 		{type: "point_of_interest", filterOption:"Other", duration: 1800},
+		{type: "point of interest", filterOption:"Other", duration: 1800},
 		{type: "police", filterOption:"Other", duration: 1800},
 		{type: "post_office", filterOption:"Other", duration: 1800},
 		{type: "premise", filterOption:"Other", duration: 1800},
@@ -527,7 +528,6 @@ var Constants = Ember.Object.create({
 		{type: 'geocode', filterOption: "Other",duration: 1800},
 		{type: 'intersection', filterOption: "Other",duration: 1800},
 
-		{type: 'point of interest', filterOption: "Other",duration: 1800},
 		{type: 'atm', filterOption: "Other",duration: 1800},
 		{type: 'bank', filterOption: "Other",duration: 1800},
 		{type: 'beauty salon', filterOption: "Other",duration: 1800},

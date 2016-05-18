@@ -13,7 +13,7 @@ export default Ember.Mixin.create({
 
 
 	itemTypeInParent: function() {
-		var itemTypeName = this.get('itemType');
+		var itemTypeName = this.get('itemTypeClean');
 		var parentName = this.get('parentName');
 
 		if (parentName) {
@@ -21,7 +21,7 @@ export default Ember.Mixin.create({
 		} else {
 			return itemTypeName;
 		}
-	}.property('itemTypeName', 'parentName'),
+	}.property('itemTypeClean', 'parentName'),
 
 
 	path: function(){
