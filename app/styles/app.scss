@@ -142,6 +142,10 @@ a {
 			right: auto;
 			left: 0;
 		}
+
+		&.above{
+			bottom: 100%;
+		}
 	}
 
 	&:hover{
@@ -512,7 +516,7 @@ a {
 	border-right: 0em solid transparent;
 	border-top: 0px solid transparent;
 	padding: 1em;
-	background: #efefef;
+	background: #fafafa;
 
 	.prevent-click{
 		position:fixed;
@@ -777,7 +781,7 @@ a {
 
 .item-card, .collection-card {
 	width: 15em;
-	height: 16em;
+	min-height: 16em;
 	background: white;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
 	cursor: pointer;
@@ -961,6 +965,7 @@ a {
 	}
 
 	&.small{
+		min-height: 0;
 		display: block;
 		width: 20em;
 		height: auto;
@@ -1005,6 +1010,7 @@ a {
 }
 
 .collection-card, .item-card.sub-section-minimized {
+	 height: 16em;
 
 	.image-container {
 		height: 100%;
@@ -1232,6 +1238,21 @@ a {
 	font-weight: bold;
 	color: #555;
 	margin-bottom: 1em;
+
+	.name{
+		font-size: 1.5em;
+		color: #333;
+		line-height:2em;
+		border: none;
+		border-bottom: 1px solid transparent;
+		outline: none;
+		&:hover{
+			border-bottom-color: #ccc;
+		}
+		&:focus{
+			border-bottom-color: #E74C3C;
+		}
+	}
 }
 
 .top-content, .bottom-content {

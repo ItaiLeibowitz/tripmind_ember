@@ -11,6 +11,11 @@
 	{{#each model.ancestorsArray as |ancestor|}}
 		{{#link-to ancestor.target ancestor.slug}}{{ancestor.name}}{{/link-to}} >
 	{{/each}}
+	{{#if needsRefresh}}
+		{{refresh-done parentComponent=this}}
+	{{else}}
+		{{autosave-editable class="name" canEditContent=true isEditable=true saveOnExit=model value=model.name refreshModel=this defaultValue='Unnamed place'}}
+	{{/if}}
 </div>
 
 <div class="top-content">
@@ -59,7 +64,6 @@
 			</div>
 	</div>
 	<div class="lhs">
-		<div class="top-section-title">Description:</div>
 		{{#if needsRefresh}}
 			{{refresh-done parentComponent=this}}
 		{{else}}

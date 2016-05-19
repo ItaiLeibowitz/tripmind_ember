@@ -68,7 +68,7 @@ export default Ember.Mixin.create({
 			});
 		}
 		var ancestryLength = response.length
-		response.push({target: 'item', name: this.get('name'), slug: this.get('slug'), offsetClass:`offset-${ancestryLength + 1} is-selected`});
+		//response.push({target: 'item', name: this.get('name'), slug: this.get('slug'), offsetClass:`offset-${ancestryLength + 1} is-selected`});
 		return response;
 	}.property('ancestry','ancestryNames','name','slug'),
 
