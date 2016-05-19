@@ -138,7 +138,7 @@ export default
 													return dateItemsToSend;
 												})
 											.then(function(dateItemsToSend) {
-													var allItemAncestorIds = items.toArray().concat(dateItemsToSend).reduce(function(pv, item){
+													var allItemAncestorIds = items.toArray().concat(dateItemsToSend.toArray()).reduce(function(pv, item){
 														var ancestorArray = item.get('ancestry');
 														ancestorArray = ancestorArray ? ancestorArray.split("/") : [];
 														return pv.concat(ancestorArray);
