@@ -22,11 +22,12 @@ export default Ember.Component.extend({
 
 	itemLegs: function(){
 		var items = this.get('model.items'),
-			legs = this.get('legTravel');
+			legs = this.get('legTravel'),
+			indexMove = this.get('prevDate.lastItem') ? 0 : 1;
 		return items.map(function(item,index){
-			return Ember.Object.create({item: item, leg: legs ? legs[index] : null})
+			return Ember.Object.create({item: item, leg: legs ? legs[index - indexMove] : null})
 		});
-	}.property('model.items.[]','legTravel.[]'),
+	}.property('model.items.[]','legTravel.[]','prevDate.lastItem'),
 
 	prevDate: function(){
 		var myOrder = this.get('model.order'),

@@ -4,11 +4,12 @@
 
 {{input-with-default value=model.name addedClass="collection-title" default="Untitled" saveOnExit=model}}
 
-
+{{#if model.items}}
 <br/>
 <div class="flat-btn icon-tag" {{action 'toggleCategories'}}>
 	{{if withCategories "Hide Sorting" "Sort by categories"}}
 </div>
+{{/if}}
 
 {{#if withCategories}}
 	{{major-sections-holder parentItem=model majorSectionType='category' model=model.items canHaveRecs=false }}

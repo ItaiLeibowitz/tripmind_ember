@@ -2285,7 +2285,7 @@ a {
 }
 
 .items-sorter {
-	min-height: 9em;
+	min-height: 2em;
 	min-width: 15em;
 	border: 1px solid transparent;
 	&.with-border{
@@ -2322,6 +2322,7 @@ a {
 	}
 
 	.items-sorter{
+		min-height: 9em;
 		display: inline-block;
 		vertical-align: top;
 	}

@@ -3,8 +3,8 @@
 {{else}}
 	{{#if withDirections}}
 		{{#each model as |itemLeg|}}
-			{{item-card model=itemLeg.item addedClass=addedClass}}
 			{{distance-leg model=itemLeg.leg}}
+			{{item-card model=itemLeg.item addedClass=addedClass}}
 		{{else}}
 			<div class="sorter-explain extension-only">Drag stuff here</div>
 		{{/each}}
