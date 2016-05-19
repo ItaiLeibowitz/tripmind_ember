@@ -87,7 +87,7 @@ $white-3qtrans: rgba(255,255,255,0.75);
 body {
 	font-family: 'roboto';
 	margin: 0;
-	background: #efefef;
+	background: #fafafa;
 	font-size: 100%;
 
 	&.modal-open{
@@ -397,8 +397,7 @@ a {
 .menu-link {
 	display: block;
 	line-height: 3em;
-	color: #333;
-	font-weight: bold;
+	color: #E74C3C;
 	cursor: pointer;
 	padding: 0 .75em;
 	&.active {
@@ -902,6 +901,7 @@ a {
 	}
 
 	&.horizontal {
+		min-height: 0;
 		margin: -2px 0;
 		background: none;
 		box-shadow: none;
@@ -1234,14 +1234,12 @@ a {
 }
 
 .title-ancestry {
-	font-size: 1.2em;
-	font-weight: bold;
-	color: #555;
+	color: #999;
 	margin-bottom: 1em;
 
 	.name{
 		font-size: 1.5em;
-		color: #333;
+		color: #E74C3C;
 		line-height:2em;
 		border: none;
 		border-bottom: 1px solid transparent;
