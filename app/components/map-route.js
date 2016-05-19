@@ -91,7 +91,16 @@ export default Ember.Component.extend({
 						var totalTravel = response.routes[0].legs.reduce(function (pv, el) {
 							return pv + el.duration.value
 						}, 0);
-						modelForDistance.set('totalTravel', totalTravel);
+						var legTravel = response.routes[0].legs.map(function(leg){
+							return Ember.Object.create({
+								driveTime: leg.duration.value,
+								distance: leg.distance.value
+							});
+						});
+						modelForDistance.setProperties({
+							totalTravel: totalTravel,
+							legTravel: legTravel
+						});
 					}
 					self._drawDirections(response);
 				} else {

@@ -964,6 +964,8 @@ a {
 		display: block;
 		width: 20em;
 		height: auto;
+		box-shadow:none;
+		border: 1px solid transparent;
 
 		.image-container {
 			display: inline-block;
@@ -994,6 +996,10 @@ a {
 
 		&.inline{
 			display: inline-block;
+		}
+
+		&:hover{
+			border-color: #ccc;
 		}
 	}
 }
@@ -2300,7 +2306,7 @@ a {
 	}
 }
 .date-view{
-	background: rgba(255,255,255,0.5);
+	background: white;
 	display: inline-block;
 	margin: 0 .5em .5em 0;
 	position: relative;
@@ -2337,6 +2343,18 @@ a {
 
 	.zoom-date{
 		left: 2em;
+	}
+
+	.distance-leg{
+		margin:-0.6em 2em;
+		border-left: 1px solid #aaa;
+		font-size: 0.9em;
+		color: #aaa;
+		line-height: 2em;
+
+		&:before{
+			margin:0 2.6em 0 1em;
+		}
 	}
 
 	&:hover{

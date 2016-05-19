@@ -1,6 +1,6 @@
 <div class="date-name">{{model.title}}</div>
 
-{{items-sorter model=model.items update=true modelToUpdate=model compToUpdate=this addedClass="small"}}
+{{items-sorter model=itemLegs withDirections=true update=true modelToUpdate=model compToUpdate=this addedClass="small"}}
 {{map-route items=itemsWithPrev color=model.color modelForDistance=this}}
 {{#if model.items}}
 	<div class="time-indicator">

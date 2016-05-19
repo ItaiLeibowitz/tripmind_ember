@@ -20,6 +20,14 @@ export default Ember.Component.extend({
 		}
 	},
 
+	itemLegs: function(){
+		var items = this.get('model.items'),
+			legs = this.get('legTravel');
+		return items.map(function(item,index){
+			return Ember.Object.create({item: item, leg: legs ? legs[index] : null})
+		});
+	}.property('model.items.[]','legTravel.[]'),
+
 	prevDate: function(){
 		var myOrder = this.get('model.order'),
 			orderedDates = this.get('orderedDates');

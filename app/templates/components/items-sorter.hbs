@@ -1,9 +1,18 @@
 {{#if needsRefresh}}
 	{{refresh-done parentComponent=this}}
 {{else}}
-	{{#each model as |item|}}
-		{{item-card model=item addedClass=addedClass}}
+	{{#if withDirections}}
+		{{#each model as |itemLeg|}}
+			{{item-card model=itemLeg.item addedClass=addedClass}}
+			{{distance-leg model=itemLeg.leg}}
+		{{else}}
+			<div class="sorter-explain extension-only">Drag stuff here</div>
+		{{/each}}
 	{{else}}
-		<div class="sorter-explain extension-only">Drag stuff here</div>
-	{{/each}}
+		{{#each model as |item|}}
+			{{item-card model=item addedClass=addedClass}}
+		{{else}}
+			<div class="sorter-explain extension-only">Drag stuff here</div>
+		{{/each}}
+	{{/if}}
 {{/if}}
