@@ -135,133 +135,158 @@ export default
 													dateItemsArray.forEach(function (el) {
 														if (el.state == 'fulfilled') dateItemsToSend.addObject(el.value);
 													});
-													var serializedRecords = [
-															{
-																attributes: self.toJSON(),
-																type: 'collection',
-																id: self.get('tmToken'),
-																relationships: {
-																	items: {
-																		data: items.map(function (item) {
-																			return {type: 'item', id: item.get('id')}
-																		})
-																	}
-
-																}
-															}
-														],
-														serializedItems = items.map(function (item) {
-															var potentialLinks = item.get('potentialLinks').filter(function (link) {
-																return link.get('lastVisited') > 0
+													return dateItemsToSend;
+												})
+											.then(function(dateItemsToSend) {
+													var allItemAncestorIds = items.toArray().concat(dateItemsToSend).reduce(function(pv, item){
+														var ancestorArray = item.get('ancestry');
+														ancestorArray = ancestorArray ? ancestorArray.split("/") : [];
+														return pv.concat(ancestorArray);
+													},[]).uniq();
+													return self.store.findAll('item')
+														.then(function(allItemRecords){
+														    var ancestorItems = allItemRecords.filter(function(item){
+																return allItemAncestorIds.indexOf(item.get('id')) > -1;
 															});
-															return {
-																id: item.get('id'),
-																type: 'item',
-																attributes: item.toJSON(),
-																relationships: {
-																	collections: {
-																		data: [
-																			{type: 'collection', id: self.get('tmToken')}
-																		]
-																	},
-																	potentialLinks: {
-																		data: potentialLinks.map(function (link) {
-																			return {type: 'potentialLink', id: link.get('id')}
-																		})
+															var serializedRecords = [
+																	{
+																		attributes: self.toJSON(),
+																		type: 'collection',
+																		id: self.get('tmToken'),
+																		relationships: {
+																			items: {
+																				data: items.map(function (item) {
+																					return {type: 'item', id: item.get('id')}
+																				})
+																			}
+
+																		}
 																	}
-																}
-															}
-														}),
-														serializedLinks = linksToSend.map(function (link) {
-															return {
-																id: link.get('id'),
-																type: 'potentialLink',
-																attributes: link.toJSON(),
-																relationships: {
-																	item: {
-																		data: {type: 'item', id: link.get('item.id')}
+																],
+																serializedItems = items.map(function (item) {
+																	var potentialLinks = item.get('potentialLinks').filter(function (link) {
+																		return link.get('lastVisited') > 0
+																	});
+																	return {
+																		id: item.get('id'),
+																		type: 'item',
+																		attributes: item.toJSON(),
+																		relationships: {
+																			collections: {
+																				data: [
+																					{type: 'collection', id: self.get('tmToken')}
+																				]
+																			},
+																			potentialLinks: {
+																				data: potentialLinks.map(function (link) {
+																					return {type: 'potentialLink', id: link.get('id')}
+																				})
+																			}
+																		}
 																	}
-																}
-															}
-														}),
-														serializedDates = dates.map(function(date){
-															var tps = date.get('trippoints');
-															return {
-																id: date.get('id'),
-																type: 'date',
-																attributes: date.toJSON(),
-																relationships: {
-																	collection: {
-																		data: {type: 'collection', id: self.get('id')}
-																	},
-																	trippoints:  {
-																		data: tps.map(function (tp) {
-																			return {type: 'trippoint', id: tp.get('id')}
-																		})
+																}),
+																serializedLinks = linksToSend.map(function (link) {
+																	return {
+																		id: link.get('id'),
+																		type: 'potentialLink',
+																		attributes: link.toJSON(),
+																		relationships: {
+																			item: {
+																				data: {type: 'item', id: link.get('item.id')}
+																			}
+																		}
 																	}
-																}
-															}
-														}),
-														serializedTrippoints =  trippointsToSend.map(function(tp){
-															return {
-																id: tp.get('id'),
-																type: 'trippoint',
-																attributes: tp.toJSON(),
-																relationships: {
-																	date: {
-																		data: {type: 'date', id: tp.get('date.id')}
-																	},
-																	item: {
-																		data: {type: 'item', id: tp.get('item.id')}
+																}),
+																serializedDates = dates.map(function(date){
+																	var tps = date.get('trippoints');
+																	return {
+																		id: date.get('id'),
+																		type: 'date',
+																		attributes: date.toJSON(),
+																		relationships: {
+																			collection: {
+																				data: {type: 'collection', id: self.get('id')}
+																			},
+																			trippoints:  {
+																				data: tps.map(function (tp) {
+																					return {type: 'trippoint', id: tp.get('id')}
+																				})
+																			}
+																		}
 																	}
-																}
-															}
-														}),
-														serializedDateItems =  dateItemsToSend.map(function(item){
-															var tps = item.get('trippoints');
-															return {
-																id: item.get('id'),
-																type: 'item',
-																attributes: item.toJSON(),
-																relationships: {
-																	trippoints: {
-																		data: tps.map(function (tp) {
-																			return {type: 'trippoint', id: tp.get('id')}
-																		})
+																}),
+																serializedTrippoints =  trippointsToSend.map(function(tp){
+																	return {
+																		id: tp.get('id'),
+																		type: 'trippoint',
+																		attributes: tp.toJSON(),
+																		relationships: {
+																			date: {
+																				data: {type: 'date', id: tp.get('date.id')}
+																			},
+																			item: {
+																				data: {type: 'item', id: tp.get('item.id')}
+																			}
+																		}
 																	}
-																}
-															}
-														});
+																}),
+																serializedDateItems =  dateItemsToSend.map(function(item){
+																	var tps = item.get('trippoints');
+																	return {
+																		id: item.get('id'),
+																		type: 'item',
+																		attributes: item.toJSON(),
+																		relationships: {
+																			trippoints: {
+																				data: tps.map(function (tp) {
+																					return {type: 'trippoint', id: tp.get('id')}
+																				})
+																			}
+																		}
+																	}
+																}),
+																serializedAncestors =  ancestorItems.map(function(item){
+																	return {
+																		id: item.get('id'),
+																		type: 'item',
+																		attributes: item.toJSON()
+																	}
+																});
 
 
 
-													serializedRecords = serializedRecords
-														.concat(serializedItems)
-														.concat(serializedLinks)
-														.concat(serializedDates)
-														.concat(serializedTrippoints)
-														.concat(serializedDateItems);
-													var stringifiedRecords = JSON.stringify(serializedRecords);
-													var compressedJSON = lzwCompress.pack(stringifiedRecords);
-													var compressed = JSON.stringify(compressedJSON).length < stringifiedRecords.length;
-													var compressedData = compressed ? compressedJSON : stringifiedRecords;
-													return headOnlyPromiseFromAjax({
-														url: Constants.BASE_SERVER_URL + '/api/tm/tm_collections/' + self.get('tmToken'),
-														type: 'PATCH',
-														data: {
-															tm_collection: {
-																is_compressed: compressed,
-																last_updated: self.get('updatedAt'),
-																data: compressedData
-															}
-														}
-													}).then(function () {
-														console.log("resolve: ", compressedData)
-														return compressedData
-													}, function (status) {
-														console.log('reject:', status)
-														return status
-													});
+															serializedRecords = serializedRecords
+																.concat(serializedItems)
+																.concat(serializedLinks)
+																.concat(serializedDates)
+																.concat(serializedTrippoints)
+																.concat(serializedDateItems)
+																.concat(serializedAncestors);
+															var stringifiedRecords = JSON.stringify(serializedRecords);
+															var compressedJSON = lzwCompress.pack(stringifiedRecords);
+															var compressed = JSON.stringify(compressedJSON).length < stringifiedRecords.length;
+															var compressedData = compressed ? compressedJSON : stringifiedRecords;
+															return headOnlyPromiseFromAjax({
+																url: Constants.BASE_SERVER_URL + '/api/tm/tm_collections/' + self.get('tmToken'),
+																type: 'PATCH',
+																data: {
+																	tm_collection: {
+																		is_compressed: compressed,
+																		last_updated: self.get('updatedAt'),
+																		data: compressedData
+																	}
+																}
+															}).then(function () {
+																console.log("resolve: ", compressedData)
+																return compressedData
+															}, function (status) {
+																console.log('reject:', status)
+																return status
+															});
+													})
+													.catch(function(error){
+															console.log('couldnt find all items', error)
+														})
 
 												})
 												.catch(function (error) {
