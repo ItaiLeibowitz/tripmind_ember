@@ -46,6 +46,7 @@ export default Ember.Route.extend({
 											updatedAttributes.isTemporary = true;
 											updatedAttributes.lat = updatedAttributes.latitude;
 											updatedAttributes.lng = updatedAttributes.longitude;
+											updatedAttributes.rating = updatedAttributes.rating / 10;
 											var newTempName = "tmp" + result.attributes['ancestry-names'] + "/" + result.attributes.name;
 											newTempName = newTempName.replace(/[\s\/]/g,"-");
 
