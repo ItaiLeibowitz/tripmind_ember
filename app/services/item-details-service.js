@@ -15,13 +15,14 @@ export default Ember.Service.extend({
 			if (itemRecord && itemRecord.get('additionalInfoComplete')) resolve(itemRecord);
 			// Otherwise, we will get additional information with a delay to prevent overloading the quota
 			Ember.run.later(function () {
-				self.get('googlePlaces.service').getDetails({placeId: placeId}, function (result) {
+				self.get('googlePlaces.service').getDetails({placeId: placeId}, function (result, status) {
 					//console.log(result);
 					var item = store.peekRecord('item', placeId);
-					if (!item || !result) {
-						reject({message: "didn't find the item or its representation in the store"});
+					if (!item || !result){
+						//TODO: if the status is "over query limit" we could resend the request later
+						reject({message: "didn't find the item or its representation in the store," +  status});
 					} else {
-						ga('send', 'event', 'googlePlaces', 'getDetails')
+						ga('send', 'event', 'googlePlaces', 'getDetails');
 						item.set('phone', result.international_phone_number);
 						if (!item.get('googleHours') && result.opening_hours) item.set('googleHours', result.opening_hours.periods);
 						if (!item.get('name')) item.set('name', result.name);
@@ -57,15 +58,12 @@ export default Ember.Service.extend({
 										item.set('ancestryNames', parent.get('pathNames'));
 										item.set('ancestry', parent.get('path'));
 									}
-									item.set('updatedAt', moment().format("X"));
 									item.save()
 										.then(function (savedItem) {
 											resolve(savedItem);
 										});
 								});
-
 						} else {
-							item.set('updatedAt', moment().format("X"));
 							item.save()
 								.then(function (savedItem) {
 									resolve(savedItem);
@@ -142,7 +140,7 @@ export default Ember.Service.extend({
 							return Constants.allowedLocationTypes.indexOf(r.types[0]) > -1;
 						});
 						var topResult = filteredResults[0];
-						var massagedResult = $.extend(topResult, {name: topResult.description});
+						var massagedResult = $.extend(topResult, {name: topResult.terms[0].value});// used to be: description, but this includes commas: NYC, NY, USA
 						var item = self.buildItemInfoFromResults({}, massagedResult);
 						var itemRecord = store.peekRecord('item', item.gmapsReference);
 						//if it doesn't exist, create it.
