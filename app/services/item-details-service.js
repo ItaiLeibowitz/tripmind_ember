@@ -175,6 +175,9 @@ export default Ember.Service.extend({
 		if (result.types && result.types.length > 0) {
 			item.itemType = result.types[0];
 		}
+		if (result.rating) {
+			item.rating = result.rating;
+		}
 		item.gmapsReference = result.place_id;
 		item.address = result.formatted_address;
 		item.rating = result.rating;

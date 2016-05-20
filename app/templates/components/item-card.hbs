@@ -5,6 +5,9 @@
 		<div class="name">{{model.name}}</div>
 		<div class="type"><b>{{model.itemTypeInParent}}{{if model.onelinerOrLong ":"}}</b> {{model.onelinerOrLong}}
 		</div>
+		{{#if model.rating}}
+			<div class="rating icon-star">{{model.rating}}</div>
+		{{/if}}
 	</div>
 </div>
 {{#if inSelectMode}}

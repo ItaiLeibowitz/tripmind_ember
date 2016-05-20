@@ -29,7 +29,7 @@ var Item = DS.Model.extend(WithItemImage, WithAncestry, ModelWithDescs, {
 	googleHours: DS.attr(),
 	externalLinks: DS.attr(),
 	phone: DS.attr('string'),
-	rating: DS.attr('number', {defaultValue: 3}),
+	rating: DS.attr('number'),
 	source: DS.attr('string'),
 	price: DS.attr('string'),
 	openingHoursText: DS.attr('string'),

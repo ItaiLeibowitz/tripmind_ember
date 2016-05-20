@@ -397,7 +397,7 @@ a {
 .menu-link {
 	display: block;
 	line-height: 3em;
-	color: #E74C3C;
+	color: black;
 	cursor: pointer;
 	padding: 0 .75em;
 	&.active {
@@ -806,6 +806,16 @@ a {
 	.type {
 		color: #777;
 		font-size: 0.8em;
+	}
+
+	.rating{
+		font-size: 0.8em;
+		color: #E74C3C;
+		&:before{
+			position:relative;
+			top:2px;
+			margin-right:3px;
+		}
 	}
 
 	.card-link {
