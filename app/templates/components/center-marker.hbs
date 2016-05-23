@@ -1,0 +1,11 @@
+<div class="toggle-draggable icon-edit has-tooltip" {{action 'toggleDraggable'}}>
+	<div class="tooltip">Click to edit location</div>
+</div>
+{{#if draggable}}
+	<div class="drag-explanation">
+		Move the green marker on the map then click edit again to save, or
+		<span class="cancel-btn" {{action 'toggleDraggable' true}}>CANCEL</span>
+	</div>
+{{/if}}
+
+

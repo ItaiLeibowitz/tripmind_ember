@@ -8,8 +8,12 @@ export default MapMarker.extend({
 	map: Ember.computed.alias('mapService.googleMapObject'),
     baseDepth: 0,
 	addedLabelClass: 'center',
-	unhoveredIcon: gmaps.markerIcons.largeRed,
-	hoveredIcon: gmaps.markerIcons.largeRed,
+	unhoveredIcon: Ember.computed.alias('centerIcon'),
+	hoveredIcon: Ember.computed.alias('centerIcon'),
+
+	centerIcon: function(){
+		return this.get('draggable') ? gmaps.markerIcons.largeGreen : gmaps.markerIcons.largeRed;
+	}.property('draggable'),
 
 	lat: Ember.computed.alias('model.lat'),
 	lng: Ember.computed.alias('model.lng'),
@@ -29,6 +33,30 @@ export default MapMarker.extend({
 
 	clickMarker: function(){
 		$('body').animate({scrollTop: 0}, 200);
+	},
+
+	actions: {
+		toggleDraggable: function(preventSave){
+			if (!this.get('draggable')) {
+				this.setProperties({
+					oldLat: this.get('model.lat'),
+					oldLng: this.get('model.lng')
+				})
+			}
+			if (!this.get('model.lat')) this.get('model').setProperties({lat:1, lng: 1})
+			console.log('toddle drag: ', this.get('draggable'))
+			this.toggleProperty('draggable');
+			//Save if we just moved it
+			if (preventSave){
+				this.get('model').setProperties({
+					lat: this.get('oldLat'),
+					lng: this.get('oldLng')
+				})
+			}
+			if (!this.get('draggable')){
+				this.get('model').save();
+			}
+		}
 	}
 
 });

@@ -20,11 +20,13 @@
 
 <div class="top-content">
 	<div class="rhs">
+		<div style="position: relative">
 		<div class="image-container main-image" style={{model.photoStyle}}></div>
 		{{map-placeholder model=model}}
+		{{center-marker model=model}}
+		</div>
 
-
-			<div class="details-holder">
+		<div class="details-holder">
 				<table>
 					{{#each model.details as |detail|}}
 						<tr class="detail-line">
@@ -93,5 +95,4 @@
 {{major-sections-holder parentItem=model model=descendants recs=recs majorSectionType='item' prefilterAttribute='trackingStatus'}}
 
 
-{{center-marker model=model}}
 

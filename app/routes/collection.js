@@ -15,7 +15,11 @@ export default Ember.Route.extend({
 			var compressedData = result.data.attributes.data,
 				unpackedData = lzwCompress.unpack(compressedData),
 				rebuiltData = JSON.parse(unpackedData);
-			store.push({data: rebuiltData});
+			var objects = store.push({data: rebuiltData});
+			// We now save everything to the localforage store.
+			objects.forEach(function(ob){
+				ob.save();
+			});
 			return store.peekRecord('collection', collectionId)
 		});
 	},

@@ -195,7 +195,11 @@ export default Ember.Service.extend({
 	minimizeMap: function(options){
 		this.set('isExpanded', false);
 		var closeAll = options ? options.closeAll : false;
-		if (this.get('minimizedHolder')) {$('#actual-map').appendTo(this.get('minimizedHolder'));}
+		var minimizedHolder = this.get('minimizedHolder');
+		if (minimizedHolder) {
+			$('#actual-map').appendTo(minimizedHolder.$());
+			minimizedHolder.attachMap();
+		}
 //		this.get('currentItem').setProperties({
 //			isOpen: closeAll ? false : this.get('lastItemCardPosition'),
 //			item: this.get('lastCurrentItem'),

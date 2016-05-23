@@ -1322,6 +1322,41 @@ a {
 			}
 		}
 	}
+
+	.toggle-draggable{
+		display: none;
+		position: absolute;
+		bottom: 0;
+		right: .5em;
+		background: #777;
+		color: white;
+		font-size: 1.5em;
+		line-height: 2em;
+		width: 2em;
+		text-align: center;
+	}
+
+	.drag-explanation{
+		position: absolute;
+		background-color: #333;
+		color: white;
+		font-size: 0.8em;
+		border-radius: 5px;
+		padding: 5px;
+	}
+
+	.cancel-btn{
+		//position: absolute;
+		//top: 0;
+
+	}
+
+
+	&:hover{
+		.toggle-draggable{
+			display: block;
+		}
+	}
 }
 
 .details-holder{

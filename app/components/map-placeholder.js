@@ -3,6 +3,11 @@ import Ember from 'ember';
 export default Ember.Component.extend({
 	mapService: Ember.inject.service('map-service'),
 	classNames: ['map-placeholder'],
+	classNameBindings: ['noCoordinates:hidden'],
+
+	noCoordinates: function(){
+		return !this.get('model.lat');
+	}.property('model.lat'),
 
 	didInsertElement: function(){
 		Ember.run.scheduleOnce('afterRender', this, 'attachMap');
@@ -20,7 +25,7 @@ export default Ember.Component.extend({
 		var container = this.$(),
 			mapService = this.get('mapService');
 		mapService.changeCenter(this.get('model.lat'), this.get('model.lng'));
-		mapService.set('minimizedHolder', container);
+		mapService.set('minimizedHolder', this);
 		if(!mapService.get('isExpanded')) {
 			mapService.moveDomToElement(container);
 			mapService.setProperties({
