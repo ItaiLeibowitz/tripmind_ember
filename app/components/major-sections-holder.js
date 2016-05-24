@@ -35,18 +35,21 @@ export default Ember.Component.extend({
 	}.property('recs'),
 
 	filterItems: function(items, attribute){
-		if (!attribute) return this.get('model');
-		var [filterAttribute, not] = attribute.split("-");
+		var filteredItems = items;
+		if (attribute) {
+			var [filterAttribute, not] = attribute.split("-");
+			not = (not == 'not');
+			filteredItems = items.filter(function(item){
+				return not ? !item.get(filterAttribute) : item.get(filterAttribute);
+			})
+		}
 		var filteringItemTypes = [];
 		this.get('filterOptions').filter(function(type){
 			return type.isSelected
 		}).forEach(function(typeOption){
 			filteringItemTypes = filteringItemTypes.concat(typeOption.value);
 		});
-		not = (not == 'not');
-		return  items.filter(function(item){
-			return not ? !item.get(filterAttribute) : item.get(filterAttribute);
-		}).filter(function(item){
+		return filteredItems.filter(function(item){
 			return filteringItemTypes.indexOf(item.get('itemType')) > -1
 		})
 	},
@@ -357,7 +360,8 @@ export default Ember.Component.extend({
 
 			// Organize items into sections
 			items.forEach(function(item){
-				var itemType = item.get('itemType').replace(/_/g," ").capitalize();
+				var itemType = item.get('itemType');
+				itemType = itemType ? itemType.replace(/_/g," ").capitalize() : "Attraction";
 				sectionsObject[itemType] = sectionsObject[itemType] || Ember.Object.create({
 					title: itemType,
 					scrollSlug: item.get('itemType'),

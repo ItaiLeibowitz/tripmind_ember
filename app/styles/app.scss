@@ -1307,6 +1307,15 @@ a {
 	margin-bottom: 1em;
 	vertical-align: top;
 
+	.top-details{
+		position: relative;
+
+		&:hover{
+			.toggle-draggable{
+				display: block;
+			}
+		}
+	}
 	.main-image, .map-placeholder {
 		height: 13em;
 		width: 13em;
@@ -1352,11 +1361,7 @@ a {
 	}
 
 
-	&:hover{
-		.toggle-draggable{
-			display: block;
-		}
-	}
+
 }
 
 .details-holder{

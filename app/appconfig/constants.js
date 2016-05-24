@@ -450,7 +450,7 @@ var Constants = Ember.Object.create({
 		{type: "travel_agency", filterOption:"Other", duration: 1800},
 		{type: "university", filterOption:"Other", duration: 1800},
 		{type: "veterinary_care", filterOption:"Other", duration: 1800},
-		{type: "attraction", filterOption:"Other", duration: 1800},
+		{type: "Attraction", filterOption:"Other", duration: 1800},
 		{type: 'mine', filterOption: "Other",duration: 3600},
 		{type: 'cultural', filterOption: "Other",duration: 3600},
 		{type: 'cultural site', filterOption:  "Other",duration: 1800},
