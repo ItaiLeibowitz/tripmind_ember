@@ -8,15 +8,12 @@ export default Ember.Route.extend({
 		return store.findAll('item')
 			.then(function (results) {
 				return results.filter(function (item) {
-					return !item.get('trackingStatus') && !item.get('isTemporary');
+					return item.get('trackingStatus') && !item.get('isTemporary');
 				});
 			});
 	},
-	templateName: 'places',
 	setupController: function(controller,model){
 		this._super(controller, model);
-		controller.set('prefilterAttribute','trackingStatus-not');
-		controller.set('actionBarVersion', 'trash');
-		controller.set('isTrash', true);
+		controller.set('prefilterAttribute','trackingStatus');
 	}
 });

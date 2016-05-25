@@ -1,19 +1,12 @@
 import Ember from 'ember';
+import ENV from 'tripmind/config/environment';
 
 
 
 export default Ember.Route.extend({
-	model: function () {
-		var store = this.get('store');
-		return store.findAll('item')
-			.then(function (results) {
-				return results.filter(function (item) {
-					return item.get('trackingStatus') && !item.get('isTemporary');
-				});
-			});
-	},
-	setupController: function(controller,model){
-		this._super(controller, model);
-		controller.set('prefilterAttribute','trackingStatus');
+	beforeModel: function(){
+		if (ENV.environment != 'production') {
+			this.transitionTo('places');
+		}
 	}
 });

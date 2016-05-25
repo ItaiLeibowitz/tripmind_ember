@@ -39,6 +39,7 @@ Router.map(function() {
 	});
 	this.route('tutorial');
 	this.route('error');
+	this.route('places');
 });
 
 export default Router;

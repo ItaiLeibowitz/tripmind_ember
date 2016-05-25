@@ -47,10 +47,17 @@ $orange-transparent:  rgba(255, 153, 0, 0.33);
 $red: #EB0934;
 $red-light: #FFAAAA;
 
-$red-flat: #C0392B; //#ED4C3C;
-$red-flat-dark: #A01709; //#C0392B;
-$red-flat-light: #ED4C3C; //#ebb3af;
+$red-flat: #E74C3C; //#ED4C3C;
+$red-flat-dark: #af392a; //#C0392B;
+$red-flat-light: #fe7c73; //#ebb3af;
 
+.red-flat-back{
+	background-color: $red-flat;
+
+	&.flat-btn:hover{
+		background-color: $red-flat-dark;
+	}
+}
 
 $green: #5AC828;
 $green-muted: #6DC346;
@@ -83,6 +90,11 @@ $gray-3qtrans: rgba(204,204,204,0.75);
 $white-1qtrans: rgba(255,255,255,0.25);
 $white-semitrans: rgba(255,255,255,0.5);
 $white-3qtrans: rgba(255,255,255,0.75);
+
+.white-text{
+	color: white !important;
+}
+
 
 body {
 	font-family: 'roboto';
@@ -171,6 +183,7 @@ a {
 	font-weight: bold;
 	vertical-align: middle;
 	text-align: center;
+	cursor: pointer;
 	&:hover{
 		background-color: rgba(0,0,0,0.1);
 	}
@@ -2729,4 +2742,55 @@ a {
 			z-index: 20;
 		}
 	}
+}
+
+
+
+.landing-background {
+	position: fixed;
+	z-index: 30;
+	bottom:0;
+	top:0;
+	right:0;
+	left:0;
+	background-image: url('/assets/images/back1.jpg');
+}
+
+.landing-z-index{
+	position: relative;
+	z-index: 30;
+	width: 50%;
+	max-width: 30em;
+	text-align: center;
+	min-width: 20em;
+}
+
+
+.landing-logo{
+	width: 10em;
+	margin: 2em auto;
+	display: inline-block;
+	.logo{
+		margin: 0 0 -2em 2.5em;
+		background: url('/assets/images/brain.png') no-repeat;
+		height: 100px;
+		width: 100px;
+		background-size: contain;
+	}
+
+	.logo-text{
+		color: $red-flat;
+		font-size: 3em;
+	}
+}
+
+.landing-holder{
+	text-align: left;
+	line-height: 1.5em;
+	font-size:1.2em;
+	background:  rgba(20,50,80,0.8);
+	color: white;
+	padding: 1em;
+	border-radius: 5px;
+
 }
