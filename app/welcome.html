@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html data-ember-extension="1">
+<head>
+	<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+	<link rel="canonical" href="https://www.tripmind.online/">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Tripmind</title>
+	<meta name="description"
+		  content="TripMind is a trip planning Chrome Extension. It saves relevant information as you browse the web and helps organize it into an itinerary you can share.">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="/assets/favicon.ico">
+
+</head>
+<body class="ember-application">
+
+
+<div id="ember355" class="ember-view">
+	<style>
+
+
+		body {
+			font-family: 'roboto';
+			margin: 0;
+			background: #fafafa;
+			font-size: 100%;
+		}
+
+
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
+
+		#rhs-container {
+			border-left: 5em solid transparent;
+			border-right: 0em solid transparent;
+			border-top: 0px solid transparent;
+			padding: 1em;
+			background: #fafafa;
+		}
+
+		.flat-btn {
+			line-height: 3em;
+			padding: 0 1em;
+			margin: 1em 0;
+			display: inline-block;
+			border-radius: 5px;
+			text-transform: uppercase;
+			color: #777;
+			font-weight: bold;
+			vertical-align: middle;
+			text-align: center;
+			cursor: pointer;
+		}
+
+		.flat-btn:hover {
+			background-color: rgba(0, 0, 0, 0.1);
+		}
+
+		.flat-btn:before {
+			margin-right: 1em;
+			font-size: 1.5em;
+			vertical-align: middle;
+		}
+
+		.white-text{
+			color: white !important;
+		}
+
+		.red-flat-back {
+			background-color: #E74C3C;
+		}
+
+		.red-flat-back.flat-btn:hover {
+			background-color: #fe7c73;
+		}
+
+		.photo-div {
+			background-size: cover;
+			background-position: 50% 50%;
+			background-color: #DAD1D1;
+		}
+
+		.landing-background {
+			position: fixed;
+			z-index: 30;
+			bottom: 0;
+			top: 0;
+			right: 0;
+			left: 0;
+			background-color: #1C334F;
+			background-image: url('/assets/images/back1.jpg');
+		}
+
+		.landing-z-index {
+			position: relative;
+			z-index: 30;
+			width: 50%;
+			max-width: 30em;
+			text-align: center;
+			min-width: 20em;
+		}
+
+		.landing-logo {
+			width: 10em;
+			margin: 2em auto;
+			display: inline-block;
+
+		}
+
+		.landing-logo .logo {
+			margin: 0 0 -2em 2.5em;
+			background: url('/assets/images/brain.png') no-repeat;
+			height: 100px;
+			width: 100px;
+			background-size: contain;
+		}
+
+		.landing-logo .logo-text {
+			color: #E74C3C;
+			font-size: 3em;
+		}
+
+		.landing-logo small{
+			font-size: 0.5em;
+			vertical-align: top;
+			font-style: italic;
+		}
+
+		.landing-holder {
+			text-align: left;
+			line-height: 1.5em;
+			font-size: 1.2em;
+			background: rgba(20, 50, 80, 0.8);
+			color: white;
+			padding: 1em;
+			border-radius: 5px;
+
+		}
+	</style>
+
+	<div id="rhs-container">
+
+		<div class="landing-background photo-div"></div>
+		<div class="landing-z-index">
+			<div class="landing-logo">
+				<div class="logo"></div>
+				<div class="logo-text">
+					<b>Trip</b>Mind<small>beta</small>
+				</div>
+			</div>
+
+			<div class="landing-holder">
+				<div class="landing-text">
+					<p>
+						<b>Trip</b>Mind is a free Chrome extension for people who like to travel
+					</p>
+
+					<p>
+						When you read something online about a place you’d like to visit, <b>Trip</b>Mind automatically
+						saves that information for you
+					</p>
+
+					<p>
+						It organizes everything by destination, so you can easily find it, then share or download
+					</p>
+				</div>
+			</div>
+
+
+			<div class="landing-button-holder">
+				<a href="https://chrome.google.com/webstore/detail/tripmind/jefanopdgmnpggnnicgfkbajikmabhgf"
+				   class="flat-btn red-flat-back white-text">Get it now</a>
+
+				<div class="explanation white-text">From the Chrome Web Store</div>
+			</div>
+
+		</div>
+		<div class="prevent-click"></div>
+	</div>
+
+
+</div>
+</body>
+</html>
